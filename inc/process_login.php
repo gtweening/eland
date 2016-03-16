@@ -1,5 +1,11 @@
 <?php
 
+/**
+processing login
+
+copyright: 2013 Gerko Weening
+*/
+
 include_once "base.php";
 include_once "functions.php";
 
@@ -12,7 +18,7 @@ if (isset($_POST['email'], $_POST['p'])) {
     if (login($email, $password, $mysqli) == true ) {
         // Login success 
         //check if user = administrator
-        header('Location:../sections.php');
+        header('Location:../php/sections.php');
     } else {
         // Login failed 
         header('Location:../index.php?error=1');
