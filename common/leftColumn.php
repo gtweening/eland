@@ -38,7 +38,7 @@
             </a>
         </li>
         <li>
-            <a href="php/reportAll.php" id="navchked" title="Volledig overzicht t.b.v. archief">
+            <a href="reportAll.php" id="navchked" title="Volledig overzicht t.b.v. archief">
                 <img src="../img/reportAll.png" alt="Materialen" width="35" height="35" align="middle">
                 
             </a>
