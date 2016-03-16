@@ -1,4 +1,10 @@
 <html>
+<!--/**
+shows overview of obstacles of selected section
+
+copyright: 2013 Gerko Weening
+*/-->
+
     <a class="tableTitle3">Sectie <?echo $vsectionname?></a>
         <div class="cudWidget">   
         </div>
