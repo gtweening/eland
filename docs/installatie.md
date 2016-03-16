@@ -8,7 +8,7 @@ Voorbereiding
 - maak een map aan op de websever. Deze map zal de url vormen voor de webapplicatie.
 
 Installatie
-- Download <b>Eland</b> van github.
+- Download <b>Eland</b> van github (https://github.com/gtweening/eland/archive/master.zip).
 - Pak het zip-bestand uit.
 - Bewerk eland/inc/constants.inc.php en vul de juiste gebruikersnaam, wachtwoord, en databasenaam in.
 - Kopieer de bestanden naar de zojuist aangemaakte map op de webserver.
