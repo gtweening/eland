@@ -2,11 +2,8 @@
     // Database credentials
     define('DB_HOST', 'localhost');
     define('DB_USER', 'root');
-    define('DB_PASS', 'Nemov1975');
-    define('DB_NAME', 'ObstacleLogDB');
-    //define('DB_USER', 'ropesrun');
-    //define('DB_PASS', 'Surviv@l1');
-    //define('DB_NAME', 'ropesrun-3');
+    define('DB_PASS', '');  //your password
+    define('DB_NAME', '');  //your databasename
     
     define("CAN_REGISTER", "any");
     define("DEFAULT_ROLE", "member");
