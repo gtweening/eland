@@ -1,4 +1,12 @@
 <?php
+
+/**
+index page
+
+copyright: 2013 Gerko Weening
+*/
+
+
 include_once "inc/base.php";
 include_once "inc/functions.php";
 
