@@ -6,7 +6,6 @@ index page
 copyright: 2013 Gerko Weening
 */
 
-
 include_once "inc/base.php";
 include_once "inc/functions.php";
 
@@ -23,6 +22,7 @@ if (login_check($mysqli) == true) {
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="css/StyleSheet.css">
         <script type="text/JavaScript" src="js/sha512.js"></script> 
         <script type="text/JavaScript" src="js/forms.js"></script> 
     </head>
