@@ -1,9 +1,9 @@
 <?php
     // Database credentials
     define('DB_HOST', 'localhost');
-    define('DB_USER', 'root');
-    define('DB_PASS', 'Nemov1975');
-    define('DB_NAME', 'ObstacleLogDB');
+    define('DB_USER', ''); //username
+    define('DB_PASS', ''); //database acces password
+    define('DB_NAME', '');  //databasename
     
     define("CAN_REGISTER", "any");
     define("DEFAULT_ROLE", "member");
