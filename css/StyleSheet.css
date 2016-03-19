@@ -109,9 +109,11 @@ body {
 }
 
 #footer {
-    width: 200px;
-    height: 30px;
+    width: 950px;
+    height: 100px;
     clear: left;
+    text-align: center;
+    font-size: small;
     background: graytext;
 }
 
