@@ -13,3 +13,6 @@ Installatie
 - Bewerk eland/inc/constants.inc.php en vul de juiste gebruikersnaam, wachtwoord, en databasenaam in.
 - Kopieer de bestanden naar de zojuist aangemaakte map op de webserver.
  
+beheerder@beheer.nl 
+Ik ben de beheerder!
+
