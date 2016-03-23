@@ -12,8 +12,12 @@
 - Pak het zip-bestand uit.
 - Bewerk eland/inc/constants.inc.php en vul de juiste gebruikersnaam, wachtwoord, en databasenaam in.
 - Kopieer de bestanden naar de zojuist aangemaakte map op de webserver.
-- Zorg ervoor dat je lees en schrijf rechten hebt op de map: /img/Obstacles/ <br>
+- Zorg dat je leesrechten hebt op alle mappen en bestanden.
+- Zorg ervoor dat je lees- en schrijfrechten hebt op de map: /img/Obstacles/ <br>
   In deze map worden afbeeldingen die worden geupload opgeslagen.
+- Installeer de tabellen door in de browser het volgende bestand te starten: [server]/[map]/php/_createElandTables.php<br>
+  Bijvoorbeeld: http://www.survivalvereniging.nl/eland/php/_createElandTables.php<br>
+  Tijdens installatie krijg je twee meldingen: succesvol verwijderen van bestaande tabellen en succesvol aanmaken van tabellen. Na installatie wordt automatisch doorverwezen naar de startpagina. Je kunt nu inloggen en starten met het bijhouden van het logboek.
 
 <br>
 Er is één gebruiker aangemaakt. Deze heeft toegang tot het logboek en beheerderlogin.<br>
