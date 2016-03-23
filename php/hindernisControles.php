@@ -60,20 +60,19 @@ if(login_check($mysqli) == true) {
         
         <div id="RightColumn">
         <table id="obstacleTable">
-            <tr >        
-                <td class="tableTitle2">Hindernis <?echo $vsectionname,$vhindVolgnr?></td>
-                <td > <img src="<?echo $imgPath,$vimg;?>" alt="" width="60" height="50" ></td>
+               
+                <a class="tableTitle2">Hindernis <?echo $vsectionname,$vhindVolgnr?></a>
+                <a > <img src="<?echo $imgPath,$vimg;?>" alt="" width="60" height="50" ></a>
                 <div class="cudWidget">
                 </div>
-            </tr>
-            <tr>    
+      
                 <div id="widgetBar">
                     <ul class="basictab">
                         <li ><a href="obstacle.php?Id=<?echo $vhindId;?>&Sec=<?echo $vsectionname;?>&Vnr=<?echo $vhindVolgnr;?>&Img=<?echo $vimg;?>">Hindernisdetails</a></li>
                         <li class="selected"><a href="hindernisControles.php">Hindernis controles</a></li>
                     </ul>
                 </div>
-            </tr> 
+      
         </table>
         <form name="form1" method="post" action="">
         <table id="obstacleTable" >
@@ -91,7 +90,7 @@ if(login_check($mysqli) == true) {
                 </div>
                 
             </tr>
-            <br><br><br><br><br><br>
+            <br><br><br>
             <tr>    
                 <div id="widgetBar">
                     <input type="date" class="inputText" name="datum" maxlength="10" size="8">
