@@ -1,5 +1,6 @@
 <h1>Installatie instructie</H1>
 <b>Uitgangspunten</b>
+- op de webserver draait php.
 - je kunt bestanden uploaden naar en mappen aanmaken op de webserver.
 - je weet hoe je een database moet aanmaken op een webserver.
 - je weet hoe je lees- en schrijfrechten op een webserver moet aanpassen.
