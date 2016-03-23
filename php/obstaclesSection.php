@@ -56,9 +56,8 @@ if(login_check($mysqli) == true) {
         <td>
         <form name="form1" method="post" action="frmHandlingObst.php">
             <table id="materialenTable2">
-                <tr>
-                    <td width="5%"></td>
-                    <td colspan="2" class="tableTitle">Hindernissen sectie: <?echo $vsectionname;?></td>
+
+               <a class="tableTitle">&nbsp;&nbsp;&nbsp;&nbsp;Hindernissen sectie: <?echo $vsectionname;?></a>
                     <div class="cudWidget"> 
                         <button type="submit" name="delObstacle">
                             <img src="../img/del.jpeg" width="35" height="35">
@@ -70,8 +69,7 @@ if(login_check($mysqli) == true) {
                             <img src="../img/edit.jpeg" width="35" height="35">
                         </button>
                     </div>
-                </tr>
-                <tr>    
+
                     <div id="widgetBar">
                         <input type="hidden" name="sectionId" value="<?php echo $vsectionid;?>">
                         <input type="text" class="inputText" name="volgnr" maxlength="5" size="5">
@@ -82,7 +80,7 @@ if(login_check($mysqli) == true) {
                             </button>
                         </div>
                     </div>
-                </tr>   
+
 
                 <tr class="theader">
                     <th width="5%" ></th>
