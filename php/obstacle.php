@@ -39,22 +39,22 @@ if(login_check($mysqli) == true) {
 
         <div id="RightColumn">
         <table id="obstacleTable">
-            <tr >     
-                <td class="tableTitle2">Hindernis <?echo $vsectionname,str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT)?></td>
+     
+                <a class="tableTitle2">Hindernis <?echo $vsectionname,str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT)?></a>
                 <div class="cudWidget">
                 </div>
-            </tr>
-            <tr>    
+           
+           
                 <div id="widgetBar">
                     <ul class="basictab">
                         <li class="selected"><a href="hindernis.php">Hindernisdetails</a></li>
                         <li><a href="hindernisControles.php?hId=<?echo $vhindId;?>&Sec=<?echo $vsectionname;?>&Vnr=<?echo $vhindVolgnr;?>&Img=<?echo $vimg;?>">Hindernis controles</a></li>
                     </ul>
                 </div>
-            </tr> 
+   
             <tr valign="top">
                 <td class="hwhite" width ="50%">
-                    <br><br><br><br>
+                    <br><br>
                     <label>Sectie:</label> <?echo $vsectionname; ?><br>
                     <label>Volgnummer:</label> <?echo str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT);?> <br><br>
                     <label>Omschrijving:</label><br> <? echo $vhindOmschr;?><br><br>
@@ -65,7 +65,7 @@ if(login_check($mysqli) == true) {
                     <? if($row['ChkQ4']== True){?> Kwartaal 4 <?}?>
                 </td>
                 <td class="hwhite">
-                    <br><br><br><br>
+                    <br><br>
                     <img src="<?echo $imgPath,$vimg;?>" alt="" width="300" height="200" >
                     <br><br>
                 </td>
