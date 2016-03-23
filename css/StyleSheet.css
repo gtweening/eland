@@ -168,7 +168,7 @@ body {
 }
 #RightColumn {
     height: 600px;
-    width: 700px;
+    width: 695px;
     float: left;
     background: white;
     border-left: solid 1px black;
@@ -219,7 +219,7 @@ body {
 
 #RColmain {
     height: 500px;
-    width: 700px;
+    width: 695px;
     float: left;
     background: white;
 }
