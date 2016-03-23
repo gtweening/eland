@@ -2,6 +2,7 @@
 <b>Uitgangspunten</b>
 - je kunt bestanden uploaden naar en mappen aanmaken op de webserver.
 - je weet hoe je een database moet aanmaken op een webserver.
+- je weet hoe je lees- en schrijfrechten op een webserver moet aanpassen.
 
 <b>Voorbereiding</b>
 - maak een database aan op de webserver en stel een gebruikersnaam en wachtwoord in. Onthoud deze. Je hebt ze straks nodig.
@@ -10,9 +11,9 @@
 <b>Installatie</b>
 - Download <b>Eland</b> van github (https://github.com/gtweening/eland/archive/master.zip).
 - Pak het zip-bestand uit.
-- Bewerk eland/inc/constants.inc.php en vul de juiste gebruikersnaam, wachtwoord, en databasenaam in.
-- Kopieer de bestanden naar de zojuist aangemaakte map op de webserver.
-- Zorg dat je leesrechten hebt op alle mappen en bestanden.
+- Bewerk eland-master/inc/constants.inc.php en vul de juiste gebruikersnaam, wachtwoord, en databasenaam in.
+- Kopieer de bestanden en mappen in de map 'eland-master' naar de zojuist aangemaakte map op de webserver.
+- Zorg ervoor dat je leesrechten hebt op alle zojuist aangemaakte mappen en bestanden.
 - Zorg ervoor dat je lees- en schrijfrechten hebt op de map: /img/Obstacles/ <br>
   In deze map worden afbeeldingen die worden geupload opgeslagen.
 - Installeer de tabellen door in de browser het volgende bestand te starten: [server]/[map]/php/_createElandTables.php<br>
