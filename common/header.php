@@ -10,6 +10,13 @@
         <div id="main">
             <div id="header">
                 <img align ="left" src="../img/logo.jpg" alt="Logo" width="152" height="50">
+                    <?php
+						if (isset($_SESSION['username'])){
+							echo "Ingelogd: ";
+							echo $_SESSION['username'];
+						}
+					?>
+					<br>
                 <a href="../inc/logout.php">uitloggen</a>
             </div>
         </div>
