@@ -27,7 +27,7 @@ function sec_session_start() {
 
 
 function login($email, $password, $mysqli) {
-    $query = "SELECT Id, Password, salt 
+    $query = "SELECT Id, Email, Password, salt 
               FROM TblUsers 
               WHERE Email = '".$email."' LIMIT 1" ;
     // Using prepared statements means that SQL injection is not possible. 
@@ -37,7 +37,7 @@ function login($email, $password, $mysqli) {
         $stmt->store_result();
  
         // get variables from result.
-        $stmt->bind_result($user_id, $db_password, $salt);
+        $stmt->bind_result($user_id, $username, $db_password, $salt);
         $stmt->fetch();
         //generate random salt
         $random_salt = hash('sha512', uniqid(openssl_random_pseudo_bytes(16), TRUE));
@@ -68,10 +68,10 @@ function login($email, $password, $mysqli) {
                     $user_id = preg_replace("/[^0-9]+/", "", $user_id);
                     $_SESSION['user_id'] = $user_id;
                     // XSS protection as we might print this value
-                    //$username = preg_replace("/[^a-zA-Z0-9_\-]+/", 
-                    //                                            "", 
-                    //                                            $username);
-                    //$_SESSION['username'] = $username;
+                    $username = preg_replace("/[^a-zA-Z0-9_\-@.]+/", 
+                                                                "", 
+                                                                $username);
+                    $_SESSION['username'] = $username;
                     $_SESSION['login_string'] = hash('sha512', 
                               $password . $user_browser);
                     // Login successful.
@@ -94,7 +94,7 @@ function login($email, $password, $mysqli) {
 }
 
 function loginbeheerder($email, $password, $mysqli) {
-    $query = "SELECT Id, Password, salt, Admin 
+    $query = "SELECT Id, Email, Password, salt, Admin 
               FROM TblUsers 
               WHERE Email = '".$email."' LIMIT 1" ;
     // Using prepared statements means that SQL injection is not possible. 
@@ -104,7 +104,7 @@ function loginbeheerder($email, $password, $mysqli) {
         $stmt->store_result();
  
         // get variables from result.
-        $stmt->bind_result($user_id, $db_password, $salt, $admin);
+        $stmt->bind_result($user_id, $username, $db_password, $salt, $admin);
         $stmt->fetch();
         //generate random salt
         $random_salt = hash('sha512', uniqid(openssl_random_pseudo_bytes(16), TRUE));
@@ -141,10 +141,10 @@ function loginbeheerder($email, $password, $mysqli) {
 		            $user_id = preg_replace("/[^0-9]+/", "", $user_id);
 		            $_SESSION['user_id'] = $user_id;
 		            // XSS protection as we might print this value
-		            //$username = preg_replace("/[^a-zA-Z0-9_\-]+/", 
-		            //                                            "", 
-		            //                                            $username);
-		            //$_SESSION['username'] = $username;
+		            $username = preg_replace("/[^a-zA-Z0-9_\-@.]+/", 
+		                                                        "", 
+		                                                        $username);
+		            $_SESSION['username'] = $username;
 		            $_SESSION['login_string'] = hash('sha512', 
 		                      $password . $user_browser);
 		            // Login successful.
