@@ -1,18 +1,15 @@
 <?php
-
 /**
 maintenance page
-
 copyright: 2013 Gerko Weening
-*/
 
+201609 - changed style leftcoloumn
+*/
 include_once "../inc/base.php";
 include_once "../inc/functions.php";
-
 sec_session_start(); 
 include_once "../common/header.php"; 
-//include_once "common/leftColumn.php";
-
+include_once "../common/leftColumnBeheerder.php";
 //$tbl_name="TblSections"; // Table name
 //secure login
 if(login_check($mysqli) == true) { 
@@ -22,8 +19,8 @@ if(login_check($mysqli) == true) {
         <script type="text/JavaScript" src="../js/sha512.js"></script> 
         <script type="text/JavaScript" src="../js/forms.js"></script>
     </head>
-    <body >
-        <div >
+    <body id="gebruikersbeheer">
+        <div id="LeftColumn2" >
             
         </div>
         <div id="RightColumn">
@@ -73,15 +70,11 @@ if(login_check($mysqli) == true) {
                             <img src="../img/ok.jpeg" width="20" height="20"><?
                          }; ?></td>
                 </tr>
-
                 <?php
                 }
-
-
                 //close connection
                 $db = null;
                 ?>
-
             </table>
         </form>
         </td>
@@ -97,6 +90,3 @@ U bent niet geautoriseerd voor toegang tot deze pagina. <a href="../index.php">I
 <?php
 }
 ?>
-
-
-
