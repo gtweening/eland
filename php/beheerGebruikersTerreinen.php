@@ -1,9 +1,9 @@
 <?php
 
 /**
-maintenance page
+maintenance page 
 
-copyright: 2013 Gerko Weening
+copyright: 2016 Gerko Weening
 */
 
 include_once "../inc/base.php";
