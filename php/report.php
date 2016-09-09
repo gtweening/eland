@@ -8,63 +8,23 @@ copyright: 2013 Gerko Weening
 */
 
 include_once "../inc/base.php";
+include_once "../inc/functions.php";
+include_once "../inc/queries.php";
+sec_session_start(); 
+
+
 //bepaal op basis van opgegeven jaar en kwartaal
 //de controleperiode die beschouwd moet worden
-if(isset($_POST['jaar'])){
-    $jaar = substr($_POST['jaar'], -2);
-    //$jaar = $_POST['jaar'];    
-    $i=$_POST['kwartaal'];
-    switch ($i) {
-        case 1:
-            $datbegin = $jaar."-01-01";
-            $datend = date("Y-m-d", strtotime($datbegin));
-            $ChkQ = 'tob.ChkQ1';
-            break;
-        case 2:
-            $datend = date("Y-m-d", strtotime($jaar."-04-01"));
-            $ChkQ = 'tob.ChkQ2';
-            break;
-        case 3:
-            $datend = date("Y-m-d", strtotime($jaar."-07-01"));
-            $ChkQ = 'tob.ChkQ3';
-            break;
-        case 4:
-            $datend = date("Y-m-d", strtotime($jaar."-10-01"));
-            $ChkQ = 'tob.ChkQ4';
-            break;
-    }
-}
+$checkperiod = getcheckperiod($_POST['jaar'], $_POST['kwartaal']);
 
 //selecteer items te controleren uit gekozen kwartaal;
 //selecteer items gecontroleerd uit voorgaande kwartalen die niet OK zijn.
+//selecteer enkel hindernis; overige info via aparte queries ophalen
+$qry1 = getviewtobechecked($checkperiod[0],$checkperiod[1]);
 
-//oud: selecteerd alle info in 1 query
-//$query = "select ts.Naam,tob.*, tobc.DatCheck, tobc.ChkSt, tobc.CheckedBy,tobc.Note ";
-//$query .="from TblSections ts, TblObstacles tob left join TblObstacleChecks tobc on (tob.id=tobc.obstacle_id) ";
-//$query .="where tob.Section_id = ts.Id and $ChkQ is true ";
-//$query .="union ";
-//$query .="select ts.Naam,tob.*, tobc.DatCheck, tobc.ChkSt, tobc.CheckedBy,tobc.Note ";
-//$query .="from TblSections ts, TblObstacles tob left join TblObstacleChecks tobc on (tob.id=tobc.obstacle_id) ";
-//$query .="where tob.Section_id = ts.Id and $ChkQ is false ";
-//$query .="and DatCheck between DATE_ADD('$datend', INTERVAL -9 MONTH) and '$datend' ";
-//$query .="and ChkSt is false ";
-
-// selecteer enkel hindernis; overige info via aparte queries ophalen
-$query1 = "select ts.Naam,tob.* ";
-$query1 .="from TblSections ts,TblObstacles tob ";
-$query1 .="where tob.Section_id = ts.Id and $ChkQ is true ";
-$query1 .="union ";
-$query1 .="select ts.Naam,tob.* ";
-$query1 .="from TblSections ts,TblObstacles tob left join TblObstacleChecks tobc on (tob.id=tobc.obstacle_id) ";
-$query1 .="where tob.Section_id = ts.Id and $ChkQ is false ";
-$query1 .="and DatCheck between DATE_ADD('$datend', INTERVAL -9 MONTH) and '$datend' ";
-$query1 .="and ChkSt is false ";
-
-//$STH = $db->query($query);
-$STH = $db->query($query1);
+$STH = $db->query($qry1);
 $STH->setFetchMode(PDO::FETCH_ASSOC);
 while($rows=$STH->fetch()){
-    //var_dump($_POST);
 ?>
 
 <!DOCTYPE html>
