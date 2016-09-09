@@ -9,7 +9,7 @@ copyright: 2013 Gerko Weening
 
 include_once "../inc/base.php";
 include_once "../inc/functions.php";
-
+include_once "../inc/queries.php";
 sec_session_start(); 
 include_once "../common/header.php"; 
 include_once "../common/leftColumn.php";
@@ -52,7 +52,12 @@ if(login_check($mysqli) == true) {
                 </tr>
 
                 <?php
-                $STH = $db->query('select tos.*, tss.naam from TblObstacles as tos, TblSections as tss where tos.section_id = tss.id order by naam,Volgnr');
+					 $whereTerrein = getterreinid();
+                $STH = $db->query('select tos.*, tss.naam 
+											  from TblObstacles as tos, TblSections as tss 
+											  where tos.section_id = tss.id 
+													  and tss.'.$whereTerrein.' 
+											  order by naam,Volgnr');
                 $STH->setFetchMode(PDO::FETCH_ASSOC);
                 while($rows=$STH->fetch()){
                 ?>
