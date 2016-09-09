@@ -1,3 +1,12 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            function setTerrein($user_id){
+                alert("8");
+            }
+		</script>
+	</head>
+</html>
 <?php
 include_once "constants.inc.php";
 
@@ -74,8 +83,40 @@ function login($email, $password, $mysqli) {
                     $_SESSION['username'] = $username;
                     $_SESSION['login_string'] = hash('sha512', 
                               $password . $user_browser);
-                    // Login successful.
-                    return true;
+						  //check aantal terreinen bij gebruiker
+						  $qry3 = "Select count(Terrein_id) as aantal 
+									  from TblTerreinUsers 
+									  where User_id = '$user_id' 
+									 ";
+						  $stmt3 = $mysqli->prepare($qry3);
+						  $stmt3->execute();
+						  $stmt3->store_result();
+						  $stmt3->bind_result($aantal);
+						  $stmt3->fetch();
+					     //als gebruiker meer dan 1 terrein beheert dan keuze laten maken
+						  if ($aantal>1) {
+								$_SESSION['Terreinid'] = 0;
+								echo "<meta http-equiv=\"refresh\" content=\"0;URL=../php/selectGebruikersTerrein.php?Id=".$user_id."\">";
+								exit;
+						  } else {
+							  //Get terreinnaam
+							  $qry2 = "Select tt.Id, tt.Terreinnaam 
+										  from TblTerreinUsers ttu, TblTerrein tt 
+										  where ttu.Terrein_id = tt.Id and
+											     ttu.User_id = '$user_id'
+										 ";
+							  $stmt2 = $mysqli->prepare($qry2);
+							  $stmt2->execute();    // Execute the prepared query.
+							  $stmt2->store_result();
+							  // get variables from result.
+							  $stmt2->bind_result($Terreinid, $Terreinnaam);
+							  $stmt2->fetch();
+							  $_SESSION['Terreinnaam'] = $Terreinnaam;
+							  $_SESSION['Terreinid'] = $Terreinid;
+							  // Login successful.
+                       return true;
+						  }
+                    
                 } else {
                     // Password is not correct
                     // We record this attempt in the database
@@ -196,12 +237,12 @@ function checkbrute($user_id, $mysqli) {
 function login_check($mysqli) {
     // Check if all session variables are set 
     if (isset($_SESSION['user_id'], 
-//                        $_SESSION['username'], 
+                        $_SESSION['username'], 
                         $_SESSION['login_string'])) {
  
         $user_id = $_SESSION['user_id'];
         $login_string = $_SESSION['login_string'];
-//        $username = $_SESSION['username'];
+        $username = $_SESSION['username'];
  
         // Get the user-agent string of the user.
         $user_browser = $_SERVER['HTTP_USER_AGENT'];
