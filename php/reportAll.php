@@ -8,37 +8,16 @@ copyright: 2013 Gerko Weening
 */
 
 include_once "../inc/base.php";
+include_once "../inc/functions.php";
+include_once "../inc/queries.php";
+sec_session_start(); 
 
-//bepaal op basis van opgegeven jaar en kwartaal
-//de controleperiode die beschouwd moet worden
-if(isset($_POST['jaar'])){
-    $jaar = substr($_POST['jaar'], -2);
-    //$jaar = $_POST['jaar'];    
-    $i=$_POST['kwartaal'];
-    switch ($i) {
-        case 1:
-            $datbegin = $jaar."-01-01";
-            $datend = date("Y-m-d", strtotime($datbegin));
-            $ChkQ = 'tob.ChkQ1';
-            break;
-        case 2:
-            $datend = date("Y-m-d", strtotime($jaar."-04-01"));
-            $ChkQ = 'tob.ChkQ2';
-            break;
-        case 3:
-            $datend = date("Y-m-d", strtotime($jaar."-07-01"));
-            $ChkQ = 'tob.ChkQ3';
-            break;
-        case 4:
-            $datend = date("Y-m-d", strtotime($jaar."-10-01"));
-            $ChkQ = 'tob.ChkQ4';
-            break;
-    }
-}
+$whereTerrein = getterreinid();
 
 $query1 ="select distinct ts.Naam,tob.* ";
 $query1 .="from TblSections ts,TblObstacles tob left join TblObstacleChecks tobc on (tob.id=tobc.obstacle_id) ";
-$query1 .="where tob.Section_id = ts.Id " ;
+$query1 .="where tob.Section_id = ts.Id ";
+$query1 .="and ts.".$whereTerrein;
 $query1 .="order by ts.Naam, tob.Volgnr ";
 $STH = $db->query($query1);
 $STH->setFetchMode(PDO::FETCH_ASSOC);
