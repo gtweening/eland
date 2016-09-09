@@ -9,7 +9,7 @@ copyright: 2013 Gerko Weening
 
 include_once "../inc/base.php";
 include_once "../inc/functions.php";
-
+include_once "../inc/queries.php";
 sec_session_start();
 include_once "../common/header.php";
 include_once "../common/leftColumn.php";
@@ -55,7 +55,10 @@ if(login_check($mysqli) == true) {
                 <th ><strong>Omschrijving</strong></th>
             </tr>
             <?php
-            $STH = $db->query('SELECT * from TblCheckpoints order by Id');
+			   $whereTerrein = getterreinid();
+            $STH = $db->query('SELECT * from TblCheckpoints 
+									    where '.$whereTerrein.'
+									    order by Id');
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             while($rows=$STH->fetch()){
             ?>
@@ -93,6 +96,5 @@ U bent niet geautoriseerd voor toegang tot deze pagina. <a href="index.php">Inlo
 <?php
 }
 ?>
-
 
 
