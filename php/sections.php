@@ -9,7 +9,7 @@ copyright: 2013 Gerko Weening
 
 include_once "../inc/base.php";
 include_once "../inc/functions.php";
-
+include_once "../inc/queries.php";
 sec_session_start(); 
 include_once "../common/header.php"; 
 include_once "../common/leftColumn.php";
@@ -77,9 +77,12 @@ if(login_check($mysqli) == true) {
                 </tr>
 
                 <?php
-                $STH = $db->query('SELECT * from TblSections order by Id');
-                $STH->setFetchMode(PDO::FETCH_ASSOC);
-                while($rows=$STH->fetch()){
+				 		 $whereTerrein = getterreinid();
+		             $STH = $db->query('SELECT * from TblSections
+												  where '.$whereTerrein.'  
+												  order by Id');
+		             $STH->setFetchMode(PDO::FETCH_ASSOC);
+		             while($rows=$STH->fetch()){
                 ?>
 
                 <tr >
@@ -122,6 +125,5 @@ U bent niet geautoriseerd voor toegang tot deze pagina. <a href="../index.php">I
 <?php
 }
 ?>
-
 
 
