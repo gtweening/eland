@@ -76,7 +76,10 @@ if(login_check($mysqli) == true) {
             </tr>
 
             <?php
-            $STH1 = $db->query('SELECT * from TblMaterials order by Id');
+            $STH1 = $db->query('SELECT * 
+                                from TblMaterials 
+                                where Terrein_id = "'.$_SESSION['Terreinid'].'"
+                                order by Id');
             $STH1->setFetchMode(PDO::FETCH_ASSOC);
             while($rows=$STH1->fetch()){
             ?>
