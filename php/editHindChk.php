@@ -78,7 +78,10 @@ if(login_check($mysqli) == true) {
             </tr>
 
             <?php
-            $STH1 = $db->query('SELECT * from TblCheckpoints order by Id');
+            $STH1 = $db->query('SELECT * 
+                                from TblCheckpoints 
+                                where Terrein_id = "'.$_SESSION['Terreinid'].'"
+                                order by Id');
             $STH1->setFetchMode(PDO::FETCH_ASSOC);
             while($rows=$STH1->fetch()){
             ?>
@@ -174,4 +177,3 @@ U bent niet geautoriseerd voor toegang tot deze pagina. <a href="index.php">Inlo
 <?php
 }
 ?>
-

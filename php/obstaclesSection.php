@@ -18,12 +18,18 @@ $tbl_name="TblObstacles"; // Table name
 //determine sectionname
 if(isset($_GET['sectie'])){
     $vsectionname = $_GET['sectie'];
-    $STH = $db->query('SELECT * from TblSections where Naam ="'.$vsectionname.'"');
+    $STH = $db->query('SELECT * 
+                       from TblSections 
+                       where Naam ="'.$vsectionname.'"
+                             and Terrein_id = "'.$_SESSION['Terreinid'].'" ');
     $STH->setFetchMode(PDO::FETCH_ASSOC);
     $row=$STH->fetch();
     $vsectionid=$row['Id'];
 }else{
-    $STH = $db->query('SELECT * from TblSections where Omschr ="'.$_GET['omschr'].'"');
+    $STH = $db->query('SELECT * 
+                       from TblSections 
+                       where Omschr ="'.$_GET['omschr'].'"
+                             and Terrein_id = "'.$_SESSION['Terreinid'].'" ');
     $STH->setFetchMode(PDO::FETCH_ASSOC);
     $row=$STH->fetch();
     $vsectionname=$row['Naam'];
