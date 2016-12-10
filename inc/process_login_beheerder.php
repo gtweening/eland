@@ -12,7 +12,7 @@ if (isset($_POST['email'], $_POST['p'])) {
     if (loginbeheerder($email, $password, $mysqli) == true ) {
         // Login success 
         //check if user = administrator
-        header('Location:../beheerder.php');
+        header('Location:../php/beheerder.php');
     } else {
         // Login failed 
         header('Location:../beheerderlogin.php?error=1');
