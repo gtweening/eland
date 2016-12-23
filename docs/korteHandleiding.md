@@ -44,19 +44,19 @@ wachtwoord: Ik ben de beheerder! <br>
 <br>
 
 <h2 id="menu">Menu</h2>
-- controlepunten<br>
+- <img src="../img/controlepunten.jpeg" alt="add" height="30" width="30"> - controlepunten<br>
   Beheer een basislijst van controlepunten die je kunt toekennen aan hindernissen.
-- materialen<br>
+- <img src="../img/material.jpeg" alt="add" height="30" width="30"> - materialen<br>
   Beheer een basislijst van materialen die je kunt toekennen aan hindernissen.
-- hindernissen<br>
+- <img src="../img/obstacle.jpeg" alt="add" height="30" width="30"> - hindernissen<br>
   Beheer je hindernissen. De hindernissen worden beheert in een of meerdere secties. Voor elke hindernis kun je een foto, materialen en controlepunten toevoegen. Verder kun je per hindernis aangeven wanneer, wie, wat gecontroleerd heeft. 
-- controle agenda<br>
+- <img src="../img/calendar.jpeg" alt="add" height="30" width="30"> - controle agenda<br>
   Je kunt per hindernis aangeven hoevaak ze gecontroleerd moeten worden 1x,2x,3x of 4x per jaar.
-- overzicht te controleren<br>
+- <img src="../img/toCheck.jpeg" alt="add" height="30" width="30"> - overzicht te controleren<br>
   Maak een overzicht van de te controleren hindernissen. Dit overzicht kun je afdrukken en tijdens een controle dag meegeven aan de controleurs.
-- invoeren gecontroleerd<br>
+- <img src="../img/checklist.jpeg" alt="add" height="30" width="30"> - invoeren gecontroleerd<br>
   Na de controle kun je voor meerdere hindernissen in 1 keer de controlestatus bijwerken. Als alles goed is kun je dit in 1 keer bijwerken. Dit scheelt aanzienlijke invoertijd.
-- volledig overzicht<br>
+- <img src="../img/reportAll.jpeg" alt="add" height="30" width="30">volledig overzicht<br>
   Geeft een overzicht van alle hindernissen en controles. Deze functie is vooral bedoeld als papieren backup of archief.
 <br>
 
