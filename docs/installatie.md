@@ -23,7 +23,5 @@
   Tijdens installatie krijg je twee meldingen: succesvol verwijderen van bestaande tabellen en succesvol aanmaken van tabellen. Na installatie wordt automatisch doorverwezen naar de startpagina. Je kunt nu inloggen en starten met het bijhouden van het logboek.
 
 <br>
-Er is één gebruiker aangemaakt. Deze heeft toegang tot het logboek en beheerderlogin.<br>
-gebruikersnaam: beheerder@beheer.nl <br>
-wachtwoord: Ik ben de beheerder!
+Ga verder met het doorlezen van de <a href="korteHandleiding.md">korte handleiding</a>.
 
