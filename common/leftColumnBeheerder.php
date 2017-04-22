@@ -9,13 +9,13 @@
         </li>
         <li>
             <a href="beheerTerreinen.php" id="navTerreinen" title ="Terreinbeheer ">
-                <img src="../img/terreinen.jpg" alt="terreinen" width="35" height="35" align="middle">
+                <img src="../img/terrein.png" alt="terreinen" width="35" height="35" align="middle">
                 
             </a>
         </li>
 			<li>
             <a href="beheerGebruikersTerreinen.php" id="navGebruikersTerreinen" title ="GebruikersTerreinbeheer ">
-                <img src="../img/terreinen.jpg" alt="terreinen" width="35" height="35" align="middle">
+                <img src="../img/terreinuser.png" alt="terreinen" width="35" height="35" align="middle">
                 
             </a>
         </li>
