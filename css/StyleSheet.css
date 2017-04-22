@@ -134,15 +134,48 @@ body {
     vertical-align: top;
 	 float: left;
 }
-#footer {
-    width: 950px;
-    height: 100px;
-    clear: left;
-    text-align: center;
-    font-size: small;
-    background: graytext;
+#login {
+    background-color: white;
+    width: 320px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 20px;
+    margin: auto;
+    font: 14px arial, sans-serif;
 }
-
+.loginbutton {
+    background-color: #E0F8F7;
+    border: 1px solid gray;
+    border-radius: 3px;
+    width: 315px;
+    color: black;
+    padding: 10px 115px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.logininput{
+	 height: 25px;
+    border-radius: 3px;
+    font-size: 16px;
+    width: 315px;
+}
+#footer {
+    width: 360px;
+    font-size: 10px;
+    background: gray;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: auto;
+}
+h2 {
+    text-align: center;
+    font: 24px arial, sans-serif;
+    color: gray;
+}
 #LeftColumn {
     height: 600px;
     width: 50px;
