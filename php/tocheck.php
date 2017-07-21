@@ -1,11 +1,13 @@
-<?php>
-
+<?php
 /**
 It is assumed that an organisation plans a day to check some obstacles.
 For this day you can generate an overview of obstacles which should be checked.
 The overview is based on the quarters in which an obstacle should be checked.
 
 copyright: 2013 Gerko Weening
+
+20170705
+solved undefined index when logged out
 */
 
 include_once "../inc/base.php";
@@ -13,13 +15,14 @@ include_once "../inc/functions.php";
 
 sec_session_start(); 
 include_once "../common/header.php"; 
-include_once "../common/leftColumn.php";
-
-$tbl_name="TblObstacles"; // Table name
 
 //secure login
 if(login_check($mysqli) == true) { 
+
+include_once "../common/leftColumn.php";
+$tbl_name="TblObstacles"; // Table name
 ?>
+
 <html>
     <head>
     </head>        
@@ -72,7 +75,7 @@ if(login_check($mysqli) == true) {
 <?php
 } else { ?>
 <br>
-U bent niet geautoriseerd voor toegang tot deze pagina. <a href="index.php">Inloggen</a> alstublieft.
+U bent niet geautoriseerd voor toegang tot deze pagina. <a href="../index.php">Inloggen</a> alstublieft.
 <?php
 }
 ?>
