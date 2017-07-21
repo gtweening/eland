@@ -1,12 +1,3 @@
-<html>
-    <head>
-        <script type="text/javascript">
-            function setTerrein($user_id){
-                alert("8");
-            }
-		</script>
-	</head>
-</html>
 <?php
 include_once "constants.inc.php";
 
