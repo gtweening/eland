@@ -1,10 +1,15 @@
-<?php>
-
+<?php
 /**
 Each obstacle has checkpoints.
 Using this page you can maintain the checkpoints for the obstacle.
 
 copyright: 2013 Gerko Weening
+
+20170702
+solved undifined variable
+20170705
+solved undefined index when logged out
+
 */
 
 include_once "../inc/base.php";
@@ -12,18 +17,23 @@ include_once "../inc/functions.php";
 
 sec_session_start();
 include_once "../common/header.php"; 
+
+//secure login
+if(login_check($mysqli) == true) { 
+
 include_once "../common/leftColumn.php";
 
 $tbl_name="TblObstacles"; // Table name
 $tbl_name1="TblObstacleCheckpoints"; // Table name
-
 $vsectionname=$_GET['Sec'];
 $vhindVolgnr=$_GET['Vnr'];
 $vhindId=$_GET['Id'];
 $vimg=$_GET['Img'];
-//secure login
-if(login_check($mysqli) == true) { 
+$stmt=null;
+$STH=null;
+
 ?>
+
 <html>
     <head>
         <script type="text/JavaScript" src="../js/getObstacle.js"></script>
@@ -33,37 +43,30 @@ if(login_check($mysqli) == true) {
                 if (Materiaal!=null){
                     window.location.href = "editHindMat.php?var1=" + Materiaal + "&hmId="+id+ "&Id="+hindid+ "&Sec="+sectionname+ "&Vnr="+volgnr+ "&Img="+img;
                 }
-            }
-            
+            }       
         </script>    
     </head>
     
     <body id="sections">
     <div id="LeftColumn2a">
-        <? include "obstacleOverviewPerSection.php"; ?>
+        <?php include "obstacleOverviewPerSection.php"; ?>
     </div>
     <div id="RightColumn">
         <table display:block>
         <tr >
         <td>
             <table id="obstacleTable">
-                <tr>
-                     <td class="tableTitle2">Hindernis <?echo $vsectionname,str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT)?></td>
-                     <td> <img src="<?echo $imgPath,$vimg;?>" alt="" width="60" height="50" ></td>
-                </tr>
-                <tr>
-                    <td class="tableTitle4">Onderhouden hinderniscontrolepunten</td>
-                    <div class="cudWidget">
-                    </div>
-                </tr>
-                <tr>    
-                    <div id="widgetBar"> 
-                        <div class="cudWidget">        
-                        </div>
-                    </div>
-                </tr> 
+                <a class="tableTitle2">Hindernis <?php echo $vsectionname,str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT)?></a>
 
+                <div class="cudWidget"> 
+                   <a> <img src="<?php echo $imgPath,$vimg;?>" alt="" width="60" height="50" ></a>
+                </div>
+
+                <div id="widgetBar"> 
+                    <a class="tableTitle4">Onderhouden hinderniscontrolepunten</a>
+                </div>
             </table>
+
         <form name="form1" method="post" action="">
         <div id="RightColumnHalf">
         <table id="obstacleTableHalf">
@@ -87,8 +90,8 @@ if(login_check($mysqli) == true) {
             ?>
 
             <tr>
-                <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<? echo $rows['Id']; ?>"></td>
-                <td colspan="2" class = "white"><? echo htmlentities($rows['Omschr']); ?></td>
+                <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
+                <td colspan="2" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
             </tr>
 
             <?php
@@ -117,8 +120,8 @@ if(login_check($mysqli) == true) {
             while($rows=$STH2->fetch()){
             ?>
             <tr>
-                <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<? echo $rows['Id']; ?>"></td>
-                <td colspan ="3" class = "white"><? echo htmlentities($rows['Omschr']); ?></td>
+                <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
+                <td colspan ="3" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
             </tr>
 
             <?php
@@ -173,7 +176,7 @@ if(login_check($mysqli) == true) {
 <?php
 } else { ?>
 <br>
-U bent niet geautoriseerd voor toegang tot deze pagina. <a href="index.php">Inloggen</a> alstublieft.
+U bent niet geautoriseerd voor toegang tot deze pagina. <a href="../index.php">Inloggen</a> alstublieft.
 <?php
 }
 ?>
