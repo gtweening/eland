@@ -17,6 +17,8 @@ copyright: 2013 Gerko Weening
 include_once "../inc/base.php";
 include_once "../inc/functions.php";
 $tbl_name1="TblObstacleChecks"; // Table name
+$STH="";
+$stmt="";
 
 if(isset($_POST['addCheck'])){
     //var_dump($_POST);
@@ -40,11 +42,15 @@ if(isset($_POST['addCheck'])){
                 $stmt->execute();
             }
         }
-    }   
+    }else{
+		echo '<script> alert("Geen hindernis geselecteerd om controleresultaat aan toe te voegen!"); </script>';
+		echo "<meta http-equiv=\"refresh\" content=\"0;URL=CheckedList.php?ChkQ=".$_POST['ChkQ']."&datend=".$_POST['datend']."\">";
+	 }   
     // if successful redirect to CheckedList.php
     if($stmt){
         echo "<meta http-equiv=\"refresh\" content=\"0;URL=CheckedList.php?ChkQ=".$_POST['ChkQ']."&datend=".$_POST['datend']."\">";
     }    
+
 }else if(isset($_POST['delCheck'])){
     //var_dump($_POST);
     if(!empty($_POST['checkbox'])){
@@ -57,7 +63,10 @@ if(isset($_POST['addCheck'])){
         $query5 .= "DatCheck between '".$_POST['datend']."' and DATE_ADD('".$_POST['datend']."', INTERVAL +3 MONTH) ";
         $STH = $db->prepare($query5);
         $STH->execute();
-    }
+    }else{
+		 echo '<script> alert("Er is niets geselecteerd om te verwijderen!"); </script>';
+		 echo "<meta http-equiv=\"refresh\" content=\"0;URL=CheckedList.php?ChkQ=".$_POST['ChkQ']."&datend=".$_POST['datend']."\">";
+	 }
     // if successful redirect to delete_multiple.php
     if($STH){
         echo "<meta http-equiv=\"refresh\" content=\"0;URL=CheckedList.php?ChkQ=".$_POST['ChkQ']."&datend=".$_POST['datend']."\">";
