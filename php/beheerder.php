@@ -63,11 +63,11 @@ if(login_check($mysqli) == true) {
                     <td width="5%" class="white2">
 	                <input name="checkbox[]" type="checkbox" id="checkbox[]" 
                                value="<? echo $rows['Id']; ?>"></td>
-                    <td width="70%" class="white" "><? echo htmlentities($rows['Email']); ?></td>
-		    <td width="5%" class="white"><?if($rows['Admin']== FALSE){?>
-                            <img src="../img/nok.png" width="20" height="20"><?
+                    <td width="70%" class="white" "><?php echo htmlentities($rows['Email']); ?></td>
+		    <td width="5%" class="white"><?php if($rows['Admin']== FALSE){ ?>
+                            <img src="../img/nok.png" width="20" height="20"><?php
                          }else{?>
-                            <img src="../img/ok.jpeg" width="20" height="20"><?
+                            <img src="../img/ok.jpeg" width="20" height="20"><?php
                          }; ?></td>
                 </tr>
                 <?php

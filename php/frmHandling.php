@@ -1,3 +1,8 @@
+<?php
+include_once "../inc/base.php";
+include_once "../inc/functions.php";
+sec_session_start(); 
+?>
 <html>
     <head>
         <script type="text/javascript">
@@ -32,9 +37,6 @@
 </html>
 
 <?php
-include_once "../inc/base.php";
-include_once "../inc/functions.php";
-sec_session_start(); 
 $Terreinid = $_SESSION['Terreinid']; //sessions terreinid
 $tbl_sections="TblSections"; // Table name
 $tbl_materials="TblMaterials"; // Table name

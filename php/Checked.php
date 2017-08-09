@@ -1,10 +1,13 @@
-<?php>
-
+<?php
 /**
 After checking the obstacles you have to update the administration.
 Using this page you can set the year and quater you have checked.
 
 copyright: 2013 Gerko Weening
+
+20170705
+prevent undefined index when logged out
+
 */
 
 include_once "../inc/base.php";
@@ -12,13 +15,15 @@ include_once "../inc/functions.php";
 
 sec_session_start(); 
 include_once "../common/header.php"; 
-include_once "../common/leftColumn.php";
-
-$tbl_name="TblObstacles"; // Table name
 
 //secure login
 if(login_check($mysqli) == true) { 
+
+include_once "../common/leftColumn.php";
+$tbl_name="TblObstacles"; // Table name
+
 ?>
+
 <html>
     <head>
     </head>        
@@ -71,7 +76,7 @@ if(login_check($mysqli) == true) {
 <?php
 } else { ?>
 <br>
-U bent niet geautoriseerd voor toegang tot deze pagina. <a href="index.php">Inloggen</a> alstublieft.
+U bent niet geautoriseerd voor toegang tot deze pagina. <a href="../index.php">Inloggen</a> alstublieft.
 <?php
 }
 ?>

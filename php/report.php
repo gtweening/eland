@@ -1,10 +1,12 @@
 <?php
-
 /**
 Shows the obstacles which should be checked.
 This page can be printed (or saved as pdf).
 
 copyright: 2013 Gerko Weening
+
+20170705
+solved undefined index when logged out
 */
 
 include_once "../inc/base.php";
@@ -12,6 +14,8 @@ include_once "../inc/functions.php";
 include_once "../inc/queries.php";
 sec_session_start(); 
 
+//secure login
+if(login_check($mysqli) == true) { 
 
 //bepaal op basis van opgegeven jaar en kwartaal
 //de controleperiode die beschouwd moet worden
@@ -63,7 +67,7 @@ while($rows=$STH->fetch()){
                 <tr>
                     <th align="left">Materialen </th>
                 </tr>
-                <?
+                <?php
                 //selecteer materialen van hindernis
                 $vhindId = ($rows['Id']); 
                 $query2 = "SELECT tm.Omschr, tom.Aantal from TblObstacleMaterials tom, TblMaterials tm ";
@@ -74,7 +78,7 @@ while($rows=$STH->fetch()){
                 <tr>
                     <td class="TableText">- <?php echo ($rows2['Omschr']); ?>; <?php echo ($rows2['Aantal']); ?>  </td>
                 </tr>            
-                <?}?>
+                <?php }?>
              </table>
         </td>
         <td id="Table">
@@ -82,7 +86,7 @@ while($rows=$STH->fetch()){
                 <tr>
                     <th align="left">Controlepunten </th>    
                 </tr>  
-                <?
+                <?php
                 //selecteer controlepunten van hindernis
                 $query3 = "SELECT tc.Omschr from TblObstacleCheckpoints toc, TblCheckpoints tc ";
                 $query3 .= "where toc.Checkpoint_id = tc.Id and toc.Obstacle_id = ".$vhindId." ";
@@ -92,7 +96,7 @@ while($rows=$STH->fetch()){
                 <tr>
                     <td class="TableText">- <?php echo ($rows3['Omschr']); ?></td>
                 </tr>            
-                <?}?>
+                <?php }?>
             </table>
         </td>
     </tr>
@@ -106,7 +110,7 @@ while($rows=$STH->fetch()){
             <th width ="10%">Controleur</th>
             <th width ="42%">Opmerking</th>
         </tr>
-        <?
+        <?php
         //selecteer controles van hindernis
         $query4 = "select tob.*, tobc.DatCheck, tobc.ChkSt, tobc.CheckedBy,tobc.Note ";
         $query4 .="from TblObstacles tob left join TblObstacleChecks tobc on (tob.id=tobc.obstacle_id) ";
@@ -116,21 +120,27 @@ while($rows=$STH->fetch()){
         ?>
         <tr>
             <td class="TableText" width ="7%"><?php echo ($rows4['DatCheck'])?></td>
-            <td class="TableText" width ="5%"><?if($rows4['ChkSt']== FALSE){?>
-                      <img src="img/warning.jpeg" width="20" height="20"><?
+            <td class="TableText" width ="5%"><?php if($rows4['ChkSt']== FALSE){?>
+                      <img src="../img/warning.jpeg" width="20" height="20"><?php
                    }else{?>
-                      <img src="img/ok.jpeg" width="20" height="20"><?
+                      <img src="../img/ok.jpeg" width="20" height="20"><?php
                    }; ?></td>
             <td class="TableText" width ="12%"><?php echo ($rows4['CheckedBy'])?></td>
             <td class="TableText" width ="40%"><?php echo nl2br(($rows4['Note'])) ; ?></td>
         </tr>
-        <?}?>
+        <?php }
+	?>
     </table>
     <span style="page-break-after: always;"></span>
 </body>
 </html>
-<?
+<?php
+} //end while
+	//close connection
+	$db = null;
+} else { ?>
+<br>
+U bent niet geautoriseerd voor toegang tot deze pagina.
+<?php
 }
-//close connection
-$db = null;
 ?>

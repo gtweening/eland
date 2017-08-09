@@ -55,7 +55,7 @@ if (login_check($mysqli) == true) {
         </div>
         </div>
         <div id="footer">
-          <? include "common/footer.php"; ?>
-        </div
+          <?php include "common/footer.php"; ?>
+        </div>
     </body>
 </html>
