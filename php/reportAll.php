@@ -12,8 +12,10 @@ include_once "../inc/functions.php";
 include_once "../inc/queries.php";
 sec_session_start(); 
 
-$whereTerrein = getterreinid();
+//secure login
+if(login_check($mysqli) == true) { 
 
+$whereTerrein = getterreinid();
 $query1 ="select distinct ts.Naam,tob.* ";
 $query1 .="from TblSections ts,TblObstacles tob left join TblObstacleChecks tobc on (tob.id=tobc.obstacle_id) ";
 $query1 .="where tob.Section_id = ts.Id ";
@@ -54,7 +56,7 @@ while($rows=$STH->fetch()){
     <h2 class="h2">Hindernis: <?php echo ($rows['Naam']),($rows['Volgnr']); ?></h2>
     <a id="main">Omschrijving: <?php echo ($rows['Omschr']); ?></a>
     <h3>Foto: </h3>
-    <img src="<?echo $imgPath,($rows['ImgPath']);?>" alt="" width="250" height="160" >
+    <img src="<?php echo $imgPath,($rows['ImgPath']);?>" alt="" width="250" height="160" >
     <table >
     <tr>
         <td id="Table" width ="350" >
@@ -62,7 +64,7 @@ while($rows=$STH->fetch()){
                 <tr>
                     <th align="left">Materialen </th>
                 </tr>
-                <?
+                <?php
                 //selecteer materialen van hindernis
                 $vhindId = ($rows['Id']); 
                 $query2 = "SELECT tm.Omschr, tom.Aantal from TblObstacleMaterials tom, TblMaterials tm ";
@@ -73,7 +75,7 @@ while($rows=$STH->fetch()){
                 <tr>
                     <td class="TableText">- <?php echo ($rows2['Omschr']); ?>; <?php echo ($rows2['Aantal']); ?>  </td>
                 </tr>            
-                <?}?>
+                <?php }?>
              </table>
         </td>
         <td id="Table">
@@ -81,7 +83,7 @@ while($rows=$STH->fetch()){
                 <tr>
                     <th align="left">Controlepunten </th>    
                 </tr>  
-                <?
+                <?php
                 //selecteer controlepunten van hindernis
                 $query3 = "SELECT tc.Omschr from TblObstacleCheckpoints toc, TblCheckpoints tc ";
                 $query3 .= "where toc.Checkpoint_id = tc.Id and toc.Obstacle_id = ".$vhindId." ";
@@ -91,7 +93,7 @@ while($rows=$STH->fetch()){
                 <tr>
                     <td class="TableText">- <?php echo ($rows3['Omschr']); ?></td>
                 </tr>            
-                <?}?>
+                <?php }?>
             </table>
         </td>
     </tr>
@@ -105,7 +107,7 @@ while($rows=$STH->fetch()){
             <th width ="10%">Controleur</th>
             <th width ="42%">Opmerking</th>
         </tr>
-        <?
+        <?php
         //selecteer controles van hindernis
         $query4 = "select tob.*, tobc.DatCheck, tobc.ChkSt, tobc.CheckedBy,tobc.Note ";
         $query4 .="from TblObstacles tob left join TblObstacleChecks tobc on (tob.id=tobc.obstacle_id) ";
@@ -116,21 +118,26 @@ while($rows=$STH->fetch()){
         ?>
         <tr>
             <td class="TableText" width ="7%"><?php echo ($rows4['DatCheck']);?></td>
-            <td class="TableText" width ="5%"><?if($rows4['ChkSt']== FALSE){?>
-                      <img src="img/warning.jpeg" width="20" height="20"><?
+            <td class="TableText" width ="5%"><?php if($rows4['ChkSt']== FALSE){?>
+                      <img src="../img/warning.jpeg" width="20" height="20"><?php
                    }else{?>
-                      <img src="img/ok.jpeg" width="20" height="20"><?
+                      <img src="../img/ok.jpeg" width="20" height="20"><?php
                    }; ?></td>
             <td class="TableText" width ="12%"><?php echo ($rows4['CheckedBy'])?></td>
             <td class="TableText" width ="40%"><?php echo nl2br(($rows4['Note'])) ; ?></td>
         </tr>
-        <?}?>
+        <?php }?>
     </table>
     <footer></footer>
 </body>
 </html>
-<?
+<?php
 }
 //close connection
 $db = null;
+} else { ?>
+<br>
+U bent niet geautoriseerd voor toegang tot deze pagina. 
+<?php
+}
 ?>

@@ -87,9 +87,9 @@ if(login_check($mysqli) == true) {
                 <tr >
                     <td width="5%" class="white2">
 	                <input name="checkbox[]" type="checkbox" id="checkbox[]" 
-                               value="<? echo $rows['Id']; ?>"></td>
-                    <td width="50%" class="white" ><? echo htmlentities($rows['Email']); ?></td>
-							<td class="white"><? echo htmlentities($rows['Terreinnaam']); ?> </td>
+                               value="<?php echo $rows['Id']; ?>"></td>
+                    <td width="50%" class="white" ><?php echo htmlentities($rows['Email']); ?></td>
+							<td class="white"><?php echo htmlentities($rows['Terreinnaam']); ?> </td>
                 </tr>
 
                 <?php

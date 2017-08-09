@@ -15,7 +15,7 @@
 <?php
 include_once "../inc/base.php";
 $tbl_obstacles="TblObstacles"; // Table name
-
+$STH="";
 $vsectionid = $_POST['sectionId'];
 $vsectionname = $_POST['sectionName'];
 
@@ -32,18 +32,36 @@ if(isset($_POST['delObstacle'])){
         $ids = implode("','", $ids);
         $STH = $db->prepare("DELETE FROM $tbl_obstacles WHERE Id IN ('".$ids."')");
         $STH->execute();
-    }
+    }else{
+		echo '<script> alert("Er is niets geselecteerd om te verwijderen!"); </script>';
+		echo "<meta http-equiv=\"refresh\" content=\"0;URL=obstaclesSection.php?sectie=".$vsectionname."\">";
+	 }
     // if successful redirect to delete_multiple.php
     if($STH){
         echo "<meta http-equiv=\"refresh\" content=\"0;URL=obstaclesSection.php?sectie=".$vsectionname."\">";
     }
 }else if(isset($_POST['addObstacle'])){      
-    if(!empty($_POST['volgnr'])){
-        
-        $STH = $db->prepare("INSERT INTO $tbl_obstacles (Section_id, Volgnr, Omschr) VALUES
-        ('$vsectionid', '$_POST[volgnr]' , '$_POST[hindernisOmschr]')");
+    if(is_numeric($_POST['volgnr'])){
+        //check if volgnr already exists
+		  $STH1 = $db->query('select distinct Volgnr from TblObstacles');        
+		  $STH1->setFetchMode(PDO::FETCH_ASSOC);
+		  while($rows=$STH1->fetch()){
+            if($_POST['volgnr'] == $rows['Volgnr']){
+					echo '<script> alert("Er is al een hindernis met dit volgnummer!"); </script>';
+					echo "<meta http-equiv=\"refresh\" content=\"0;URL=obstaclesSection.php?sectie=".$vsectionname."\">";
+				   exit;
+				}
+        }
+		  //Volgnr does not exist => insert
+        $STH = $db->prepare("INSERT INTO $tbl_obstacles (Section_id, Volgnr, MaxH, DatCreate, 
+                             Omschr) VALUES
+        ('$vsectionid', '$_POST[volgnr]' , '$_POST[maxH]','$_POST[datCreate]',
+         '$_POST[hindernisOmschr]')");
         $STH->execute();
-    }
+    }else{
+		echo '<script> alert("De hindernis heeft geen nummeriek volgnummer!"); </script>';
+		echo "<meta http-equiv=\"refresh\" content=\"0;URL=obstaclesSection.php?sectie=".$vsectionname."\">";
+	 }
     // if successful redirect to delete_multiple.php
     if($STH){
         echo "<meta http-equiv=\"refresh\" content=\"0;URL=obstaclesSection.php?sectie=".$vsectionname."\">";
@@ -61,6 +79,9 @@ if(isset($_POST['delObstacle'])){
        $obstacleVolgnr=$row['Volgnr'];
        //call jscript
        echo '<script> editObstacleFunction("'.$obstacleOmschr.'","'.$obstacleVolgnr.'", "'.$ids.'", "'.$vsectionname.'"); </script>';   
-    }
+    }else{
+		echo '<script> alert("Er is niets geselecteerd om te bewerken!"); </script>';
+		echo "<meta http-equiv=\"refresh\" content=\"0;URL=obstaclesSection.php?sectie=".$vsectionname."\">";
+	 }
 }
 ?>

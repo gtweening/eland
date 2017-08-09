@@ -1,24 +1,30 @@
-<?php>
-
+<?php
 /**
 Each obstacle has to be checked once or several times each year.
 Using this page you can maintain the quarters in which an obstacle should be checked.
 
 copyright: 2013 Gerko Weening
+
+20170705
+solved undefined index when logged out
+
 */
 
 include_once "../inc/base.php";
 include_once "../inc/functions.php";
 include_once "../inc/queries.php";
+
 sec_session_start(); 
 include_once "../common/header.php"; 
-include_once "../common/leftColumn.php";
-
-$tbl_name="TblObstacles"; // Table name
 
 //secure login
 if(login_check($mysqli) == true) { 
+
+include_once "../common/leftColumn.php";
+$tbl_name="TblObstacles"; // Table name
+
 ?>
+
 <html>
     <head>
     </head>        
@@ -52,25 +58,25 @@ if(login_check($mysqli) == true) {
                 </tr>
 
                 <?php
-					 $whereTerrein = getterreinid();
+		$whereTerrein = getterreinid();
                 $STH = $db->query('select tos.*, tss.naam 
-											  from TblObstacles as tos, TblSections as tss 
-											  where tos.section_id = tss.id 
-													  and tss.'.$whereTerrein.' 
-											  order by naam,Volgnr');
+                                    from TblObstacles as tos, TblSections as tss 
+                                    where tos.section_id = tss.id 
+                                                    and tss.'.$whereTerrein.' 
+                                    order by naam,Volgnr');
                 $STH->setFetchMode(PDO::FETCH_ASSOC);
                 while($rows=$STH->fetch()){
                 ?>
 
                 <tr>
-                    <td width="15%" class = "white"><? echo htmlentities($rows['naam']),htmlentities($rows['Volgnr']); ?>
+                    <td width="15%" class = "white"><?php echo htmlentities($rows['naam']),htmlentities($rows['Volgnr']); ?>
                         <span class="white-text" style="margin-left: 1em;">
-                        <img src="<?echo $imgPath,$rows['ImgPath'];?>" alt="" width="55" height="38" ></td>
-                    <td width="30%" class = "white"><? echo htmlentities($rows['Omschr']); ?></td>
-                    <td width="15%" class="white"><input name="checkQ1[]" type="checkbox" id="checkbox[]" value="<? echo $rows['Id']; ?>" <?php echo $rows["ChkQ1"] ? 'checked="checked"' : ''; ?>></td>
-                    <td width="15%" class="white"><input name="checkQ2[]" type="checkbox" id="checkbox[]" value="<? echo $rows['Id']; ?>" <?php echo $rows["ChkQ2"] ? 'checked="checked"' : ''; ?>></td>
-                    <td width="15%" class="white"><input name="checkQ3[]" type="checkbox" id="checkbox[]" value="<? echo $rows['Id']; ?>" <?php echo $rows["ChkQ3"] ? 'checked="checked"' : ''; ?>></td>
-                    <td width="15%" class="white"><input name="checkQ4[]" type="checkbox" id="checkbox[]" value="<? echo $rows['Id']; ?>" <?php echo $rows["ChkQ4"] ? 'checked="checked"' : ''; ?>></td>
+                        <img src="<?php echo $imgPath,$rows['ImgPath'];?>" alt="" width="55" height="38" ></td>
+                    <td width="30%" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+                    <td width="15%" class="white"><input name="checkQ1[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>" <?php echo $rows["ChkQ1"] ? 'checked="checked"' : ''; ?>></td>
+                    <td width="15%" class="white"><input name="checkQ2[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>" <?php echo $rows["ChkQ2"] ? 'checked="checked"' : ''; ?>></td>
+                    <td width="15%" class="white"><input name="checkQ3[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>" <?php echo $rows["ChkQ3"] ? 'checked="checked"' : ''; ?>></td>
+                    <td width="15%" class="white"><input name="checkQ4[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>" <?php echo $rows["ChkQ4"] ? 'checked="checked"' : ''; ?>></td>
                 </tr>
 
                 <?php
@@ -150,7 +156,7 @@ if(login_check($mysqli) == true) {
 <?php
 } else { ?>
 <br>
-U bent niet geautoriseerd voor toegang tot deze pagina. <a href="index.php">Inloggen</a> alstublieft.
+U bent niet geautoriseerd voor toegang tot deze pagina. <a href="../index.php">Inloggen</a> alstublieft.
 <?php
 }
 ?>

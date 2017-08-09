@@ -4,20 +4,24 @@
 maintenance page
 
 copyright: 2013 Gerko Weening
+
+20170705
+solved undefined index when logged out
+
 */
 
 include_once "../inc/base.php";
 include_once "../inc/functions.php";
+
 sec_session_start(); 
 include_once "../common/header.php"; 
-
-
-$userid=$_GET['Id'];
 
 //secure login
 if(login_check($mysqli) == true) { 
 
+$userid=$_GET['Id'];
 ?>
+
 <html>
     <head>
         <script type="text/JavaScript" src="../js/sha512.js"></script> 
@@ -91,6 +95,5 @@ U bent niet geautoriseerd voor toegang tot deze pagina. <a href="../index.php">I
 <?php
 }
 ?>
-
 
 

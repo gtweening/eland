@@ -1,38 +1,48 @@
 <?php
-
 /**
 Once the obstacle are checked the adminstration should be updated.
 Based on the selected year and quarte you get a list of obstacles which should be checked.
 You can maintain the check results.
 
 copyright: 2013 Gerko Weening
-*/
 
+20170702
+improved view of list
+20170705
+prevent undefined index when logged out
+
+*/
 
 include_once "../inc/base.php";
 include_once "../inc/functions.php";
 include_once "../inc/queries.php";
+
 sec_session_start(); 
 include_once "../common/header.php"; 
-include_once "../common/leftColumn.php";
-
-$tbl_name1="TblObstacleChecks"; // Table name
 
 //secure login
 if(login_check($mysqli) == true) { 
-    
+
+include_once "../common/leftColumn.php";
+$tbl_name1="TblObstacleChecks"; // Table name
+$ChkQ = "";
+$datend = "";
+
 //bepaal op basis van opgegeven jaar en kwartaal
 //de controleperiode die beschouwd moet worden
 if(isset($_GET['ChkQ'])){
     $ChkQ=$_GET['ChkQ'];
     $datend=$_GET['datend'];
+}else{
+    $checkperiod = getcheckperiod($_POST['jaar'], $_POST['kwartaal']);
+    $datend = $checkperiod[1];
+    $ChkQ=$checkperiod[0];
 }
-$checkperiod = getcheckperiod($_POST['jaar'], $_POST['kwartaal']);
-$datend = $checkperiod[1];
 //selecteer items te controleren uit gekozen kwartaal;
 //selecteer items gecontroleerd uit voorgaande kwartalen die niet OK zijn.
 //selecteer enkel hindernis; overige info via aparte queries ophalen
-$qry1 = getviewtobechecked($checkperiod[0],$datend);
+//$qry1 = getviewtobechecked($checkperiod[0],$datend);
+$qry1 = getviewtobechecked($ChkQ,$datend);
 
 ?>
 <html>
@@ -41,6 +51,7 @@ $qry1 = getviewtobechecked($checkperiod[0],$datend);
             
         </script>
     </head>
+
     <body id="checked">
         <div id="LeftColumn2">
             
@@ -58,13 +69,13 @@ $qry1 = getviewtobechecked($checkperiod[0],$datend);
                     </button>
                 </div>
                 <div id="widgetBar">
-                    <input type="date" class="inputText" name="cdatum" maxlength="10" size="10"
+                    <input type="date" class="inputText" name="cdatum" maxlength="10" size="8"
                            value="<?php echo date('Y-m-d'); ?>">
                     <input type="checkbox" class="inputText" name="cstatus" >
-                    <input type="text" class="inputText" name="ccontroleur" maxlength="15" size="15">
+                    <input type="text" class="inputText" name="ccontroleur" maxlength="10" size="12" value="controleur">
                     <input type="hidden" name="ChkQ" value="<?php echo $ChkQ;?>">
                     <input type="hidden" name="datend" value="<?php echo $datend;?>">
-                    <textarea rows="2" cols="32" name="cnote" >
+                    <textarea rows="1.7" cols="27" name="cnote">
                     </textarea>
                     <div class="cudWidget">
                         <button class="submitbtn" type="submit" name="addCheck" float="right">
@@ -94,27 +105,32 @@ $qry1 = getviewtobechecked($checkperiod[0],$datend);
                     
                 ?>
                 <tr >
-                    <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<? echo $rows['Id']; ?>"></td>
-                    <td width="15%" class = "white" ><? echo htmlentities($rows['Naam']),htmlentities($rows['Volgnr']); ?>
+                    <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
+                    <td width="15%" class = "white" ><?php echo htmlentities($rows['Naam']),htmlentities($rows['Volgnr']); ?>
                         <span class="white-text" style="margin-left: 1em;">
-                        <img src="<?echo $imgPath,$rows['ImgPath'];?>" alt="" width="55" height="38" ></td>
-                    <td  width="30%" class = "white" ><? echo htmlentities($rows['Omschr']); ?></td>
+                        <img src="<?php echo $imgPath,$rows['ImgPath'];?>" alt="" width="55" height="38" ></td>
+                    <td  width="30%" class = "white" ><?php echo htmlentities($rows['Omschr']); ?></td>
                     <?php
                     $STH4 = $db->query($query4);
+						  $i=1;
                     while($rows4=$STH4->fetch()){
+                        if($i>1){
+                               echo "<td></td><td></td><td></td>";
+                        }
                     ?>
-                
-                    <td width="10%" class = "white"><? echo htmlentities($rows4['DatCheck']); ?></td>
-                    <td width="5%" class = "white"><?if($rows4['ChkSt']== FALSE){?>
-                            <img src="../img/warning.jpeg" width="20" height="20"><?
+
+                    <td width="10%" class = "white"><?php echo htmlentities($rows4['DatCheck']); ?></td>
+                    <td width="5%" class = "white"><?php if($rows4['ChkSt']== FALSE){?>
+                            <img src="../img/warning.jpeg" width="20" height="20"><?php
                          }else{?>
-                            <img src="../img/ok.jpeg" width="20" height="20"><?
+                            <img src="../img/ok.jpeg" width="20" height="20"><?php
                          }; ?></td>
-                    <td width="15%" class = "white"><? echo htmlentities($rows4['CheckedBy']); ?></td>
-                    <td width="20%" class = "white"><? echo htmlentities($rows4['Note']); ?></td>
+                    <td width="15%" class = "white"><?php echo htmlentities($rows4['CheckedBy']); ?></td>
+                    <td width="20%" class = "white"><?php echo htmlentities($rows4['Note']); ?></td>
                 </tr>
 
                 <?php
+                    $i=$i+1;
                 } //rows4
                 } //rows
                 
@@ -133,7 +149,7 @@ $qry1 = getviewtobechecked($checkperiod[0],$datend);
 <?php
 } else { ?>
 <br>
-U bent niet geautoriseerd voor toegang tot deze pagina. <a href="index.php">Inloggen</a> alstublieft.
+U bent niet geautoriseerd voor toegang tot deze pagina. <a href="../index.php">Inloggen</a> alstublieft.
 <?php
 }
 ?>

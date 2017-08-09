@@ -1,9 +1,11 @@
-<?php>
-
+<?php
 /**
 Shows the details of the selected obstacle.
 
 copyright: 2013 Gerko Weening
+
+20170705
+solved undefined index when logged out
 */
 
 include_once "../inc/base.php";
@@ -11,10 +13,12 @@ include_once "../inc/functions.php";
 
 sec_session_start(); 
 include_once "../common/header.php"; 
+
+//secure login
+if(login_check($mysqli) == true) { 
+
 include_once "../common/leftColumn.php";
-
 $tbl_name="TblObstacles"; // Table name
-
 $vhindId=$_GET['Id'];
 $vsectionname=$_GET['Sec'];
 $vhindVolgnr=$_GET['Vnr'];
@@ -25,22 +29,21 @@ $row=$STH->fetch();
 $vhindVolgnr=str_pad($row['Volgnr'],2,'0', STR_PAD_LEFT);
 $vhindOmschr=$row['Omschr'];
 $vimg=$row['ImgPath'];
-//secure login
-if(login_check($mysqli) == true) { 
 ?>
+
 <html>
     <head>
         <script type="text/JavaScript" src="../js/getObstacle.js"></script>
     </head>
     <body id="sections">
         <div id="LeftColumn2a">
-                 <? include "obstacleOverviewPerSection.php"; ?>
+              <?php include "obstacleOverviewPerSection.php"; ?>
         </div>
 
         <div id="RightColumn">
         <table id="obstacleTable">
      
-                <a class="tableTitle2">Hindernis <?echo $vsectionname,str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT)?></a>
+                <a class="tableTitle2">Hindernis <?php echo $vsectionname,str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT)?></a>
                 <div class="cudWidget">
                 </div>
            
@@ -48,25 +51,25 @@ if(login_check($mysqli) == true) {
                 <div id="widgetBar">
                     <ul class="basictab">
                         <li class="selected"><a href="hindernis.php">Hindernisdetails</a></li>
-                        <li><a href="hindernisControles.php?hId=<?echo $vhindId;?>&Sec=<?echo $vsectionname;?>&Vnr=<?echo $vhindVolgnr;?>&Img=<?echo $vimg;?>">Hindernis controles</a></li>
+                        <li><a href="hindernisControles.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernis controles</a></li>
                     </ul>
                 </div>
    
             <tr valign="top">
                 <td class="hwhite" width ="50%">
                     <br><br>
-                    <label>Sectie:</label> <?echo $vsectionname; ?><br>
-                    <label>Volgnummer:</label> <?echo str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT);?> <br><br>
-                    <label>Omschrijving:</label><br> <? echo $vhindOmschr;?><br><br>
+                    <label>Sectie:</label> <?php echo $vsectionname; ?><br>
+                    <label>Volgnummer:</label> <?php echo str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT);?> <br><br>
+                    <label>Omschrijving:</label><br> <?php  echo $vhindOmschr;?><br><br>
                     Hindernis controleren in:<br>
-                    <? if($row['ChkQ1']== True){?> Kwartaal 1 <?}?>
-                    <? if($row['ChkQ2']== True){?> Kwartaal 2 <?}?>
-                    <? if($row['ChkQ3']== True){?> Kwartaal 3 <?}?>
-                    <? if($row['ChkQ4']== True){?> Kwartaal 4 <?}?>
+                    <?php if($row['ChkQ1']== True){?> Kwartaal 1 <?php }?>
+                    <?php if($row['ChkQ2']== True){?> Kwartaal 2 <?php }?>
+                    <?php if($row['ChkQ3']== True){?> Kwartaal 3 <?php }?>
+                    <?php if($row['ChkQ4']== True){?> Kwartaal 4 <?php }?>
                 </td>
                 <td class="hwhite">
                     <br><br>
-                    <img src="<?echo $imgPath,$vimg;?>" alt="" width="300" height="200" >
+                    <img src="<?php echo $imgPath,$vimg;?>" alt="" width="300" height="200" >
                     <br><br>
                 </td>
             </tr>
@@ -104,8 +107,8 @@ if(login_check($mysqli) == true) {
             while($rows=$STH->fetch()){
             ?>
             <tr>
-                <td class = "white"><? echo htmlentities($rows['Omschr']); ?></td>
-                <td class = "white"><? echo htmlentities($rows['Aantal']); ?></td>
+                <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+                <td class = "white"><?php echo htmlentities($rows['Aantal']); ?></td>
             </tr>
 
             <?php
@@ -133,7 +136,7 @@ if(login_check($mysqli) == true) {
             while($rows=$STH->fetch()){
             ?>
             <tr>
-                <td colspan="2" class = "white"><? echo htmlentities($rows['Omschr']); ?></td>
+                <td colspan="2" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
             </tr>
 
             <?php
@@ -159,7 +162,7 @@ if(login_check($mysqli) == true) {
 <?php
 } else { ?>
 <br>
-U bent niet geautoriseerd voor toegang tot deze pagina. <a href="index.php">Inloggen</a> alstublieft.
+U bent niet geautoriseerd voor toegang tot deze pagina. <a href="../index.php">Inloggen</a> alstublieft.
 <?php
 }
 ?>

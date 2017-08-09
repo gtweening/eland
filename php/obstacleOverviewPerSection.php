@@ -22,8 +22,8 @@ copyright: 2013 Gerko Weening
         while($rows=$STH5->fetch()){
         ?>
             <tr>
-                <td width="15%" class = "white2"><? echo str_pad(htmlentities($rows['Volgnr']),2,'0',STR_PAD_LEFT); ?></td>
-                <td class = "white" onclick="getObstacle(event,'<?echo $rows['Id'];?>','<?echo $vsectionname;?>','<?echo $rows['Volgnr'];?>')"><? echo htmlentities($rows['Omschr']); ?></td>
+                <td width="15%" class = "white2"><?php echo str_pad(htmlentities($rows['Volgnr']),2,'0',STR_PAD_LEFT); ?></td>
+                <td class = "white" onclick="getObstacle(event,'<?php echo $rows['Id'];?>','<?php echo $vsectionname;?>','<?php echo $rows['Volgnr'];?>')"><?php echo htmlentities($rows['Omschr']); ?></td>
             </tr>
             <?php
         }
@@ -32,5 +32,4 @@ copyright: 2013 Gerko Weening
     
 </html>
             
-
 
