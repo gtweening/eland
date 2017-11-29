@@ -8,6 +8,8 @@ copyright: 2013 Gerko Weening
 inproved view list. changed frmHandling. added form validation.
 20170705
 solved undefined index when logged out
+20171129
+synchronised prod with master
 
 */
 
@@ -127,8 +129,9 @@ $vimg=$row['ImgPath'];
       <?php
 
       $STH = $db->query('Select * from '.$tbl_name1.' where Obstacle_id = '.$vhindId.' ');
-      //$STH->setFetchMode(PDO::FETCH_ASSOC);
-      while($rows=$STH->fetch(PDO::FETCH_ASSOC)){
+      $STH->setFetchMode(PDO::FETCH_ASSOC);
+      //while($rows=$STH->fetch(PDO::FETCH_ASSOC)){
+      while($rows=$STH->fetch()){
       ?>
 
       <tr>
