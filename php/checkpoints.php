@@ -87,7 +87,7 @@ $Terreinid = $_SESSION['Terreinid']; //sessions terreinid
             while($rows=$STH->fetch()){
             ?>
             <tr>
-                <td width="5%" class="white2"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<? echo $rows['Id']; ?>"></td>
+                <td width="5%" class="white2"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
                 <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
             </tr>
             <?php
@@ -156,6 +156,8 @@ $Terreinid = $_SESSION['Terreinid']; //sessions terreinid
                    $STH->setFetchMode(PDO::FETCH_ASSOC);
                    $row=$STH->fetch();
                    $value=$row['Omschr'];
+                   echo $ids."<br>";
+                   echo $_POST['CheckPoint'];
                    //call jscript
                    echo '<script> editChkPointFunction("'.$value.'", "'.$ids.'"); </script>';   
                 }else{

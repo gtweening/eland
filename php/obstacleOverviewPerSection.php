@@ -3,9 +3,13 @@
 shows overview of obstacles of selected section
 
 copyright: 2013 Gerko Weening
+20171011
+solved issue with php short code
+solved issue showing obstacles of section
+
 */-->
 
-    <a class="tableTitle3">Sectie <?echo $vsectionname?></a>
+    <a class="tableTitle3">Sectie <?php echo $vsectionname?></a>
         <div class="cudWidget">   
         </div>
     <table id="obstacleTableQuarter">
@@ -15,7 +19,12 @@ copyright: 2013 Gerko Weening
         <?php
         //hindernis ophalen
         $query5 =  "Select * from $tbl_name ";
-        $query5 .= "where section_id = (select Id from TblSections where Naam = '$vsectionname') ";
+        //$query5 .= "where section_id = (select Id from TblSections where Naam = '$vsectionname') ";
+        $query5 .= "where section_id = (select Id 
+                                        from TblSections 
+                                        where Naam = '$vsectionname' 
+                                              and Terrein_id = '".$_SESSION['Terreinid']."' ) ";
+        
         $query5 .= "order by Volgnr ";
         $STH5 = $db->query($query5);
         $STH5->setFetchMode(PDO::FETCH_ASSOC);
@@ -31,5 +40,4 @@ copyright: 2013 Gerko Weening
     </table>
     
 </html>
-            
 
