@@ -156,8 +156,8 @@ $Terreinid = $_SESSION['Terreinid']; //sessions terreinid
                    $STH->setFetchMode(PDO::FETCH_ASSOC);
                    $row=$STH->fetch();
                    $value=$row['Omschr'];
-                   echo $ids."<br>";
-                   echo $_POST['CheckPoint'];
+                   //echo $ids."<br>";
+                   //echo $_POST['CheckPoint'];
                    //call jscript
                    echo '<script> editChkPointFunction("'.$value.'", "'.$ids.'"); </script>';   
                 }else{
