@@ -33,7 +33,7 @@ try {
         
     $sqlTblObstacles_alter1 = "alter table TblObstacles
                             add MaxH decimal(2,1),
-                            add DatCreate date 
+                            add DatCreate date,  
                             add IndSecure int(1) ";
     
     $sqlTblMaterialTypes = "CREATE TABLE `TblMaterialTypes` (
