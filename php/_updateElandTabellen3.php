@@ -29,7 +29,9 @@ try {
     // maakt het mogelijk pc lid rapportage gemaakt kan worden
     
     $sqlTblMaterials_alter3 = "alter table TblMaterials
-                           add MaterialType_id int(11) ";
+                           add MaterialType_id int(11),
+                           add IndSecureRope char(1), 
+                           add IndMainRope char(1) ";
         
     $sqlTblObstacles_alter1 = "alter table TblObstacles
                             add MaxH decimal(2,1),
