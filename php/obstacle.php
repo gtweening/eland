@@ -28,7 +28,19 @@ $STH->setFetchMode(PDO::FETCH_ASSOC);
 $row=$STH->fetch();
 $vhindVolgnr=str_pad($row['Volgnr'],2,'0', STR_PAD_LEFT);
 $vhindOmschr=$row['Omschr'];
+$vhindDat=$row['DatCreate'];
+$vhindH=$row['MaxH'];
+$vhindSec=$row['IndSecure'];
+if(empty($vhindSec)){
+    $vhindSec=0;
+};
 $vimg=$row['ImgPath'];
+$optObsSec = array("onbekend",
+    "Door SBN goedgekeurd materiaal",
+    "Taak-Risico-Analyse",
+    "Constructieberekening",
+    "Labels" );
+
 ?>
 
 <html>
@@ -59,7 +71,10 @@ $vimg=$row['ImgPath'];
                 <td class="hwhite" width ="50%">
                     <br><br>
                     <label>Sectie:</label> <?php echo $vsectionname; ?><br>
-                    <label>Volgnummer:</label> <?php echo str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT);?> <br><br>
+                    <label>Volgnummer:</label> <?php echo str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT);?> <br>
+                    <label>Gebouwd op:</label> <?php echo $vhindDat; ?><br>
+                    <label>Hoogte:</label> <?php echo $vhindH; ?>m<br>
+                    <label>Veilig door:</label> <?php echo $optObsSec[$vhindSec]; ?><br>
                     <label>Omschrijving:</label><br> <?php  echo $vhindOmschr;?><br><br>
                     Hindernis controleren in:<br>
                     <?php if($row['ChkQ1']== True){?> Kwartaal 1 <?php }?>

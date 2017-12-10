@@ -25,6 +25,13 @@ $tbl_name="TblObstacles"; // Table name
 $vsectionid="";
 $vsectionname="";
 $vsectionomschr="";
+//obstacle security
+$optObsSec = array("onbekend",
+                   "Door SBN goedgekeurd materiaal",
+                   "Taak-Risico-Analyse",
+                   "Constructieberekening",
+                   "Labels" );
+
 //determine sectionname
 if(isset($_GET['sectie'])){
     $vsectionname = $_GET['sectie'];
@@ -94,21 +101,37 @@ if(isset($_GET['sectie'])){
                         </button>
                     </div>
 
-                    <div id="widgetBar">
+                    <div id="widgetBar3x">
                         <input type="hidden" name="sectionId" value="<?php echo $vsectionid;?>">
+                        <label>Volgnr.</label>
                         <input type="text" class="inputText" name="volgnr" maxlength="5" size="5">
-                        <input type="text" class="inputText" name="hindernisOmschr" maxlength="32" size="32">
+                        Gebouwd op <input type="date"  name="datcreate" maxlength="5" size="5">
+                        Hoogte <input type="text" name="maxh" maxlength="2" size="2">
+                        <br>
+                        <label>Omschrijving</label>
+                        <input type="text" class="inputText" name="hindernisOmschr" maxlength="32" size="38">
+                        <br>
                         <div class="cudWidget">
                             <button type="submit" name="addObstacle" float="right">
                                 <img src="../img/add.jpeg" width="35" height="35">
                             </button>
                         </div>
+                        <br>
+                        Veiligheid gewaarborgd door:
+                        <select name="obsSec">
+                            <?php
+                            foreach($optObsSec as $key => $value):
+                                echo '<option value="'.$key.'">'.$value.'</option>';
+                            endforeach;
+                            ?>
+                        </select>
                     </div>
-
-
+                    
                 <tr class="theader">
                     <th width="5%" ></th>
                     <th width="10%"><strong>Volgnr</strong></th>
+                    <th width="15%"><strong>Datum</strong></th>
+                    <th width="5%"><strong>H</strong></th>
                     <th ><strong>Omschrijving</strong></th>
                 </tr>
 
@@ -118,7 +141,12 @@ if(isset($_GET['sectie'])){
                                             where Naam = "'.$vsectionname .'" 
                                               and Terrein_id = "'.$_SESSION['Terreinid'].'") ';
 
-                $STH = $db->query('Select * from '.$tbl_name.' where section_id = (select Id from TblSections where Naam = "'.$vsectionname .'" and Terrein_id = "'.$_SESSION['Terreinid'].'") order by Volgnr');
+                $STH = $db->query('Select * from '.$tbl_name.' 
+                                   where section_id = (select Id 
+                                                       from TblSections 
+                                                       where Naam = "'.$vsectionname .'" 
+                                                         and Terrein_id = "'.$_SESSION['Terreinid'].'") 
+                                                       order by Volgnr');
                 $STH->setFetchMode(PDO::FETCH_ASSOC);
                 while($rows=$STH->fetch()){
                 ?>
@@ -126,6 +154,8 @@ if(isset($_GET['sectie'])){
                 <tr>
                     <td width="5%" class="white2"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
                     <td class = "white2"><?php echo str_pad(htmlentities($rows['Volgnr']),2,'0',STR_PAD_LEFT); ?></td>
+                    <td class = "white2"><?php echo str_pad(htmlentities($rows['DatCreate']),2,'0',STR_PAD_LEFT); ?></td>
+                    <td class = "white2"><?php echo str_pad(htmlentities($rows['MaxH']),2,'0',STR_PAD_LEFT); ?></td>
                     <td class = "white" onclick="FunOmschr(event,'<?php echo $rows['Id'];?>','<?php echo $vsectionname;?>','<?php echo $rows['Volgnr'];?>')"><?php echo htmlentities($rows['Omschr']); ?></td>
                 </tr>
 
@@ -182,9 +212,9 @@ if(isset($_GET['sectie'])){
 									}
 							  }
 							  //Volgnr does not exist => insert
-							  $STH = $db->prepare("INSERT INTO $tbl_name (Section_id, Volgnr, 
-										              Omschr) VALUES 
-							  ('$vsectionid', '$_POST[volgnr]', '$_POST[hindernisOmschr]')");
+							  $STH = $db->prepare("INSERT INTO $tbl_name (Section_id, Volgnr, Omschr, MaxH, DatCreate, IndSecure) 
+                                                   VALUES ('$vsectionid', '$_POST[volgnr]', '$_POST[hindernisOmschr]', 
+                                                           '$_POST[maxh]', '$_POST[datcreate]', '$_POST[obsSec]' )");
 							  $STH->execute();
 						 }else{
 							echo '<script> alert("De hindernis heeft geen nummeriek volgnummer!"); </script>';
