@@ -248,6 +248,14 @@ h2 {
     border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
+#widgetBartab {
+    height: 50px;
+    width: 700px;
+    float: left;
+    background: white;    
+    border-top: solid 1px black;
+    border-bottom: solid 2px #58D3F7;
+}
 #widgetBar2x {
     height: 100px;
     width: 700px;
@@ -365,7 +373,7 @@ h2 {
     color: #2d2b2b;
 }
 .basictab li a:hover{
-    background-color: #CEF6F5;
+    background-color: #e6e6e6;
     color: black;
 }
 .basictab li.selected a{ /*selected tab effect*/
@@ -380,6 +388,10 @@ label{
     clear: left;
     width: 95px;
     text-align: left;
+    color: #595959;
+}
+lblgrey{
+	color: #595959;
 }
 .chkbox{
 	width:250px;

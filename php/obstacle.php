@@ -60,7 +60,7 @@ $optObsSec = array("onbekend",
                 </div>
            
            
-                <div id="widgetBar">
+                <div id="widgetBartab">
                     <ul class="basictab">
                         <li class="selected"><a href="hindernis.php">Hindernisdetails</a></li>
                         <li><a href="hindernisControles.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernis controles</a></li>
@@ -76,7 +76,7 @@ $optObsSec = array("onbekend",
                     <label>Hoogte:</label> <?php echo $vhindH; ?>m<br>
                     <label>Veilig door:</label> <?php echo $optObsSec[$vhindSec]; ?><br>
                     <label>Omschrijving:</label><br> <?php  echo $vhindOmschr;?><br><br>
-                    Hindernis controleren in:<br>
+                    <lblgrey>Hindernis controleren in:</lblgrey><br>
                     <?php if($row['ChkQ1']== True){?> Kwartaal 1 <?php }?>
                     <?php if($row['ChkQ2']== True){?> Kwartaal 2 <?php }?>
                     <?php if($row['ChkQ3']== True){?> Kwartaal 3 <?php }?>

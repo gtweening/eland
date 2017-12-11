@@ -97,8 +97,10 @@ if(isset($_GET['sectie'])){
                         <input type="hidden" name="sectionId" value="<?php echo $vsectionid;?>">
                         <label>Volgnr.</label>
                         <input type="text" class="inputText" name="volgnr" maxlength="5" size="5">
-                        Gebouwd op <input type="date"  name="datcreate" maxlength="5" size="5">
-                        Hoogte <input type="text" name="maxh" maxlength="2" size="2">
+                        <lblgrey>Gebouwd op</lblgrey>
+                        <input type="date"  name="datcreate" maxlength="5" size="5">
+                        <lblgrey>Hoogte</lblgrey> 
+                        <input type="text" name="maxh" maxlength="2" size="2">
                         <br>
                         <label>Omschrijving</label>
                         <input type="text" class="inputText" name="hindernisOmschr" maxlength="32" size="38">
@@ -109,7 +111,7 @@ if(isset($_GET['sectie'])){
                             </button>
                         </div>
                         <br>
-                        Veiligheid gewaarborgd door:
+                        <lblgrey>Veiligheid gewaarborgd door:</lblgrey>
                         <select name="obsSec">
                             <?php
                             foreach($optObsSec as $key => $value):

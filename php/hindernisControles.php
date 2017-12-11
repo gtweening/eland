@@ -77,7 +77,7 @@ $vimg=$row['ImgPath'];
           <div class="cudWidget">
           </div>
 
-          <div id="widgetBar">
+          <div id="widgetBartab">
               <ul class="basictab">
                   <li ><a href="obstacle.php?Id=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernisdetails</a></li>
                   <li class="selected"><a href="hindernisControles.php">Hindernis controles</a></li>
