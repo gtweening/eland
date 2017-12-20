@@ -26,7 +26,7 @@ $vsectionid="";
 $vsectionname="";
 $vsectionomschr="";
 //obstacle security
-$optObsSec = array("onbekend",
+$optObsSec = array("niet opgegeven",
                    "Door SBN goedgekeurd materiaal",
                    "Taak-Risico-Analyse",
                    "Constructieberekening",

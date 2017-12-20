@@ -35,7 +35,7 @@ if(empty($vhindSec)){
     $vhindSec=0;
 };
 $vimg=$row['ImgPath'];
-$optObsSec = array("onbekend",
+$optObsSec = array("niet opgegeven",
     "Door SBN goedgekeurd materiaal",
     "Taak-Risico-Analyse",
     "Constructieberekening",
