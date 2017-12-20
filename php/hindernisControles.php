@@ -77,7 +77,7 @@ $vimg=$row['ImgPath'];
           <div class="cudWidget">
           </div>
 
-          <div id="widgetBar">
+          <div id="widgetBartab">
               <ul class="basictab">
                   <li ><a href="obstacle.php?Id=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernisdetails</a></li>
                   <li class="selected"><a href="hindernisControles.php">Hindernis controles</a></li>
@@ -104,10 +104,10 @@ $vimg=$row['ImgPath'];
       <br><br><br>
       <tr>    
           <div id="widgetBar">
-              <input type="date" class="inputText" name="datum" maxlength="10" size="8"
+              <input type="date" class="inputText2" name="datum" maxlength="10" size="8"
 						   value="<?php echo date('Y-m-d'); ?>">
-              <input type="checkbox" class="inputText" name="status" >
-              <input type="text" class="inputText" name="controleur" maxlength="15"
+              <input type="checkbox" class="inputText2" name="status" >
+              <input type="text" class="inputText2" name="controleur" maxlength="15"
 						   size="10" value="controleur">
               <textarea rows="2" cols="30" name="note" >
               </textarea>

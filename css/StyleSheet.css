@@ -90,6 +90,11 @@ body {
     margin-top: 12px;
     margin-left: 30px;
 }
+.inputText2{
+    margin-top: 12px;
+    margin-left: 30px;
+    float: left;
+}
 .bubble {
     font-weight: bold;
     background-color: #f5eabe;
@@ -248,6 +253,30 @@ h2 {
     border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
+#widgetBartab {
+    height: 50px;
+    width: 700px;
+    float: left;
+    background: white;    
+    border-top: solid 1px black;
+    border-bottom: solid 2px #58D3F7;
+}
+#widgetBar2x {
+    height: 100px;
+    width: 700px;
+    float: left;
+    background: white;    
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+}
+#widgetBar3x {
+    height: 150px;
+    width: 700px;
+    float: left;
+    background: white;    
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+}
 #widgetBar2 {
     height: 50px;
     width: 900px;
@@ -329,7 +358,7 @@ h2 {
                      cursor:pointer;
 }
 .basictab{
-    padding: 5px 0px;
+    padding: 7px 0px;
     margin-left: 0;    
     list-style-type: none;
     text-align: center; /*set to left, center, or right to align the menu as desired*/
@@ -349,7 +378,7 @@ h2 {
     color: #2d2b2b;
 }
 .basictab li a:hover{
-    background-color: #CEF6F5;
+    background-color: #e6e6e6;
     color: black;
 }
 .basictab li.selected a{ /*selected tab effect*/
@@ -361,14 +390,21 @@ h2 {
 }
 label{
     display: inline-block;
-    float: left;
     clear: left;
-    width: 100px;
+    width: 95px;
     text-align: left;
+    color: #595959;
+}
+lblgrey{
+	color: #595959;
+}
+.chkbox{
+	width:250px;
+}
 }
 input {
   display: inline-block;
-  float: left;
+
 }
 body#gebruikersbeheer a#navGebruikers, 
 body#gebruikersterreinbeheer a#navGebruikersTerreinen, 

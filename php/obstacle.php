@@ -28,7 +28,19 @@ $STH->setFetchMode(PDO::FETCH_ASSOC);
 $row=$STH->fetch();
 $vhindVolgnr=str_pad($row['Volgnr'],2,'0', STR_PAD_LEFT);
 $vhindOmschr=$row['Omschr'];
+$vhindDat=$row['DatCreate'];
+$vhindH=$row['MaxH'];
+$vhindSec=$row['IndSecure'];
+if(empty($vhindSec)){
+    $vhindSec=0;
+};
 $vimg=$row['ImgPath'];
+$optObsSec = array("niet opgegeven",
+    "Door SBN goedgekeurd materiaal",
+    "Taak-Risico-Analyse",
+    "Constructieberekening",
+    "Labels" );
+
 ?>
 
 <html>
@@ -48,7 +60,7 @@ $vimg=$row['ImgPath'];
                 </div>
            
            
-                <div id="widgetBar">
+                <div id="widgetBartab">
                     <ul class="basictab">
                         <li class="selected"><a href="hindernis.php">Hindernisdetails</a></li>
                         <li><a href="hindernisControles.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernis controles</a></li>
@@ -59,9 +71,12 @@ $vimg=$row['ImgPath'];
                 <td class="hwhite" width ="50%">
                     <br><br>
                     <label>Sectie:</label> <?php echo $vsectionname; ?><br>
-                    <label>Volgnummer:</label> <?php echo str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT);?> <br><br>
+                    <label>Volgnummer:</label> <?php echo str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT);?> <br>
+                    <label>Gebouwd op:</label> <?php echo $vhindDat; ?><br>
+                    <label>Hoogte:</label> <?php echo $vhindH; ?>m<br>
+                    <label>Veilig door:</label> <?php echo $optObsSec[$vhindSec]; ?><br>
                     <label>Omschrijving:</label><br> <?php  echo $vhindOmschr;?><br><br>
-                    Hindernis controleren in:<br>
+                    <lblgrey>Hindernis controleren in:</lblgrey><br>
                     <?php if($row['ChkQ1']== True){?> Kwartaal 1 <?php }?>
                     <?php if($row['ChkQ2']== True){?> Kwartaal 2 <?php }?>
                     <?php if($row['ChkQ3']== True){?> Kwartaal 3 <?php }?>
