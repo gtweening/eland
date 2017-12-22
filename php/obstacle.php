@@ -62,7 +62,7 @@ $optObsSec = array("niet opgegeven",
            
                 <div id="widgetBartab">
                     <ul class="basictab">
-                        <li class="selected"><a href="hindernis.php">Hindernisdetails</a></li>
+                        <li class="selected"><a href="obstacle.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernisdetails</a></li>
                         <li><a href="hindernisControles.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernis controles</a></li>
                     </ul>
                 </div>
@@ -106,7 +106,8 @@ $optObsSec = array("niet opgegeven",
         <div id="RightColumnHalf">
         <table id="obstacleTableHalf">
             <tr class="theader">
-                <th ><strong>Hindernismaterialen</strong></th>
+                <th><strong>Hindernismaterialen</strong></th>
+                <th></th>
                 <th align="center">
                 <button type="submit" name="editHindMaterials" >
                     <img src="../img/edit.jpeg" width="35" height="35">
@@ -116,12 +117,16 @@ $optObsSec = array("niet opgegeven",
             </tr>    
             <?php
             //hindernismaterialen ophalen
-            $STH = $db->query('SELECT tm.Omschr, tom.Aantal from TblObstacleMaterials tom, TblMaterials tm where tom.Material_id = tm.Id and tom.Obstacle_id ='.$vhindId .' ');
+            $STH = $db->query('SELECT tm.Omschr, tom.Aantal, tmt.Omschr as tmtomschr  
+                               from TblObstacleMaterials tom, TblMaterials tm, TblMaterialTypes tmt 
+                               where tom.Material_id = tm.Id and tmt.Id=tm.MaterialType_Id 
+                                 and tom.Obstacle_id ='.$vhindId .' ');
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             //hindernismaterialen tonen
             while($rows=$STH->fetch()){
             ?>
             <tr>
+                <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
                 <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
                 <td class = "white"><?php echo htmlentities($rows['Aantal']); ?></td>
             </tr>
@@ -145,7 +150,9 @@ $optObsSec = array("niet opgegeven",
             </tr>
             <?php
             //hindernismaterialen ophalen
-            $STH = $db->query('SELECT tc.Omschr from TblObstacleCheckpoints toc, TblCheckpoints tc where toc.Checkpoint_id = tc.Id and toc.Obstacle_id = '.$vhindId .' ');
+            $STH = $db->query('SELECT tc.Omschr 
+                               from TblObstacleCheckpoints toc, TblCheckpoints tc 
+                               where toc.Checkpoint_id = tc.Id and toc.Obstacle_id = '.$vhindId .' ');
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             //hindernismaterialen tonen
             while($rows=$STH->fetch()){
