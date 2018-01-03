@@ -1,5 +1,4 @@
 <?php
-
 /**
 Each obstacle is build from materials. 
 Using this page you can maintain your materials library.
@@ -8,7 +7,6 @@ copyright: 2017 Gerko Weening
 
 20171222
 changed from materials to materialtypes
-
 
 */
 
@@ -225,7 +223,7 @@ $tbl_name="TblMaterials"; // Table name
             }
             // if successful redirect to delete_multiple.php
             if($STH){
-               //echo "<meta http-equiv=\"refresh\" content=\"0;URL=materialdetails.php\">";
+               echo "<meta http-equiv=\"refresh\" content=\"0;URL=materialdetails.php\">";
             }
         }
 

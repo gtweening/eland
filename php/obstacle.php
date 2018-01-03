@@ -6,6 +6,9 @@ copyright: 2013 Gerko Weening
 
 20170705
 solved undefined index when logged out
+20171222
+added materialtype and materialdetail in view
+
 */
 
 include_once "../inc/base.php";

@@ -9,6 +9,8 @@ copyright: 2013 Gerko Weening
 solved undifined variable
 20170705
 solved undefined index when logged out
+20171222
+added materialtype and materialdetail in view
 
 */
 
@@ -84,13 +86,21 @@ $STH=null;
                             and tm.Terrein_id = "'.$_SESSION['Terreinid'].'"
                           order by tm.Id');
       $STH1->setFetchMode(PDO::FETCH_ASSOC);
+      //show materials
       while($rows=$STH1->fetch()){
+          $isrope = htmlentities($rows['IndSecureRope']);
+          $imrope = htmlentities($rows['IndMainRope']);
+          $srope="";
+          $mrope="";
+          if($isrope==1){$srope="Veiligheidstouw";}
+          if($imrope==1){$srope="Hoofdtouw";}
       ?>
 
       <tr>
           <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
           <td colspan="2" class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
           <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+          <td class = "white"><?php echo $srope.$mrope; ?></td>
       </tr>
 
       <?php
