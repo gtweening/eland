@@ -100,7 +100,7 @@ if(isset($_GET['sectie'])){
                         <lblgrey>Gebouwd op</lblgrey>
                         <input type="date"  name="datcreate" maxlength="5" size="5">
                         <lblgrey>Hoogte</lblgrey> 
-                        <input type="text" name="maxh" maxlength="2" size="2">
+                        <input type="text" name="maxh" maxlength="3" size="3">
                         <br>
                         <label>Omschrijving</label>
                         <input type="text" class="inputText" name="hindernisOmschr" maxlength="32" size="38">
