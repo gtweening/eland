@@ -56,7 +56,12 @@ while($rows=$STH->fetch()){
     <h2 class="h2">Hindernis: <?php echo ($rows['Naam']),($rows['Volgnr']); ?></h2>
     <a id="main">Omschrijving: <?php echo ($rows['Omschr']); ?></a>
     <h3>Foto: </h3>
+     
+    <?php showObsPic($imgPath,$rows['ImgPath'],250,160); ?>
+    
+    <!--    
     <img src="<?php echo $imgPath,($rows['ImgPath']);?>" alt="" width="250" height="160" >
+    -->
     <table >
     <tr>
         <td id="Table" width ="350" >

@@ -87,31 +87,7 @@ $optObsSec = array("niet opgegeven",
                 </td>
                 <td class="hwhite">
                     <br><br>
-                    <?php
-                        //if there is an image, check ratio
-                        if($vimg!=''){
-                            //standaard ratio = 300*200
-                            $defaultratio=300/200;
-                            list($w,$h) = getimagesize($imgPath.$vimg);
-                            $ratio = $w/$h;
-                            $str="";
-                            switch (TRUE){
-                                case ($ratio<$defaultratio):
-                                    //echo "smaller";
-                                    //breedte is kleiner dan 300/200 => max h = 200
-                                    $width=200/$h*$w;                              
-                                    $str=' width="'.$width.'" height="200"';
-                                    break;
-                                case ($ratio>$defaultratio):
-                                    //breedte is groter dan 300/200 => max b = 300
-                                    $height=300/$w*$h;
-                                    $str=" width='300' heigth='".$height."'";
-                                    break;
-                            }
-                            //show image
-                            echo '<img src="'.$imgPath.$vimg.'"'.$str.' >';
-                        }
-                    ?>
+                    <?php showObsPic($imgPath,$vimg,300,200); ?>
                     <br><br>
                 </td>
             </tr>
