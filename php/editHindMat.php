@@ -9,6 +9,8 @@ copyright: 2013 Gerko Weening
 solved undifined variable
 20170705
 solved undefined index when logged out
+20171222
+added materialtype and materialdetail in view
 
 */
 
@@ -69,6 +71,7 @@ $STH=null;
       <tr class="theader">
           <th width="5%" ></th>
           <th ><strong>Materialen</strong></th>
+          <th></th>
           <th align="center">
               <button type="submit" name="addMaterials" >
                   <img src="../img/forward.jpeg" width="35" height="35">
@@ -77,17 +80,27 @@ $STH=null;
       </tr>
 
       <?php
-      $STH1 = $db->query('SELECT * 
-                          from TblMaterials 
-                          where Terrein_id = "'.$_SESSION['Terreinid'].'"
-                          order by Id');
+      $STH1 = $db->query('SELECT tm.*, tmt.Omschr as tmtomschr 
+                          from TblMaterials tm, TblMaterialTypes tmt
+                          where tmt.Id=tm.MaterialType_Id 
+                            and tm.Terrein_id = "'.$_SESSION['Terreinid'].'"
+                          order by tm.Id');
       $STH1->setFetchMode(PDO::FETCH_ASSOC);
+      //show materials
       while($rows=$STH1->fetch()){
+          $isrope = htmlentities($rows['IndSecureRope']);
+          $imrope = htmlentities($rows['IndMainRope']);
+          $srope="";
+          $mrope="";
+          if($isrope==1){$srope="Veiligheidstouw";}
+          if($imrope==1){$srope="Hoofdtouw";}
       ?>
 
       <tr>
           <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
-          <td colspan="2" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+          <td colspan="2" class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
+          <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+          <td class = "white"><?php echo $srope.$mrope; ?></td>
       </tr>
 
       <?php
@@ -115,14 +128,19 @@ $STH=null;
       </tr>
       <?php
       //hindernismaterialen ophalen
-      $STH2 = $db->query('SELECT tom.Id, tm.Omschr, tom.Aantal from TblObstacleMaterials tom, TblMaterials tm where tom.Material_id = tm.Id and tom.Obstacle_id ='.$vhindId.' ');
+      $STH2 = $db->query('SELECT tom.Id, tm.Omschr, tom.Aantal, tmt.Omschr as tmtomschr 
+                          from TblObstacleMaterials tom, TblMaterials tm, TblMaterialTypes tmt 
+                          where tom.Material_id = tm.Id 
+                            and tmt.Id=tm.MaterialType_Id 
+                            and tom.Obstacle_id ='.$vhindId.' ');
       $STH2->setFetchMode(PDO::FETCH_ASSOC);
       //hindernismaterialen tonen
       while($rows=$STH2->fetch()){
       ?>
       <tr>
           <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
-          <td colspan ="2" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+          <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
+          <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
           <td class = "white"><?php echo htmlentities($rows['Aantal']); ?></td>
       </tr>
 
