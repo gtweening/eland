@@ -9,6 +9,10 @@ solved undefined index when logged out
 20171007
 solved issue with php short code
 solved issue showing obstacles of section
+20180223
+solved issue with input limitation 'gebouwd op'.
+solved issue with input limitation 'max h'.
+improved userfriendlyness update obstacle properties
 */
 
 include_once "../inc/base.php";
@@ -53,6 +57,24 @@ if(isset($_GET['sectie'])){
     $vsectionname=$row['Naam'];
     $vsectionid=$row['Id'];
 }
+//set default values for obstacle properties
+$inputvolgnr="";
+$inputdate="";
+$inputh="";
+$inputomschr="";
+$inputobssec="";
+//get obstacle properties of selected item for prefill
+if(isset($_GET['Id'])){
+    $STH=$db->query('SELECT * from '.$tbl_name.'
+                     where Id = '.$_GET['Id'] );
+    $STH->setFetchMode(PDO::FETCH_ASSOC);
+    $row=$STH->fetch();
+    $inputvolgnr=$row['Volgnr'];
+    $inputdate=$row['DatCreate'];
+    $inputh=$row['MaxH'];
+    $inputomschr=$row['Omschr'];
+    $inputobssec=$row['IndSecure'];
+}
 ?>
 
 <html>
@@ -65,6 +87,9 @@ if(isset($_GET['sectie'])){
                     var hindomschr =  e.target.innerHTML;
                     window.location.href = "obstacle.php?Id=" + Id +"&Sec="+sectionname+"&Vnr="+volgnr;
                 }
+            }
+            function FunFillInputFields(e,Id,sectionname){
+                window.location.href = "obstaclesSection.php?Id=" + Id +"&sectie="+sectionname;
             }
         </script>
     </head>    
@@ -96,14 +121,18 @@ if(isset($_GET['sectie'])){
                     <div id="widgetBar3x">
                         <input type="hidden" name="sectionId" value="<?php echo $vsectionid;?>">
                         <label>Volgnr.</label>
-                        <input type="text" class="inputText" name="volgnr" maxlength="5" size="5">
+                        <input type="text" class="inputText" name="volgnr" 
+                               maxlength="5" size="5" value="<?php echo $inputvolgnr;?>">
                         <lblgrey>Gebouwd op</lblgrey>
-                        <input type="date"  name="datcreate" maxlength="5" size="5">
+                         <input type="date"  name="datcreate" 
+                               maxlength="10" size="7" value="<?php echo $inputdate;?>">
                         <lblgrey>Hoogte</lblgrey> 
-                        <input type="text" name="maxh" maxlength="3" size="3">
+                        <input type="text" name="maxh" 
+                               maxlength="3" size="3" value="<?php echo $inputh;?>">
                         <br>
                         <label>Omschrijving</label>
-                        <input type="text" class="inputText" name="hindernisOmschr" maxlength="32" size="38">
+                        <input type="text" class="inputText" name="hindernisOmschr" 
+                               maxlength="32" size="38" value="<?php echo $inputomschr;?>">
                         <br>
                         <div class="cudWidget">
                             <button type="submit" name="addObstacle" float="right">
@@ -115,7 +144,11 @@ if(isset($_GET['sectie'])){
                         <select name="obsSec">
                             <?php
                             foreach($optObsSec as $key => $value):
-                                echo '<option value="'.$key.'">'.$value.'</option>';
+                                if ($key==$inputobssec){
+                                    echo '<option value="'.$key.'" selected>'.$value.'</option>';
+                                }else {
+                                    echo '<option value="'.$key.'">'.$value.'</option>';
+                                }
                             endforeach;
                             ?>
                         </select>
@@ -146,7 +179,16 @@ if(isset($_GET['sectie'])){
                 ?>
 
                 <tr>
-                    <td width="5%" class="white2"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
+                    <td width="5%" class="white2">
+                    	<input name="checkbox[]" type="checkbox" id="checkbox[]" 
+                    	       value="<?php echo $rows['Id']; ?>" 
+                    	       <?php if(isset($_GET['Id'])){
+                    	               if($rows['Id']==$_GET['Id']){echo "checked";}
+                                     }
+                               ?> 
+                    	       onclick="FunFillInputFields(event,'<?php echo $rows['Id']; ?>','<?php echo $vsectionname;?>');" 
+                    	>
+                    </td>
                     <td class = "white2"><?php echo str_pad(htmlentities($rows['Volgnr']),2,'0',STR_PAD_LEFT); ?></td>
                     <td class = "white2"><?php echo str_pad(htmlentities($rows['DatCreate']),2,'0',STR_PAD_LEFT); ?></td>
                     <td class = "white2"><?php echo str_pad(htmlentities($rows['MaxH']),2,'0',STR_PAD_LEFT); ?></td>
