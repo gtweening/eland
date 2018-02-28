@@ -6,6 +6,8 @@ copyright: 2013 Gerko Weening
 
 20170705
 solved undefined index when logged out
+20180228
+improved aspect ratio of preview of picture
 */
 
 include_once "../inc/base.php";
@@ -62,7 +64,7 @@ $optObsSec = array("niet opgegeven",
            
                 <div id="widgetBartab">
                     <ul class="basictab">
-                        <li class="selected"><a href="hindernis.php">Hindernisdetails</a></li>
+                        <li class="selected"><a href="">Hindernisdetails</a></li>
                         <li><a href="hindernisControles.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernis controles</a></li>
                     </ul>
                 </div>
@@ -84,7 +86,10 @@ $optObsSec = array("niet opgegeven",
                 </td>
                 <td class="hwhite">
                     <br><br>
+<!--
                     <img src="<?php echo $imgPath,$vimg;?>" alt="" width="300" height="200" >
+-->
+                    <?php showObsPic($imgPath,$vimg,300,200); ?>
                     <br><br>
                 </td>
             </tr>
