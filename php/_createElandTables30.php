@@ -21,6 +21,9 @@ $sqlDropTblObs = "DROP TABLE IF EXISTS TblObstacles";
 $sqlDropTblSec = "DROP TABLE IF EXISTS TblSections";
 $sqlDropTblUse = "DROP TABLE IF EXISTS TblUsers";
 $sqlDropTblLogin = "DROP TABLE IF EXISTS login_attempts";
+$sqlDropTblTer = "DROP TABLE IF EXISTS TblTerrein";
+$sqlDropTblTerUse = "DROP TABLE IF EXISTS TblTerreinUsers";
+$sqlDropTblMatTyp = "DROP TABLE IF EXISTS TblMaterialTypes";
 
 //table structure
 $sqlTblChe = "CREATE TABLE TblCheckpoints (
@@ -185,6 +188,9 @@ $sqlTblMaterialTypes = "CREATE TABLE `TblMaterialTypes` (
     $db->exec($sqlDropTblSec);
     $db->exec($sqlDropTblUse);
     $db->exec($sqlDropTblLogin);
+    $db->exec($sqlDropTblTer);
+    $db->exec($sqlDropTblTerUse);
+    $db->exec($sqlDropTblMatTyp);
     echo "Bestaande tabellen succesvol verwijdert.";
     echo "<br>";
 //start creation
