@@ -1,7 +1,7 @@
 <?php
 include_once "../inc/base.php";
 
-$allowedExts = array("gif", "jpeg", "jpg", "png");
+$allowedExts = array("gif", "jpeg", "jpg", "png","GIF", "JPEG", "JPG", "PNG","Gif", "Jpeg", "Jpg", "Png");
 $temp = explode(".", $_FILES["file"]["name"]);
 $extension = end($temp);
 if ((($_FILES["file"]["type"] == "image/gif")

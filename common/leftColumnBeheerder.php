@@ -10,15 +10,18 @@
         <li>
             <a href="beheerTerreinen.php" id="navTerreinen" title ="Terreinbeheer ">
                 <img src="../img/terrein.png" alt="terreinen" width="35" height="35" align="middle">
-                
             </a>
         </li>
-			<li>
+		<li>
             <a href="beheerGebruikersTerreinen.php" id="navGebruikersTerreinen" title ="GebruikersTerreinbeheer ">
                 <img src="../img/terreinuser.png" alt="terreinen" width="35" height="35" align="middle">
-                
             </a>
         </li>
+		<li>
+            <a href="beheerBerichten.php" id="navBerichten" title ="Berichten">
+                <img src="../img/messages0.png" alt="berichten" width="35" height="35" align="middle">
+            </a>
+        </li>        
     </ul>
  </div>
 </html> 
