@@ -62,7 +62,7 @@ while($rows=$STH->fetch()){
 <body>
     <a class="koptekst">Terrein: <?php echo $_SESSION['Terreinnaam'];?></a>
     <hr>
-    <h2 class="h2">Hindernis: <?php echo ($rows['Naam']),($rows['Volgnr']); ?></h2>
+    <h2 class="h2">Hindernis: <?php echo ($rows['Naam'])."-".($rows['Volgnr']); ?></h2>
     <a id="main">Omschrijving: <?php echo ($rows['Omschr']); ?></a>
     <h3>Foto: </h3>
     <?php //show picture at right format and ratio 
