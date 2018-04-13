@@ -75,6 +75,12 @@
                 <br>
             </div>
             <div id="headerright">
+                <div class="cudWidget">
+                	<a href="../docs/help.html">
+                       <img src="../img/information.png" width="40" height="40"> 
+                    </a>
+                </div>
+                
                 <!-- show messages read button for all users except beheerder  -->
                 <?php
                 if ($_SESSION['username']!= 'beheerder@eland.nl' &&
@@ -109,15 +115,20 @@
                 }
                 ?>
 
-                <div class="cudWidget">
-                    Ingelogd: <?php echo $_SESSION['username']; ?>
-                    <br>
-                    <?php
+                <div class="cudWidget dropdown">
+                   <a><img src="../img/user.png" width="40" height="40"> </a>
+                   <div class="account-dropbox">
+                      <a>Ingelogd: <?php echo $_SESSION['username']; ?></a>
+                      <a href="../inc/logout.php">
+                        <?php
                         //uiloggen onderdeel van php vanwege controle op ingelogd zijn
-                        echo "<a href='../inc/logout.php'>uitloggen</a>";
+                        echo "Uitloggen";
                         }
-                    ?>
+                        ?>
+                      </a>
+                   </div>
                 </div>
+                
             </div>
         </div>
     </div>
