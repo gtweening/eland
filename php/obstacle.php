@@ -100,8 +100,13 @@ $optObsSec = array("niet opgegeven",
                     <input type="hidden" name="hindId" value="<?php echo $vhindId;?>">
                     <input type="hidden" name="hindSec" value="<?php echo $vsectionname;?>">
                     <input type="hidden" name="hindVolgnr" value="<?php echo $vhindVolgnr;?>">
+                    <input type="hidden" name="imgPath" value="<?php echo $imgPath;?>">
+                    <input type="hidden" name="vimg" value="<?php echo $vimg;?>">
                     <input type="file" name="file" id="file" >
-                    <input type="submit" name="fileImport" value="Importeren" float="right">
+                    <input class="cudWidget" type="image" name="fileDelete" src="../img/del.jpeg" 
+                           value="Verwijderen" >
+                    <input class="cudWidget" type="image" name="fileImport" src="../img/save.jpeg" 
+                           value="Opslaan" >
                     </form><br>
                 </td>
             </tr>
