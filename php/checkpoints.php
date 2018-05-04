@@ -57,8 +57,8 @@ $Terreinid = $_SESSION['Terreinid']; //sessions terreinid
                 </button>
             </div>    
             <div id="widgetBar">
-                <input type="text" class="inputText" name="CheckPoint" maxlength="50" 
-                                                                    size="32">
+                <input type="text" class="inputText" name="CheckPoint" maxlength="75" 
+                                                                       size="50">
                 <div class="cudWidget">
                     <button class="submitbtn" type="submit" name="addChkPoint" 
                                                                                     float="right">
