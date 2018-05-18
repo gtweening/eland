@@ -12,6 +12,8 @@ changed frmHandling. added form validation.
 prevent undefined index when logged out
 20171222 
 changed way of processing update
+20180504
+added order name
 
 */
 
@@ -28,6 +30,17 @@ if(login_check($mysqli) == true) {
 include_once "../common/leftColumn.php";
 $Terreinid = $_SESSION['Terreinid']; //sessions terreinid
 $tbl_name="TblSections"; // Table name
+
+//determine sort
+if(isset($_GET['s'])){
+    if ($_GET['s']=='a'){
+        $orderby=" order by Naam asc";
+    }else{
+        $orderby=" order by Naam desc";
+    }
+}else{
+  $orderby=" order by Id";
+}
 ?>
 
 <html>
@@ -87,15 +100,26 @@ $tbl_name="TblSections"; // Table name
 
           <tr class="theader">
               <th width="5%" ></th>
-              <th width="10%"><strong>Naam</strong></th>
+              <th class="dropdown" width="10%">
+              	Naam
+              	<div class="account-dropbox">
+                      <a href="sections.php">Standaard</a>
+                      <a href="sections.php?s=a">
+                          <img src="../img/sort_AZ.png" width="20" height="20">
+                          Oplopend</a>
+                      <a href="sections.php?s=d">
+                      <img src="../img/sort_ZA.png" width="20" height="20">
+                      Aflopend</a>
+                   </div>
+              </th>
               <th ><strong>Omschrijving</strong></th>
           </tr>
 
           <?php
-	     $whereTerrein = getterreinid();
+	         $whereTerrein = getterreinid();
              $STH = $db->query('SELECT * from TblSections
-                                where '.$whereTerrein.'  
-                                order by Id');
+                                where '.$whereTerrein.$orderby.'  
+                                ');
              $STH->setFetchMode(PDO::FETCH_ASSOC);
              while($rows=$STH->fetch()){
           ?>
