@@ -5,6 +5,8 @@ Using this page you can maintain your materials library.
  
 20171222
 changed from materials to materialtypes
+20180903
+revised
  
 copyright: 2017 Gerko Weening
 */

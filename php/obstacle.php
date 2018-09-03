@@ -8,6 +8,8 @@ copyright: 2013 Gerko Weening
 solved undefined index when logged out
 20171222
 added materialtype and materialdetail in view
+20180903
+revised
 
 */
 
@@ -111,28 +113,36 @@ $optObsSec = array("niet opgegeven",
             <tr class="theader">
                 <th><strong>Hindernismaterialen</strong></th>
                 <th></th>
-                <th align="center">
+                <th colspan="2" align="center">
                 <button type="submit" name="editHindMaterials" >
                     <img src="../img/edit.jpeg" width="35" height="35">
                 </button>    
                 </th>
+              
 
             </tr>    
             <?php
             //hindernismaterialen ophalen
-            $STH = $db->query('SELECT tm.Omschr, tom.Aantal, tmt.Omschr as tmtomschr  
+            $STH = $db->query('SELECT tm.Omschr, tom.Aantal, tm.*, tmt.Omschr as tmtomschr  
                                from TblObstacleMaterials tom, TblMaterials tm, TblMaterialTypes tmt 
                                where tom.Material_id = tm.Id and tmt.Id=tm.MaterialType_Id 
                                  and tom.Obstacle_id ='.$vhindId .' ');
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             //hindernismaterialen tonen
             while($rows=$STH->fetch()){
+            	$isrope = htmlentities($rows['IndSecureRope']);
+          		$imrope = htmlentities($rows['IndMainRope']);
+          		$srope="";
+          		$mrope="";
+          		if($isrope==1){$srope="Veiligheidstouw";}
+          		if($imrope==1){$srope="Hoofdtouw";}
             ?>
             <tr>
                 <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
                 <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
                 <td class = "white"><?php echo htmlentities($rows['Aantal']); ?></td>
-            </tr>
+					 <td class = "white"><?php echo $srope.$mrope; ?></td>            
+				</tr>
 
             <?php
             }
