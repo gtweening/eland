@@ -2,13 +2,17 @@
 /**
 Each obstacle is build from materials.
 Using this page you can maintain your materials library.
- 
+
+20170702
+changed frmHandling. added form validation
+20170705
+prevent undefined index when logged out 
 20171222
 changed from materials to materialtypes
 20180903
 revised
  
-copyright: 2017 Gerko Weening
+copyright: 2013-2018 Gerko Weening
 */
 
 include_once "../inc/base.php";
@@ -76,54 +80,71 @@ if(login_check($mysqli) == true) {
           </tr>
 
           <?php
-			 $whereTerrein = getterreinid();
+          $whereTerrein = getterreinid();
           $STH = $db->query('SELECT * from TblMaterialTypes 
-									  where '.$whereTerrein.'
-									  order by Id');
+                             where '.$whereTerrein.'
+                             order by Id');
           $STH->setFetchMode(PDO::FETCH_ASSOC);
           while($rows=$STH->fetch()){
           ?>
 
           <tr>
-              <td width="5%" class="white2"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
-              <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+              <td width="5%" class="white2">
+                 <input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
+              <td class = "white">
+                 <?php echo htmlentities($rows['Omschr']); ?></td>
           </tr>
 
           <?php
           }
 
-
-		if(isset($_POST['delMaterialType'])){
-			 //var_dump($_POST);
-			 //$del_id = $_POST['checkbox'];
-			 //print_r($_POST['checkbox']);   
-			 if(!empty($_POST['checkbox'])){
+      //post acties
+      if(isset($_POST['delMaterialType'])){
+          //var_dump($_POST);
+          //$del_id = $_POST['checkbox'];
+          //print_r($_POST['checkbox']);   
+          if(!empty($_POST['checkbox'])){
 				  foreach($_POST['checkbox'] as $val){
 					   $ids[] = (int) $val;
+					   //controleer of dit materiaalsoort nog gebruikt wordt => niet verwijderen.
+					   $qry1 = "Select distinct MaterialType_id 
+                           from TblMaterials ";
+                  $STH1=$db->prepare($qry1);
+                  $STH1->execute();
+                  while($rows=$STH1->fetch(PDO::FETCH_ASSOC)){
+                      if($rows['MaterialType_id']==$val){
+                          echo '<script> alert("Er zijn materiaaldetails van dit materiaalsoort.\nVerwijderen niet mogelijk"); </script>';
+                          exit;	
+                      }
+                  }	   
 				  }
 				  $ids = implode("','", $ids);
 				  $STH = $db->prepare("DELETE FROM $tbl_name WHERE Id IN ('".$ids."')");
 				  $STH->execute();
+				  
 			 }else{
 					echo '<script> alert("Er is niets geselecteerd om te verwijderen!"); </script>';
 			 }
-			 // if successful redirect to delete_multiple.php
+			 // if successful redirect to materials.php
 			 if($STH){
 				  echo "<meta http-equiv=\"refresh\" content=\"0;URL=materials.php\">";
 			 }
+			 
 		}else if(isset($_POST['addMaterialType'])){   
 		    $sOmschr=str_replace(" ","_",$_POST['materialtype']);
 			 if(!empty($sOmschr)){
 				  $STH = $db->prepare("INSERT INTO $tbl_name (Omschr, Terrein_id) VALUES
 				  ('$sOmschr', ".$Terreinid.")");
 				  $STH->execute();
+				  
 			 }else{
 				echo '<script> alert("Het materiaalsoort moet nog ingevuld worden!"); </script>';
 			 }
-			 // if successful redirect to delete_multiple.php
+			 // if successful redirect to materials.php
 			 if($STH){
 				echo "<meta http-equiv=\"refresh\" content=\"0;URL=materials.php\">";
 			 }
+			 
 		}else if(isset($_POST['editMaterialType'])){
 		    $sOmschr=$_POST['materialtype'];
 		    //checkbox needs to be selected
@@ -132,6 +153,7 @@ if(login_check($mysqli) == true) {
 			    if (count($_POST['checkbox'])<>1){
 			        echo '<script> alert("Er mag maar een item geselecteerd worden bij bewerken!"); </script>';
 			        exit;
+			        
 			    }else{
 			        //determine which item is selected
 			        foreach($_POST['checkbox'] as $val){
@@ -141,18 +163,19 @@ if(login_check($mysqli) == true) {
 			        if (strlen($sOmschr)==0){
 			            echo '<script> alert("Omschrijving is niet gevuld!"); </script>';
 			            exit;
+			            
 			        }else{
 			            //name needs to be unique, selected name not included
 			            $sql1 = 'select Omschr from '.$tbl_name.'
-                                 where Id = '.$sId.' ';
+                              where Id = '.$sId.' ';
 			            $STH1=$db->prepare($sql1);
 			            $STH1->execute();
 			            $result = $STH1->fetch(PDO::FETCH_ASSOC);
 			            $sNaamSel=$result['Omschr'];
 			            //select other names
 			            $STH2 = $db->query('select distinct Omschr from '.$tbl_name.'
-         									where Terrein_id = '.$Terreinid.'
-                                            and Omschr <>"'.$sNaamSel.'" ');
+         								        where Terrein_id = '.$Terreinid.'
+                                         and Omschr <>"'.$sNaamSel.'" ');
 			            $STH2->setFetchMode(PDO::FETCH_ASSOC);
 			            //set default in case only one or two sections
 			            $volgnrok=1;
@@ -161,6 +184,7 @@ if(login_check($mysqli) == true) {
 			                if($sOmschr == $rows['Omschr']){
 			                    $volgnrok=0; // names are equal => not ok
 			                    break;
+			                    
 			                }else{
 			                    $volgnrok=1; // names are not equal => ok
 			                }
@@ -168,16 +192,18 @@ if(login_check($mysqli) == true) {
 			            //
 			            if($volgnrok==1){
 			                $STH = $db->prepare("UPDATE $tbl_name
-                                                 SET Omschr = '".$sOmschr."'
-                                                 WHERE Id = $sId");
+                                              SET Omschr = '".$sOmschr."'
+                                              WHERE Id = $sId");
 			                $STH->execute();
+			                
 			            }else{
-			                echo '<script> alert("Controle omschrijving is elders gebruikt! Kies andere naam."); </script>';
+			                echo '<script> alert("Materiaalsoort omschrijving is elders gebruikt! Kies andere naam."); </script>';
 			                exit;
 			            }
 			        }
 			    }
 			    echo "<meta http-equiv=\"refresh\" content=\"0;URL=materials.php\">";	 
+			    
 			}else{
 				echo '<script> alert("Er is niets geselecteerd om te bewerken!"); </script>';
 			}

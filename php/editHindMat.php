@@ -51,11 +51,11 @@ $STH=null;
   <div id="LeftColumn2a">
       <?php include "obstacleOverviewPerSection.php"; ?>
   </div>
+  
   <div id="RightColumn">
       <table id="obstacleTable">
-
-          <a class="tableTitle2">Hindernis <?php echo $vsectionname,str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT)?></a>
-            
+          <a class="tableTitle2">Hindernis <?php echo $vsectionname,str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT)?></a>   
+                 
           <div class="cudWidget">
 				<a> <img src="<?php echo $imgPath,$vimg;?>" alt="" width="60" height="50" ></a>
           </div>
@@ -93,7 +93,7 @@ $STH=null;
           $srope="";
           $mrope="";
           if($isrope==1){$srope="Veiligheidstouw";}
-          if($imrope==1){$srope="Hoofdtouw";}
+          if($imrope==1){$mrope="Hoofdtouw";}
       ?>
 
       <tr>
@@ -126,6 +126,7 @@ $STH=null;
 			 </div>
           </th>
       </tr>
+      
       <?php
       //hindernismaterialen ophalen
       $STH2 = $db->query('SELECT tom.Id, tm.Omschr, tom.Aantal, tmt.Omschr as tmtomschr 
@@ -137,6 +138,7 @@ $STH=null;
       //hindernismaterialen tonen
       while($rows=$STH2->fetch()){
       ?>
+      
       <tr>
           <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
           <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
@@ -161,9 +163,11 @@ $STH=null;
                   $stmt->execute();
               }
           }
+          
           if($stmt){
               echo "<meta http-equiv=\"refresh\" content=\"0;URL=editHindMat.php?Id=".$vhindId."&Sec=".$vsectionname."&Vnr=".$vhindVolgnr."&Img=".$vimg."\">";
           }
+          
       }else  if(isset($_POST['delMaterials'])){
           if(!empty($_POST['checkbox'])){
               foreach($_POST['checkbox'] as $val){
@@ -173,10 +177,12 @@ $STH=null;
               $STH = $db->prepare("DELETE FROM $tbl_name1 WHERE Id IN ('".$ids."')");
               $STH->execute();
           }
+          
           // if successful redirect to delete_multiple.php
           if($STH){
               echo "<meta http-equiv=\"refresh\" content=\"0;URL=editHindMat.php?Id=".$vhindId."&Sec=".$vsectionname."&Vnr=".$vhindVolgnr."&Img=".$vimg."\">";
           }
+          
       }else if(isset($_POST['editMaterials'])){
               if(!empty($_POST['checkbox'])){
                   foreach($_POST['checkbox'] as $val){
@@ -191,6 +197,7 @@ $STH=null;
                  echo '<script> editFunction("'.$value.'", "'.$ids.'","'.$vhindId.'" ,"'.$vsectionname.'", "'.$vhindVolgnr.'", "'.$vimg.'"); </script>';   
               }
           }
+          
           if(isset($_GET['var1'])){
             $sOmschr = $_GET['var1'];
             $hmId = $_GET['hmId'];
@@ -209,10 +216,12 @@ $STH=null;
   </table>
   </div>
   </form>
+  
   <?php
   //close connection
   $db = null;
   ?>
+  
   </table>
   </td>
   </tr>
