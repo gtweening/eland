@@ -2,9 +2,11 @@
 
 /**
 Gives an overview of all checks performed and results for all obstacles.
-FOr achive purposes.
+For achive purposes.
 
 copyright: 2013 Gerko Weening
+20180227
+added terreinnaam on output
 */
 
 include_once "../inc/base.php";
@@ -44,6 +46,11 @@ while($rows=$STH->fetch()){
              background: darkblue;
              color: white;
         }
+        .koptekst{font-family: arial;
+                  font-size: small;
+                  text-align: right;
+                  display:block;
+        }
         .TableText{font-family: verdana;
                    font-size: small; 
                    text-align: left;
@@ -53,10 +60,14 @@ while($rows=$STH->fetch()){
     </style>
 </head>
 <body>
-    <h2 class="h2">Hindernis: <?php echo ($rows['Naam']),($rows['Volgnr']); ?></h2>
+    <a class="koptekst">Terrein: <?php echo $_SESSION['Terreinnaam'];?></a>
+    <hr>
+    <h2 class="h2">Hindernis: <?php echo ($rows['Naam'])."-".($rows['Volgnr']); ?></h2>
     <a id="main">Omschrijving: <?php echo ($rows['Omschr']); ?></a>
     <h3>Foto: </h3>
-    <img src="<?php echo $imgPath,($rows['ImgPath']);?>" alt="" width="250" height="160" >
+    <?php //show picture at right format and ratio 
+        showObsPic($imgPath,$rows['ImgPath'],250,160); 
+    ?>
     <table >
     <tr>
         <td id="Table" width ="350" >
@@ -98,7 +109,7 @@ while($rows=$STH->fetch()){
         </td>
     </tr>
     </table>
-
+    <hr>
     <h3>Laatste controle </h3>
     <table>
         <tr align="left">
@@ -128,7 +139,7 @@ while($rows=$STH->fetch()){
         </tr>
         <?php }?>
     </table>
-    <footer></footer>
+    <footer><hr></footer>
 </body>
 </html>
 <?php

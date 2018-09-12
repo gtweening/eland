@@ -37,13 +37,17 @@ sec_session_start();
 </html>
 
 <?php
-$Terreinid = $_SESSION['Terreinid']; //sessions terreinid
+//set terreinid for users except beheerder
+if ($_SESSION['username'] != 'beheerder@beheer.nl' && $_SESSION['username'] != 'beheerder@eland.nl'){
+    $Terreinid = $_SESSION['Terreinid']; //sessions terreinid
+}
+
 $tbl_sections="TblSections"; // Table name
 $tbl_materials="TblMaterials"; // Table name
 $tbl_chkpoints="TblCheckpoints"; // Table name
 $STH=0;
 
-//var_dump($_POST);
+
 
 // Check if delete button active, start this
 if(isset($_POST['delSection'])){
@@ -295,8 +299,44 @@ if(isset($_POST['delSection'])){
       $_SESSION['Terreinnaam'] = $value;
 		echo "<meta http-equiv=\"refresh\" content=\"0;URL=sections.php\">";
     }
-   
-
+}else if(isset($_POST['addBericht'])){
+    if(!empty($_POST['titel'])){
+        $STH = $db->prepare("INSERT INTO TblMessages (Datum, Titel, Bericht) VALUES
+        ('$_POST[datum]','$_POST[titel]','$_POST[bericht]')");
+        $STH->execute();
+    }
+    // if successful redirect to delete_multiple.php
+    if($STH){
+        echo "<meta http-equiv=\"refresh\" content=\"0;URL=beheerBerichten.php\">";
+    }
+}else if(isset($_POST['delBericht'])){
+    //var_dump($_POST);
+    //$del_id = $_POST['checkbox'];
+    //print_r($_POST['checkbox']);
+    if(!empty($_POST['checkbox'])){
+        foreach($_POST['checkbox'] as $val){
+            $ids[] = (int) $val;
+        }
+        $ids = implode("','", $ids);
+        $STH = $db->prepare("DELETE FROM TblMessages WHERE Id IN ('".$ids."')");
+        $STH->execute();
+    }
+    // if successful redirect to beheerder.php
+    if($STH){
+        echo "<meta http-equiv=\"refresh\" content=\"0;URL=beheerBerichten.php\">";
+    }
+}else if(isset($_POST['pubBericht'])){
+    if(!empty($_POST['checkbox'])){
+        foreach($_POST['checkbox'] as $val){
+            $ids[] = (int) $val;
+        }
+        $ids = implode("','", $ids);
+        $STH = $db->prepare("Update TblMessages set Gepubliceerd = 1 WHERE Id IN ('".$ids."')");
+        $STH->execute();
+    }
+    // if successful redirect to beheerder.php
+    if($STH){
+        echo "<meta http-equiv=\"refresh\" content=\"0;URL=beheerBerichten.php\">";
+    }
 }
-
 ?>

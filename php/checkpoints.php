@@ -10,6 +10,8 @@ copyright: 2013 Gerko Weening
 changed frmHandling. added form validation.
 20170705
 prevent undefined index when logged out
+20171222
+changed way of processing update
 
 */
 
@@ -30,14 +32,6 @@ $Terreinid = $_SESSION['Terreinid']; //sessions terreinid
 
 <html>
 <head>
-    <script type="text/javascript">
-        function editChkPointFunction(value,ids){
-            var Materiaal=prompt("Verander de omschrijving van het controlepunt",value);
-            if (Materiaal!=null){
-                     window.location.href = "checkpoints.php?var1=" + Materiaal + "&var2="+ids;
-            }
-        }
-    </script>
 </head>
 
 <body id="checkpoints">
@@ -63,8 +57,8 @@ $Terreinid = $_SESSION['Terreinid']; //sessions terreinid
                 </button>
             </div>    
             <div id="widgetBar">
-                <input type="text" class="inputText" name="CheckPoint" maxlength="50" 
-                                                                    size="32">
+                <input type="text" class="inputText" name="CheckPoint" maxlength="75" 
+                                                                       size="50">
                 <div class="cudWidget">
                     <button class="submitbtn" type="submit" name="addChkPoint" 
                                                                                     float="right">
@@ -147,19 +141,59 @@ $Terreinid = $_SESSION['Terreinid']; //sessions terreinid
                     echo "<meta http-equiv=\"refresh\" content=\"0;URL=checkpoints.php\">";
                 }
             }else if(isset($_POST['editChkPoint'])){
+                $sOmschr = $_POST['CheckPoint'];
+                //checkbox needs to be selected
                 if(!empty($_POST['checkbox'])){
-                    foreach($_POST['checkbox'] as $val){
-                        $ids[] = (int) $val;
+                    //only one checkbox selected
+                    if (count($_POST['checkbox'])<>1){
+                        echo '<script> alert("Er mag maar een item geselecteerd worden bij bewerken!"); </script>';
+                        exit;
+                    }else{
+                        //determine which item is selected
+                        foreach($_POST['checkbox'] as $val){
+                            $sId = (int) $val;
+                        }
+                        //omschrijving needs to be filled
+                        if (strlen($sOmschr)==0){
+                            echo '<script> alert("Omschrijving is niet gevuld!"); </script>';
+                            exit;
+                        }else{
+                            //name needs to be unique, selected name not included
+                            $sql1 = 'select Omschr from '.$tbl_name.'
+                                     where Id = '.$sId.' ';
+                            $STH1=$db->prepare($sql1);
+                            $STH1->execute();
+                            $result = $STH1->fetch(PDO::FETCH_ASSOC);
+                            $sNaamSel=$result['Omschr'];
+                            //select other names
+                            $STH2 = $db->query('select distinct Omschr from '.$tbl_name.'
+             									where Terrein_id = '.$Terreinid.'
+                                                and Omschr <>"'.$sNaamSel.'" ');
+                            $STH2->setFetchMode(PDO::FETCH_ASSOC);
+                            //set default in case only one or two sections
+                            $volgnrok=1;
+                            //loop through results
+                            while($rows=$STH2->fetch()){
+                                if($sOmschr == $rows['Omschr']){
+                                    $volgnrok=0; // names are equal => not ok
+                                    break;
+                                }else{
+                                    $volgnrok=1; // names are not equal => ok
+                                }
+                            }
+                            //
+                            if($volgnrok==1){
+                                $STH = $db->prepare("UPDATE $tbl_name 
+                                                     SET Omschr = '".$sOmschr."'
+                                                     WHERE Id = $sId");
+                                $STH->execute();
+                            }else{
+                                echo '<script> alert("Controle omschrijving is elders gebruikt! Kies andere naam."); </script>';
+                                exit;
+                            }
+                        }
                     }
-                    $ids = implode("','", $ids);
-                   $STH = $db->query('select Omschr FROM '.$tbl_name.' WHERE Id = '.$ids.'');
-                   $STH->setFetchMode(PDO::FETCH_ASSOC);
-                   $row=$STH->fetch();
-                   $value=$row['Omschr'];
-                   //echo $ids."<br>";
-                   //echo $_POST['CheckPoint'];
-                   //call jscript
-                   echo '<script> editChkPointFunction("'.$value.'", "'.$ids.'"); </script>';   
+                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=checkpoints.php\">";
                 }else{
                     echo '<script> alert("Er is niets geselecteerd om te bewerken!"); </script>';
                 }

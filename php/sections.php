@@ -10,6 +10,10 @@ copyright: 2013-2017 Gerko Weening
 changed frmHandling. added form validation.
 20170705
 prevent undefined index when logged out
+20171222 
+changed way of processing update
+20180504
+added order name
 
 */
 
@@ -26,6 +30,17 @@ if(login_check($mysqli) == true) {
 include_once "../common/leftColumn.php";
 $Terreinid = $_SESSION['Terreinid']; //sessions terreinid
 $tbl_name="TblSections"; // Table name
+
+//determine sort
+if(isset($_GET['s'])){
+    if ($_GET['s']=='a'){
+        $orderby=" order by Naam asc";
+    }else{
+        $orderby=" order by Naam desc";
+    }
+}else{
+  $orderby=" order by Id";
+}
 ?>
 
 <html>
@@ -47,13 +62,7 @@ $tbl_name="TblSections"; // Table name
               window.location.href = "obstaclesSection.php?omschr=" + sectieomschr;
           } 
       }
-		function editSectionFunction(sectionOmschr, sectionNaam,ids){
-			 var SectieNaam = prompt("Verander de sectie naam",sectionNaam);
-			 var SectieOmschr = prompt("Verander de sectie omschrijving",sectionOmschr);
-			 if (SectieNaam!=null){
-				  window.location.href = "sections.php?id=" + ids + "&sectieNaam=" + SectieNaam + "&sectieOmschr=" + SectieOmschr ;
-			 }
-		}
+
   </script>
 </head>
 
@@ -91,15 +100,26 @@ $tbl_name="TblSections"; // Table name
 
           <tr class="theader">
               <th width="5%" ></th>
-              <th width="10%"><strong>Naam</strong></th>
+              <th class="dropdown" width="10%">
+              	Naam
+              	<div class="account-dropbox">
+                      <a href="sections.php">Standaard</a>
+                      <a href="sections.php?s=a">
+                          <img src="../img/sort_AZ.png" width="20" height="20">
+                          Oplopend</a>
+                      <a href="sections.php?s=d">
+                      <img src="../img/sort_ZA.png" width="20" height="20">
+                      Aflopend</a>
+                   </div>
+              </th>
               <th ><strong>Omschrijving</strong></th>
           </tr>
 
           <?php
-	     $whereTerrein = getterreinid();
+	         $whereTerrein = getterreinid();
              $STH = $db->query('SELECT * from TblSections
-                                where '.$whereTerrein.'  
-                                order by Id');
+                                where '.$whereTerrein.$orderby.'  
+                                ');
              $STH->setFetchMode(PDO::FETCH_ASSOC);
              while($rows=$STH->fetch()){
           ?>
@@ -114,18 +134,6 @@ $tbl_name="TblSections"; // Table name
           </tr>
 
           <?php
-          }
-
-          if(isset($_GET['sectieNaam'])){
-            $sNaam = $_GET['sectieNaam'];
-            $sOmschr = $_GET['sectieOmschr'];
-            $sId = $_GET['id'];
-            $STH = $db->prepare("UPDATE $tbl_name SET Omschr = '".$sOmschr."' , Naam = '".$sNaam."' WHERE Id = $sId");
-            $STH->execute();
-            // if successful redirect to sections.php
-              if($STH){
-                  echo "<meta http-equiv=\"refresh\" content=\"0;URL=sections.php\">";
-              }
           }
 
             // Check if delete button active, start this
@@ -170,19 +178,60 @@ $tbl_name="TblSections"; // Table name
                     echo "<meta http-equiv=\"refresh\" content=\"0;URL=sections.php\">";
                 }
             }if(isset($_POST['editSection'])){
+                $sNaam=$_POST['sectienaam'];
+                $sOmschr=$_POST['sectieomschr'];
+                //checkbox needs to be selected
                 if(!empty($_POST['checkbox'])){
-                    foreach($_POST['checkbox'] as $val){
-                             $ids[] = (int) $val;
+                    //only one checkbox selected
+                    if (count($_POST['checkbox'])<>1){
+                        echo '<script> alert("Er mag maar een item geselecteerd worden bij bewerken!"); </script>';
+                        exit;
+                    }else{
+                        //determine which item is selected
+                        foreach($_POST['checkbox'] as $val){
+                            $sId = (int) $val;
+                        }
+                        //omschrijving needs to be filled
+                        if (strlen($sOmschr)==0 or strlen($sNaam)==0){
+                            echo '<script> alert("Omschrijving of sectienaam is niet gevuld!"); </script>';
+                            exit;
+                        }else{
+                            //name needs to be unique, selected name not included
+                            $sql1 = 'select Naam from '.$tbl_name.'
+                                     where Id = '.$sId.' ';
+                            $STH1=$db->prepare($sql1);
+                            $STH1->execute();
+                            $result = $STH1->fetch(PDO::FETCH_ASSOC);
+                            $sNaamSel=$result['Naam'];
+                            //select other names
+                            $STH2 = $db->query('select distinct Naam from '.$tbl_name.'
+             									where Terrein_id = '.$Terreinid.' 
+                                                and Naam <>"'.$sNaamSel.'" ');
+                            $STH2->setFetchMode(PDO::FETCH_ASSOC);
+                            //set default in case only one or two sections
+                            $volgnrok=1;
+                            //loop through results
+                            while($rows=$STH2->fetch()){
+                                if($sNaam == $rows['Naam']){
+                                    $volgnrok=0; // names are equal => not ok
+                                    break;
+                                }else{
+                                    $volgnrok=1; // names are not equal => ok
+                                }
+                            }
+                            //
+                            if($volgnrok==1){
+                                $STH = $db->prepare("UPDATE $tbl_name 
+                                                     SET Omschr = '".$sOmschr."' , Naam = '".$sNaam."' 
+                                                     WHERE Id = $sId");
+                                $STH->execute();
+                            }else{
+                                echo '<script> alert("Sectienaam is elders gebruikt! Kies andere naam."); </script>';
+                                exit;
+                            }
+                        }
                     }
-                    $ids = implode("','", $ids);
-                    $STH = $db->query('select * FROM '.$tbl_name.' WHERE Id = '.$ids.'');
-                    $STH->setFetchMode(PDO::FETCH_ASSOC);
-                    $row=$STH->fetch();
-                    $sectionOmschr=$row['Omschr'];
-                    $sectionNaam=$row['Naam'];
-
-                    //call jscript
-                    echo '<script> editSectionFunction("'.$sectionOmschr.'","'.$sectionNaam.'", "'.$ids.'"); </script>';   
+                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=sections.php\">";
                 }else{
                     echo '<script> alert("Er is niets geselecteerd om te bewerken!"); </script>';
                 }

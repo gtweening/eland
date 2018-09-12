@@ -6,6 +6,7 @@ copyright: 2013 Gerko Weening
 
 20170705
 solved undefined index when logged out
+<<<<<<< ours
 20171222
 added materialtype and materialdetail in view
 20180228
@@ -13,6 +14,10 @@ improved aspect ratio of preview of picture
 20180903
 revised
 
+=======
+20180228
+improved aspect ratio of preview of picture
+>>>>>>> theirs
 */
 
 include_once "../inc/base.php";
@@ -68,10 +73,15 @@ $optObsSec = array("niet opgegeven",
               
                 <div id="widgetBartab">
                     <ul class="basictab">
+<<<<<<< ours
                         <li class="selected">
                             <a href="obstacle.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernisdetails</a></li>
                         <li>
                             <a href="hindernisControles.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernis controles</a></li>
+=======
+                        <li class="selected"><a href="">Hindernisdetails</a></li>
+                        <li><a href="hindernisControles.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernis controles</a></li>
+>>>>>>> theirs
                     </ul>
                 </div>
    
@@ -92,8 +102,14 @@ $optObsSec = array("niet opgegeven",
                 </td>
                 <td class="hwhite">
                     <br><br>
+<<<<<<< ours
                     <!--<img src="<?php echo $imgPath,$vimg;?>" alt="" width="300" height="200" > 
                     -->
+=======
+<!--
+                    <img src="<?php echo $imgPath,$vimg;?>" alt="" width="300" height="200" >
+-->
+>>>>>>> theirs
                     <?php showObsPic($imgPath,$vimg,300,200); ?>
                     <br><br>
                 </td>
@@ -101,6 +117,7 @@ $optObsSec = array("niet opgegeven",
             <tr>
                 <td class = "hwhite" colspan="2">
                     <form action="upload_file.php" method="post" enctype="multipart/form-data">
+<<<<<<< ours
                         <label for="file">Bestand:</label>
                         <input type="hidden" name="hindId" value="<?php echo $vhindId;?>">
                         <input type="hidden" name="hindSec" value="<?php echo $vsectionname;?>">
@@ -112,6 +129,19 @@ $optObsSec = array("niet opgegeven",
                                value="Verwijderen" >
                         <input class="cudWidget" type="image" name="fileImport" src="../img/save.jpeg" 
                                value="Opslaan" >
+=======
+                    <label for="file">Bestand:</label>
+                    <input type="hidden" name="hindId" value="<?php echo $vhindId;?>">
+                    <input type="hidden" name="hindSec" value="<?php echo $vsectionname;?>">
+                    <input type="hidden" name="hindVolgnr" value="<?php echo $vhindVolgnr;?>">
+                    <input type="hidden" name="imgPath" value="<?php echo $imgPath;?>">
+                    <input type="hidden" name="vimg" value="<?php echo $vimg;?>">
+                    <input type="file" name="file" id="file" >
+                    <input class="cudWidget" type="image" name="fileDelete" src="../img/del.jpeg" 
+                           value="Verwijderen" >
+                    <input class="cudWidget" type="image" name="fileImport" src="../img/save.jpeg" 
+                           value="Opslaan" >
+>>>>>>> theirs
                     </form><br>
                 </td>
             </tr>
