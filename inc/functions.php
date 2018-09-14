@@ -336,9 +336,5 @@ function showObsPic($path,$img,$maxb,$maxh){
         echo '<img src="'.$path.$img.'"'.$str.' >';
     }
 }
-<<<<<<< ours
-=======
-
->>>>>>> theirs
 
 ?>

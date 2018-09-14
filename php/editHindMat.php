@@ -114,7 +114,7 @@ $STH=null;
       <tr class="theader">
           <th width="5%" ></th>
           <th width="40%"><strong>Materialen in deze hindernis</strong></th>
-          <th colspan="2" align="right">
+          <th colspan="3" align="right">
 			 <div class="cudWidget">
               <button type="submit" name="delMaterials" >
                   <img src="../img/del.jpeg" width="35" height="35">
@@ -129,7 +129,7 @@ $STH=null;
       
       <?php
       //hindernismaterialen ophalen
-      $STH2 = $db->query('SELECT tom.Id, tm.Omschr, tom.Aantal, tmt.Omschr as tmtomschr 
+      $STH2 = $db->query('SELECT tom.Id as tomId, tm.*, tom.Aantal, tmt.Omschr as tmtomschr 
                           from TblObstacleMaterials tom, TblMaterials tm, TblMaterialTypes tmt 
                           where tom.Material_id = tm.Id 
                             and tmt.Id=tm.MaterialType_Id 
@@ -137,13 +137,20 @@ $STH=null;
       $STH2->setFetchMode(PDO::FETCH_ASSOC);
       //hindernismaterialen tonen
       while($rows=$STH2->fetch()){
+      	 $isrope = htmlentities($rows['IndSecureRope']);
+          $imrope = htmlentities($rows['IndMainRope']);
+          $srope="";
+          $mrope="";
+          if($isrope==1){$srope="Veiligheidstouw";}
+          if($imrope==1){$mrope="Hoofdtouw";}
       ?>
       
       <tr>
-          <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
+          <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['tomId']; ?>"></td>
           <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
           <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
           <td class = "white"><?php echo htmlentities($rows['Aantal']); ?></td>
+          <td class = "white"><?php echo $srope.$mrope; ?></td>
       </tr>
 
       <?php
@@ -174,7 +181,7 @@ $STH=null;
                   $ids[] = (int) $val;
               }
               $ids = implode("','", $ids);
-              $STH = $db->prepare("DELETE FROM $tbl_name1 WHERE Id IN ('".$ids."')");
+              $STH = $db->prepare("DELETE FROM $tbl_name1 WHERE Id IN ('".$ids."')");           
               $STH->execute();
           }
           
