@@ -337,5 +337,4 @@ function showObsPic($path,$img,$maxb,$maxh){
     }
 }
 
-
 ?>

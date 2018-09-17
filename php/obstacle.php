@@ -6,8 +6,18 @@ copyright: 2013 Gerko Weening
 
 20170705
 solved undefined index when logged out
+<<<<<<< ours
+20171222
+added materialtype and materialdetail in view
 20180228
 improved aspect ratio of preview of picture
+20180903
+revised
+
+=======
+20180228
+improved aspect ratio of preview of picture
+>>>>>>> theirs
 */
 
 include_once "../inc/base.php";
@@ -49,23 +59,24 @@ $optObsSec = array("niet opgegeven",
     <head>
         <script type="text/JavaScript" src="../js/getObstacle.js"></script>
     </head>
+    
     <body id="sections">
         <div id="LeftColumn2a">
               <?php include "obstacleOverviewPerSection.php"; ?>
         </div>
 
         <div id="RightColumn">
-        <table id="obstacleTable">
-     
+        <table id="obstacleTable">   
                 <a class="tableTitle2">Hindernis <?php echo $vsectionname,str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT)?></a>
                 <div class="cudWidget">
                 </div>
-           
-           
+              
                 <div id="widgetBartab">
                     <ul class="basictab">
-                        <li class="selected"><a href="">Hindernisdetails</a></li>
-                        <li><a href="hindernisControles.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernis controles</a></li>
+                        <li class="selected">
+                            <a href="obstacle.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernisdetails</a></li>
+                        <li>
+                            <a href="hindernisControles.php?hId=<?php echo $vhindId;?>&Sec=<?php echo $vsectionname;?>&Vnr=<?php echo $vhindVolgnr;?>&Img=<?php echo $vimg;?>">Hindernis controles</a></li>
                     </ul>
                 </div>
    
@@ -86,9 +97,11 @@ $optObsSec = array("niet opgegeven",
                 </td>
                 <td class="hwhite">
                     <br><br>
+
 <!--
                     <img src="<?php echo $imgPath,$vimg;?>" alt="" width="300" height="200" >
 -->
+
                     <?php showObsPic($imgPath,$vimg,300,200); ?>
                     <br><br>
                 </td>
@@ -110,31 +123,44 @@ $optObsSec = array("niet opgegeven",
                     </form><br>
                 </td>
             </tr>
-
         </table>
+        
         <form name="form1" method="post" action="">
         <div id="RightColumnHalf">
         <table id="obstacleTableHalf">
             <tr class="theader">
-                <th ><strong>Hindernismaterialen</strong></th>
-                <th align="center">
+                <th><strong>Hindernismaterialen</strong></th>
+                <th></th>
+                <th colspan="2" align="center">
                 <button type="submit" name="editHindMaterials" >
                     <img src="../img/edit.jpeg" width="35" height="35">
                 </button>    
                 </th>
-
-            </tr>    
+            </tr>  
+              
             <?php
             //hindernismaterialen ophalen
-            $STH = $db->query('SELECT tm.Omschr, tom.Aantal from TblObstacleMaterials tom, TblMaterials tm where tom.Material_id = tm.Id and tom.Obstacle_id ='.$vhindId .' ');
+            $STH = $db->query('SELECT tm.Omschr, tom.Aantal, tm.*, tmt.Omschr as tmtomschr  
+                               from TblObstacleMaterials tom, TblMaterials tm, TblMaterialTypes tmt 
+                               where tom.Material_id = tm.Id and tmt.Id=tm.MaterialType_Id 
+                                 and tom.Obstacle_id ='.$vhindId .' ');
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             //hindernismaterialen tonen
             while($rows=$STH->fetch()){
+            	$isrope = htmlentities($rows['IndSecureRope']);
+          		$imrope = htmlentities($rows['IndMainRope']);
+          		$srope="";
+          		$mrope="";
+          		if($isrope==1){$srope="Veiligheidstouw";}
+          		if($imrope==1){$mrope="Hoofdtouw";}
             ?>
+            
             <tr>
+                <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
                 <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
                 <td class = "white"><?php echo htmlentities($rows['Aantal']); ?></td>
-            </tr>
+                <td class = "white"><?php echo $srope.$mrope; ?></td>            
+				</tr>
 
             <?php
             }
@@ -142,6 +168,7 @@ $optObsSec = array("niet opgegeven",
             ?>
         </table>
         </div>
+        
         <div id="RightColumnHalf">
         <table id="obstacleTableHalf">
             <tr class="theader">
@@ -153,32 +180,36 @@ $optObsSec = array("niet opgegeven",
                 </th>
 
             </tr>
+            
             <?php
             //hindernismaterialen ophalen
-            $STH = $db->query('SELECT tc.Omschr from TblObstacleCheckpoints toc, TblCheckpoints tc where toc.Checkpoint_id = tc.Id and toc.Obstacle_id = '.$vhindId .' ');
+            $STH = $db->query('SELECT tc.Omschr 
+                               from TblObstacleCheckpoints toc, TblCheckpoints tc 
+                               where toc.Checkpoint_id = tc.Id and toc.Obstacle_id = '.$vhindId .' ');
             $STH->setFetchMode(PDO::FETCH_ASSOC);
             //hindernismaterialen tonen
             while($rows=$STH->fetch()){
             ?>
+            
             <tr>
                 <td colspan="2" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
             </tr>
 
             <?php
             }
-
             ?>
+            
         </table>
-            <?php
-            if(isset($_POST['editHindMaterials'])){
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=editHindMat.php?Id=".$vhindId."&Sec=".$vsectionname."&Vnr=".$vhindVolgnr."&Img=".$vimg."\">";
-            }else if(isset($_POST['editHindChecks'])){
-                echo "<meta http-equiv=\"refresh\" content=\"0;URL=editHindChk.php?Id=".$vhindId."&Sec=".$vsectionname."&Vnr=".$vhindVolgnr."&Img=".$vimg."\">";
-            }
+         <?php
+         if(isset($_POST['editHindMaterials'])){
+             echo "<meta http-equiv=\"refresh\" content=\"0;URL=editHindMat.php?Id=".$vhindId."&Sec=".$vsectionname."&Vnr=".$vhindVolgnr."&Img=".$vimg."\">";
+         }else if(isset($_POST['editHindChecks'])){
+             echo "<meta http-equiv=\"refresh\" content=\"0;URL=editHindChk.php?Id=".$vhindId."&Sec=".$vsectionname."&Vnr=".$vhindVolgnr."&Img=".$vimg."\">";
+         }
 
-            //close connection
-            $db = null;
-            ?>
+         //close connection
+         $db = null;
+         ?>
         </div>
         </form>
         </div>

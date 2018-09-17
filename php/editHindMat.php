@@ -9,6 +9,8 @@ copyright: 2013 Gerko Weening
 solved undifined variable
 20170705
 solved undefined index when logged out
+20171222
+added materialtype and materialdetail in view
 
 */
 
@@ -49,11 +51,11 @@ $STH=null;
   <div id="LeftColumn2a">
       <?php include "obstacleOverviewPerSection.php"; ?>
   </div>
+  
   <div id="RightColumn">
       <table id="obstacleTable">
-
-          <a class="tableTitle2">Hindernis <?php echo $vsectionname,str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT)?></a>
-            
+          <a class="tableTitle2">Hindernis <?php echo $vsectionname,str_pad($vhindVolgnr,2,'0',STR_PAD_LEFT)?></a>   
+                 
           <div class="cudWidget">
 				<a> <img src="<?php echo $imgPath,$vimg;?>" alt="" width="60" height="50" ></a>
           </div>
@@ -69,6 +71,7 @@ $STH=null;
       <tr class="theader">
           <th width="5%" ></th>
           <th ><strong>Materialen</strong></th>
+          <th></th>
           <th align="center">
               <button type="submit" name="addMaterials" >
                   <img src="../img/forward.jpeg" width="35" height="35">
@@ -77,17 +80,27 @@ $STH=null;
       </tr>
 
       <?php
-      $STH1 = $db->query('SELECT * 
-                          from TblMaterials 
-                          where Terrein_id = "'.$_SESSION['Terreinid'].'"
-                          order by Id');
+      $STH1 = $db->query('SELECT tm.*, tmt.Omschr as tmtomschr 
+                          from TblMaterials tm, TblMaterialTypes tmt
+                          where tmt.Id=tm.MaterialType_Id 
+                            and tm.Terrein_id = "'.$_SESSION['Terreinid'].'"
+                          order by tm.Id');
       $STH1->setFetchMode(PDO::FETCH_ASSOC);
+      //show materials
       while($rows=$STH1->fetch()){
+          $isrope = htmlentities($rows['IndSecureRope']);
+          $imrope = htmlentities($rows['IndMainRope']);
+          $srope="";
+          $mrope="";
+          if($isrope==1){$srope="Veiligheidstouw";}
+          if($imrope==1){$mrope="Hoofdtouw";}
       ?>
 
       <tr>
           <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
-          <td colspan="2" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+          <td colspan="2" class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
+          <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+          <td class = "white"><?php echo $srope.$mrope; ?></td>
       </tr>
 
       <?php
@@ -101,7 +114,7 @@ $STH=null;
       <tr class="theader">
           <th width="5%" ></th>
           <th width="40%"><strong>Materialen in deze hindernis</strong></th>
-          <th colspan="2" align="right">
+          <th colspan="3" align="right">
 			 <div class="cudWidget">
               <button type="submit" name="delMaterials" >
                   <img src="../img/del.jpeg" width="35" height="35">
@@ -113,17 +126,31 @@ $STH=null;
 			 </div>
           </th>
       </tr>
+      
       <?php
       //hindernismaterialen ophalen
-      $STH2 = $db->query('SELECT tom.Id, tm.Omschr, tom.Aantal from TblObstacleMaterials tom, TblMaterials tm where tom.Material_id = tm.Id and tom.Obstacle_id ='.$vhindId.' ');
+      $STH2 = $db->query('SELECT tom.Id as tomId, tm.*, tom.Aantal, tmt.Omschr as tmtomschr 
+                          from TblObstacleMaterials tom, TblMaterials tm, TblMaterialTypes tmt 
+                          where tom.Material_id = tm.Id 
+                            and tmt.Id=tm.MaterialType_Id 
+                            and tom.Obstacle_id ='.$vhindId.' ');
       $STH2->setFetchMode(PDO::FETCH_ASSOC);
       //hindernismaterialen tonen
       while($rows=$STH2->fetch()){
+      	 $isrope = htmlentities($rows['IndSecureRope']);
+          $imrope = htmlentities($rows['IndMainRope']);
+          $srope="";
+          $mrope="";
+          if($isrope==1){$srope="Veiligheidstouw";}
+          if($imrope==1){$mrope="Hoofdtouw";}
       ?>
+      
       <tr>
-          <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
-          <td colspan ="2" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+          <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['tomId']; ?>"></td>
+          <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
+          <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
           <td class = "white"><?php echo htmlentities($rows['Aantal']); ?></td>
+          <td class = "white"><?php echo $srope.$mrope; ?></td>
       </tr>
 
       <?php
@@ -143,22 +170,26 @@ $STH=null;
                   $stmt->execute();
               }
           }
+          
           if($stmt){
               echo "<meta http-equiv=\"refresh\" content=\"0;URL=editHindMat.php?Id=".$vhindId."&Sec=".$vsectionname."&Vnr=".$vhindVolgnr."&Img=".$vimg."\">";
           }
+          
       }else  if(isset($_POST['delMaterials'])){
           if(!empty($_POST['checkbox'])){
               foreach($_POST['checkbox'] as $val){
                   $ids[] = (int) $val;
               }
               $ids = implode("','", $ids);
-              $STH = $db->prepare("DELETE FROM $tbl_name1 WHERE Id IN ('".$ids."')");
+              $STH = $db->prepare("DELETE FROM $tbl_name1 WHERE Id IN ('".$ids."')");           
               $STH->execute();
           }
+          
           // if successful redirect to delete_multiple.php
           if($STH){
               echo "<meta http-equiv=\"refresh\" content=\"0;URL=editHindMat.php?Id=".$vhindId."&Sec=".$vsectionname."&Vnr=".$vhindVolgnr."&Img=".$vimg."\">";
           }
+          
       }else if(isset($_POST['editMaterials'])){
               if(!empty($_POST['checkbox'])){
                   foreach($_POST['checkbox'] as $val){
@@ -173,6 +204,7 @@ $STH=null;
                  echo '<script> editFunction("'.$value.'", "'.$ids.'","'.$vhindId.'" ,"'.$vsectionname.'", "'.$vhindVolgnr.'", "'.$vimg.'"); </script>';   
               }
           }
+          
           if(isset($_GET['var1'])){
             $sOmschr = $_GET['var1'];
             $hmId = $_GET['hmId'];
@@ -191,10 +223,12 @@ $STH=null;
   </table>
   </div>
   </form>
+  
   <?php
   //close connection
   $db = null;
   ?>
+  
   </table>
   </td>
   </tr>
