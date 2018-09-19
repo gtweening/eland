@@ -96,13 +96,22 @@ $getMatType="select tm.id,concat('m_',tmt.Omschr) as MOmschr,1 as val
                   on tm.MaterialType_id = tmt.id 
              where tm.".$whereTerrein ;
 
+//check if materialtypes are filled.
+$STH = $db->query($getMatType);
+//$STH->execute();
+if ($STH->fetchColumn()==0){
+	echo "<br>";
+	echo '<a href="materials.php">Materiaal types</a> nog niet gevuld. Controlelijst kan niet gemaakt worden.' ;
+	exit;
+}
+
 //get materiaalomschr voor hoofdtouw en zekeringstouw
-$getMainSafetyRope = "select Obstacle_id, max(if(Aantal like '%hoofdtouw%',Omschr,'')) as hoofdtouw, 
-                                          max(if(Aantal like '%zekeringstouw%',Omschr,'')) as zekeringstouw  
-                      from (select tom.Obstacle_id, tom.Aantal, tm.Omschr 
+$getMainSafetyRope = "select Obstacle_id, max(if(IndMainRope=1,Omschr,'')) as hoofdtouw, 
+                                          max(if(IndSecureRope=1,Omschr,'')) as zekeringstouw  
+                      from (select tom.Obstacle_id, tom.Aantal, tm.Omschr, tm.IndMainRope, tm.IndSecureRope
                             from TblObstacleMaterials tom inner join TblMaterials tm 
                               on tom.Material_id = tm.Id 
-                      where tom.Aantal like '%hoofdtouw%' or tom.Aantal like 'zekeringstouw%') as t 
+                      where tm.IndMainRope = 1 or tm.IndSecureRope = 1) as t 
                       group by Obstacle_id";
 
 //get obstacle id for all materials (outer join)
@@ -131,7 +140,12 @@ $getMat="select t.HId, t.Aantal, ".$sPivotScript."
          group by t.HId";
 
 //join getObstMat with Obstacle info
-$getObstMatInfo="select tob.Id, tob.Section_id, tob.Volgnr, tob.Omschr as HOmschr,
+//add leading zero if column length=1 (0-9)
+$getObstMatInfo="select tob.Id, tob.Section_id, 
+                        case when tob.Volgnr between 0 and 9
+                           then concat('0',tob.Volgnr) else tob.Volgnr
+                        end as Volgnr, 
+                        tob.Omschr as HOmschr,
                         tob.DatCreate, tob.MaxH, tomt.*  
                  from TblObstacles tob left join (".$getMat.") as tomt 
                       on tob.Id=tomt.HId";
