@@ -1,0 +1,107 @@
+/* 
+    Document   : StyleSheet
+    Created on : 19-sep-2018
+    Author     : gerko
+    Description:
+    Stylesheet for Report ControleLijst PC
+*/
+
+#main { background: white;
+        font-family: arial;
+}
+
+#Table{vertical-align: top;
+       width: 100%;
+}
+
+.h2 {font-family: arial;
+     vertical-align: top;
+     background: darkblue;
+     color: white;
+}
+
+.headerlocatie {font-family: arial;
+                font-weight: bold;
+}
+
+.TopInfo{font-family: arial;
+         font-size: small; 
+         text-align: left;
+         vertical-align: top;
+         width:15%;
+}
+
+.TableText{font-family: arial;
+           font-size: small; 
+           text-align: left;
+           vertical-align: top;
+}
+        
+.matText{font-family: arial;
+         font-size: normal; 
+         text-align: center;
+         vertical-align: top;
+}
+
+th.matheader {height: 125px;
+              white-space: nowrap;
+}
+
+th.matheader > div {transform: translate(5px, 50px)
+                    rotate(270deg);
+                    width: 15px;
+}
+
+th.matheader > div > span {
+}
+    
+.inputText{font-family: arial;
+           font-size: small; 
+           text-align: left;                   
+}
+
+td{border-bottom: 1px solid #dddddd;
+}
+
+tr:nth-child(even) {background-color: #eeeeee;
+}
+
+tr:nth-child(odd) {background-color:#ffffff;
+}
+
+th {background-color: #0b2b8c;
+	 color: white;
+	 font-family: arial;
+	 font-size: small;
+}
+
+footer {page-break-after:always;}
+
+.navbar {overflow: hidden;
+          background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  font-family: arial;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+
+.main {
+  padding: 16px;
+  margin-top: 30px;
+  height: 1500px; /* Used in this example to enable scrolling */
+}

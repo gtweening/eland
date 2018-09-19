@@ -2,6 +2,7 @@
 include_once "constants.inc.php";
 
 function getterreinid(){
+	$Terreinid="";
 	if ($_SESSION['Terreinid']==0) {
 		$where = "Terrein_id is null ";
 	} else {
