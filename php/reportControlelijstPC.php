@@ -33,7 +33,12 @@ if(login_check($mysqli) == true) {
 
 <body>
 <div class="navbar">
-   <a href="exportRptPC-RTF.php">Exporteer rapport naar RTF</a>   
+   <a href="?exportRptRTF=true">Exporteer rapport naar RTF</a>
+   <?php
+   	if(isset($_GET['exportRptRTF'])){
+			exportRptRTF($Terreinnaam);   	
+   	}
+   ?>   
 </div>
 
 <div class="main">
