@@ -124,7 +124,7 @@ $tbl_name="TblMaterials"; // Table name
               <td width="5%" class="white2"><input name="checkbox[]" type="checkbox" 
 				  id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
               <td class = "white"><?php echo htmlentities($rows['matType']); ?></td>
-              <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+              <td class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></td>
               <td class = "white"><?php echo $srope.$mrope; ?></td>
           </tr>
           <?php
@@ -171,8 +171,9 @@ $tbl_name="TblMaterials"; // Table name
                         break;
                     default:
                 }
+                $omschr=utf8_decode($_POST[material]);
                 $STH = $db->prepare("INSERT INTO $tbl_name (Omschr, MaterialType_id, Terrein_id, IndSecureRope, IndMainRope) 
-                                     VALUES ('$_POST[material]', '$_POST[mattype]', '$Terreinid','$srope','$mrope')");
+                                     VALUES ('$omschr', '$_POST[mattype]', '$Terreinid','$srope','$mrope')");
                 $STH->execute();
             }else{
                 echo $_POST['rope'];
@@ -208,7 +209,7 @@ $tbl_name="TblMaterials"; // Table name
                     }
                     if (strlen($sOmschr)<>0){
                         $STH = $db->prepare("UPDATE $tbl_name 
-                                             SET Omschr = '".$sOmschr."', 
+                                             SET Omschr = '".utf8_decode($sOmschr)."', 
                                                  MaterialType_id = '".$mattype."', 
                                                  IndSecureRope = $srope, 
                                                  IndMainRope = $mrope    
