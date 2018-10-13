@@ -38,7 +38,13 @@
             </a>
         </li>
         <li>
-            <a href="reportAll.php" id="navchked" title="Volledig overzicht t.b.v. archief">
+            <a href="reportControlelijstPC.php" id="navrptpc" title="Controlelijst Parcours Commissie">
+                <img src="../img/checklistSBN.png" alt="Materialen" width="35" height="35" align="middle">
+                
+            </a>
+        </li>      
+        <li>
+            <a href="reportAll.php" id="navrptall" title="Volledig overzicht t.b.v. archief">
                 <img src="../img/reportAll.png" alt="Materialen" width="35" height="35" align="middle">
                 
             </a>

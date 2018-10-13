@@ -76,7 +76,7 @@ while($rows=$STH->fetch()){
                 while($rows2=$STH2->fetch()){
                 ?>
                 <tr>
-                    <td class="TableText">- <?php echo ($rows2['Omschr']); ?>; <?php echo ($rows2['Aantal']); ?>  </td>
+                    <td class="TableText">- <?php echo (utf8_encode($rows2['Omschr'])); ?>; <?php echo ($rows2['Aantal']); ?>  </td>
                 </tr>            
                 <?php }?>
              </table>

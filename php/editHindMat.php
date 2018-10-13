@@ -70,7 +70,7 @@ $STH=null;
   <table id="obstacleTableHalf">
       <tr class="theader">
           <th width="5%" ></th>
-          <th ><strong>Materialen</strong></th>
+          <th colspan="2"><strong>Materialen</strong></th>
           <th></th>
           <th align="center">
               <button type="submit" name="addMaterials" >
@@ -99,7 +99,7 @@ $STH=null;
       <tr>
           <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
           <td colspan="2" class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
-          <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+          <td class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></td>
           <td class = "white"><?php echo $srope.$mrope; ?></td>
       </tr>
 
@@ -113,8 +113,8 @@ $STH=null;
   <table id="obstacleTableHalf">
       <tr class="theader">
           <th width="5%" ></th>
-          <th width="40%"><strong>Materialen in deze hindernis</strong></th>
-          <th colspan="3" align="right">
+          <th colspan="2" width="35%"><strong>Materialen in deze hindernis</strong></th>
+          <th colspan="2" align="right">
 			 <div class="cudWidget">
               <button type="submit" name="delMaterials" >
                   <img src="../img/del.jpeg" width="35" height="35">
@@ -125,6 +125,7 @@ $STH=null;
               </button>    
 			 </div>
           </th>
+          <th></th>
       </tr>
       
       <?php
@@ -148,7 +149,7 @@ $STH=null;
       <tr>
           <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['tomId']; ?>"></td>
           <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
-          <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+          <td class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></td>
           <td class = "white"><?php echo htmlentities($rows['Aantal']); ?></td>
           <td class = "white"><?php echo $srope.$mrope; ?></td>
       </tr>

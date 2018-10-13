@@ -129,9 +129,9 @@ $optObsSec = array("niet opgegeven",
         <div id="RightColumnHalf">
         <table id="obstacleTableHalf">
             <tr class="theader">
-                <th><strong>Hindernismaterialen</strong></th>
+                <th colspan="2"><strong>Hindernismaterialen</strong></th>
                 <th></th>
-                <th colspan="2" align="center">
+                <th  align="center">
                 <button type="submit" name="editHindMaterials" >
                     <img src="../img/edit.jpeg" width="35" height="35">
                 </button>    
@@ -157,7 +157,7 @@ $optObsSec = array("niet opgegeven",
             
             <tr>
                 <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
-                <td class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+                <td class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></td>
                 <td class = "white"><?php echo htmlentities($rows['Aantal']); ?></td>
                 <td class = "white"><?php echo $srope.$mrope; ?></td>            
 				</tr>
