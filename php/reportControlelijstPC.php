@@ -9,6 +9,7 @@
 
 include_once "../inc/base.php";
 include_once "../inc/functions.php";
+include_once "../inc/PC_CTRL_Export.php";
 include_once "../inc/queries.php";
 
 sec_session_start();
@@ -20,79 +21,8 @@ if (isset($_SESSION['Terreinnaam'])){
 
 //secure login
 if(login_check($mysqli) == true) { 
-?>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href="../css/StyleSheetReportPC.css">
-    <title>Controlelijst Parcours Commissie</title>
-    
-</head>
-
-<body>
-<div class="navbar">
-   <a href="?exportRptRTF=true">Exporteer rapport naar RTF</a>
-   <?php
-   	if(isset($_GET['exportRptRTF'])){
-			exportRptRTF($Terreinnaam);   	
-   	}
-   ?>   
-</div>
-
-<div class="main">
-   <!--header-->
-	<table width=100% >
-		<tr>
-			<td colspan=2 valign="top">	
-				<h2>Controlelijst Parcours Comissie</h2>
-			</td>
-			<td rowspan=2 align="right">
-				<img src="../img/LogoSBN.png" width="250" >
-			</td>
-		</tr>
-		<tr>
-			<td class="headerlocatie" width=15%>Trainingslocatie:</td>
-			<td class="headerlocatie">
-				<?php echo $Terreinnaam ?>
-			</td>
-		</tr>
-	</table>
-	<hr>
-	
-	<!--2nd part of header-->
-	<table id="Table">
-		<tr >		
-			<td class="TopInfo">Plaats:</td>
-			<td></td>
-			<td class="TopInfo">Controleurs terrein:</td>
-			<td width=40%></td>
-		</tr>
-		<tr>
-			<td class="TopInfo">Trainingstijden:</td>
-			<td></td>
-			<td class="TopInfo">Controleurs SBN:</td>
-			<td></td>
-		</tr>
-		<tr>	
-			<td class="TopInfo">BHV / EHBO aanwezig tijdens trainingen:</td>
-			<td class="TopInfo">Ja / Nee</td>
-			<td class="TopInfo">Datum controle:	</td>
-			<td></td>
-		</tr>
-		<tr>	
-			<td></td>
-			<td></td>
-			<td class="TopInfo">Algemeen oordeel:	</td>
-			<td></td>
-		</tr>
-		
-	</table>
-	
-<?php
-
-
+//initialise variables and queries
 $whereTerrein = getterreinid();
 
 //get materialtypes per material
@@ -194,7 +124,84 @@ if ($result = $mysqli->query($getObstChkInfo)) {
 	$result->free();
 }
 
+$STH0 = $db->query($getObstChkInfo);
+$info = $STH0->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../css/StyleSheetReportPC.css">
+    <title>Controlelijst Parcours Commissie</title>
+    
+</head>
+
+<body>
+<div class="navbar">
+   <a href="?exportRptXLS=true">Exporteer rapport naar XLS<font size="2"> (zonder opmaak)</font> </a>
+   <a href="?exportRptRTF=true">Exporteer rapport naar RTF</a>
+   <?php
+   	if(isset($_GET['exportRptRTF'])){
+			exportRptRTF($Terreinnaam,$info);   	
+   	}
+   	elseif(isset($_GET['exportRptXLS'])){
+   		exportRptXLS($Terreinnaam,$finfo);
+   	}
+   ?>
+      
+</div>
+
+<div class="main">
+   <!--header-->
+	<table width=100% >
+		<tr>
+			<td colspan=2 valign="top">	
+				<h2>Controlelijst Parcours Comissie</h2>
+			</td>
+			<td rowspan=2 align="right">
+				<img src="../img/LogoSBN.png" width="250" >
+			</td>
+		</tr>
+		<tr>
+			<td class="headerlocatie" width=15%>Trainingslocatie:</td>
+			<td class="headerlocatie">
+				<?php echo $Terreinnaam ?>
+			</td>
+		</tr>
+	</table>
+	<hr>
+	
+	<!--2nd part of header-->
+	<table id="Table">
+		<tr >		
+			<td class="TopInfo">Plaats:</td>
+			<td></td>
+			<td class="TopInfo">Controleurs terrein:</td>
+			<td width=40%></td>
+		</tr>
+		<tr>
+			<td class="TopInfo">Trainingstijden:</td>
+			<td></td>
+			<td class="TopInfo">Controleurs SBN:</td>
+			<td></td>
+		</tr>
+		<tr>	
+			<td class="TopInfo">BHV / EHBO aanwezig tijdens trainingen:</td>
+			<td class="TopInfo">Ja / Nee</td>
+			<td class="TopInfo">Datum controle:	</td>
+			<td></td>
+		</tr>
+		<tr>	
+			<td></td>
+			<td></td>
+			<td class="TopInfo">Algemeen oordeel:	</td>
+			<td></td>
+		</tr>
+		
+	</table>
+	
+
 
    <!--body of report-->
 	<table width="100%">
