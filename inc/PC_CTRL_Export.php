@@ -382,16 +382,16 @@ function exportRptRTF($TL,$obsdata){
    //$string_encoded = iconv( mb_detect_encoding( $header ), 'Windows-1252//TRANSLIT', $header );
    $string_encoded = iconv( mb_detect_encoding( $data ), "WINDOWS-1252", $data );
 
-   $path=getcwd()."/";
-   $filename="PC_controlelijst.rtf";
+   $path=getcwd()."/../downloads/";
+   $filename="PC-controlelijst_".$TL.".rtf";
    $file=$path.$filename;
-   $file="/var/www/html/workspace/eland/inc/PC_controlelijst.rtf";
   
    $myfile = fopen($file, "w") or die("Unable to open file!");
    fwrite($myfile, $string_encoded);
    fclose($myfile);
    
-   echo '<a href="../inc/PC_controlelijst.rtf" download>download</a>';
+   $str='<a href="../downloads/PC-controlelijst_'.$TL.'.rtf" download>download</a>';
+   echo $str;
    
 }
 
