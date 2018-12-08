@@ -337,12 +337,7 @@ function showObsPic($path,$img,$maxb,$maxh){
     }
 }
 
-//function to export controlelijst parcours commissie to RTF
-//$obs = array with obstacle information
-function exportRptRTF($obs){
-	echo '<script language="javascript">';
-   echo 'alert("Hier wordt aan gewerkt!")';
-   echo '</script>';
 
-}
+
+
 ?>
