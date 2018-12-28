@@ -126,6 +126,13 @@ if ($result = $mysqli->query($getObstChkInfo)) {
 
 $STH0 = $db->query($getObstChkInfo);
 $info = $STH0->fetchAll(PDO::FETCH_ASSOC);
+
+if(isset($_GET['exportRptRTF'])){
+	exportRptRTF($Terreinnaam,$info);   	
+}
+elseif(isset($_GET['exportRptXLS'])){
+	exportRptXLS($Terreinnaam,$finfo);
+}
 ?>
 
 <!DOCTYPE html>
@@ -141,15 +148,6 @@ $info = $STH0->fetchAll(PDO::FETCH_ASSOC);
 <div class="navbar">
    <a href="?exportRptXLS=true">Exporteer rapport naar XLS<font size="2"> (zonder opmaak)</font> </a>
    <a href="?exportRptRTF=true">Exporteer rapport naar RTF</a>
-   <?php
-   	if(isset($_GET['exportRptRTF'])){
-			exportRptRTF($Terreinnaam,$info);   	
-   	}
-   	elseif(isset($_GET['exportRptXLS'])){
-   		exportRptXLS($Terreinnaam,$finfo);
-   	}
-   ?>
-      
 </div>
 
 <div class="main">
@@ -157,7 +155,7 @@ $info = $STH0->fetchAll(PDO::FETCH_ASSOC);
 	<table width=100% >
 		<tr>
 			<td colspan=2 valign="top">	
-				<h2>Controlelijst Parcours Comissie</h2>
+				<h2>Controlelijst Parcours Commissie</h2>
 			</td>
 			<td rowspan=2 align="right">
 				<img src="../img/LogoSBN.png" width="250" >
