@@ -390,8 +390,15 @@ function exportRptRTF($TL,$obsdata){
    fwrite($myfile, $string_encoded);
    fclose($myfile);
    
-   $str='<a href="../downloads/PC-controlelijst_'.$TL.'.rtf" download>download</a>';
-   echo $str;
+   //$str='<a href="../downloads/PC-controlelijst_'.$TL.'.rtf" download>download</a>';
+   //echo $str;
+   header("Cache-Control: public");
+   header("Content-Description: File Transfer");
+   header("Content-Disposition: attachment; filename=$filename");
+   header("Content-Type: application/rtf");
+   header("Content-Transfer-Encoding: binary");
+   readfile("../downloads/".$filename);
+   
    
 }
 
