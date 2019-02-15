@@ -60,14 +60,36 @@ $getObstMat="select distinct tom.Obstacle_id as HId,mat.MOmschr, mat.val, tom.Aa
 
 
 //get pivot script for materialtypes per material
-$getPivotScript = "select GROUP_CONCAT(distinct 
-                          concat('max(if(t.MOmschr = ''',t.MOmschr,''', t.val, NULL)) as 
-                                 ',t.MOmschr)) as sconcat 
-                   from (".$getObstMat.") as t ";
-$STH = $db->query($getPivotScript);
-$STH->setFetchMode(PDO::FETCH_ASSOC);
-$row=$STH->fetch();
-$sPivotScript=$row['sconcat'];
+//GROUP_CONCAT kan 1024 karakters bevatten => kan uit limiet lopen.
+//$getPivotScript = "select GROUP_CONCAT(distinct 
+//                          concat('max(if(t.MOmschr = ''',t.MOmschr,''', t.val, NULL)) as 
+//                                 ',t.MOmschr)) as sconcat 
+//                   from (".$getObstMat.") as t ";
+//$STH = $db->query($getPivotScript);
+//$STH->setFetchMode(PDO::FETCH_ASSOC);
+//$row=$STH->fetch();
+//$sPivotScript=$row['sconcat'];
+
+//materiaaltypes in array zetten
+$mattypes = array();
+while($rows=$STH->fetch()){
+	$MOmschr = ($rows['MOmschr']);
+	if($MOmschr !== NULL){
+		if(in_array($MOmschr,$mattypes)){
+			//materiaal komt al voor. niets doen.
+   	}else{
+   		//materiaal komt nog niet voor in array. toevoegen
+			array_push($mattypes,$MOmschr);
+		}
+	}
+}
+$sPivotScript = '';
+foreach($mattypes as $value){
+	$sPivotScript .= "max(if(t.MOmschr = '".$value."', t.val, NULL)) as ".$value.", " ;
+}
+//laatste , weghalen voor juiste query
+$sPivotScript = substr($sPivotScript,0,-2);
+//echo $sPivotScript;
 
 //get materialtypes per material in pivot table
 $getMat="select t.HId, t.Aantal, ".$sPivotScript." 
@@ -125,7 +147,13 @@ if ($result = $mysqli->query($getObstChkInfo)) {
 }
 
 $STH0 = $db->query($getObstChkInfo);
-$info = $STH0->fetchAll(PDO::FETCH_ASSOC);
+if ($STH0 !== FALSE){
+	$info = $STH0->fetchAll(PDO::FETCH_ASSOC);
+} else {
+//	echo $getObstChkInfo;
+  echo "er is een fout opgetreden bij het ophalen van de data. Dit is bekend. Er wordt aan gewerkt.";
+  exit;
+}
 
 if(isset($_GET['exportRptRTF'])){
 	exportRptRTF($Terreinnaam,$info);   	
