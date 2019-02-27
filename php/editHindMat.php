@@ -114,7 +114,7 @@ $STH=null;
       <tr class="theader">
           <th width="5%" ></th>
           <th colspan="2" width="35%"><strong>Materialen in deze hindernis</strong></th>
-          <th colspan="2" align="right">
+          <th colspan="3" align="right">
 			 <div class="cudWidget">
               <button type="submit" name="delMaterials" >
                   <img src="../img/del.jpeg" width="35" height="35">
@@ -126,8 +126,9 @@ $STH=null;
 			 </div>
           </th>
           <th></th>
+          <th></th>
       </tr>
-      
+    </table>
       <?php
       //hindernismaterialen ophalen
       $STH2 = $db->query('SELECT tom.Id as tomId, tm.*, tom.Aantal, tmt.Omschr as tmtomschr 
@@ -145,7 +146,7 @@ $STH=null;
           if($isrope==1){$srope="Veiligheidstouw";}
           if($imrope==1){$mrope="Hoofdtouw";}
       ?>
-      
+    <table id="obstacleTableHalf">
       <tr>
           <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['tomId']; ?>"></td>
           <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
