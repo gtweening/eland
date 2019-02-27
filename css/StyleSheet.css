@@ -6,7 +6,7 @@
         Purpose of the stylesheet follows.
 */
 
-root { 
+root {
     display: block;
 }
 
@@ -17,7 +17,9 @@ body {
     margin: 20px auto;
 }
 
-#main { background: white }
+#main {
+    background: white
+}
 
 .submitbtn {
     -webkit-appearance: none;
@@ -29,116 +31,143 @@ body {
     margin: 0px 0px;
     text-align: left;
 }
-.lightBlue { background-color: #E0F8F7;
-             padding: 0;
-             outline: none;
-             border-bottom: solid 1px #58D3F7;
-             border-top: solid 1px #58D3F7;
+
+.lightBlue {
+    background-color: #E0F8F7;
+    padding: 0;
+    outline: none;
+    border-bottom: solid 1px #58D3F7;
+    border-top: solid 1px #58D3F7;
 }
-.white { background-color: #fff ;
-         text-align: left;
-         padding: 0;
-         outline: none;
-         border-bottom: solid 1px #58D3F7;
-         border-top: solid 1px #58D3F7;
+
+.white {
+    background-color: #fff;
+    text-align: left;
+    padding: 0;
+    outline: none;
+    border-bottom: solid 1px #58D3F7;
+    border-top: solid 1px #58D3F7;
 }
-.white2 { background-color: #fff ;
-         text-align: left;
-         padding: 0;
-         outline: none;
-         border-bottom: solid 1px #58D3F7;
-         border-top: solid 1px #58D3F7;
+
+.white2 {
+    background-color: #fff;
+    text-align: left;
+    padding: 0;
+    outline: none;
+    border-bottom: solid 1px #58D3F7;
+    border-top: solid 1px #58D3F7;
 }
-.whitec { background-color: #fff ;
-         text-align: center;
-         padding: 0;
-         outline: none;
-         border-bottom: solid 1px #58D3F7;
-         border-top: solid 1px #58D3F7;
+
+.whitec {
+    background-color: #fff;
+    text-align: center;
+    padding: 0;
+    outline: none;
+    border-bottom: solid 1px #58D3F7;
+    border-top: solid 1px #58D3F7;
 }
-.hwhite { background-color: #fff ;
-         text-align: left;
-         padding-left: 20px;
-         outline: none;
-         border-bottom: solid 1px lightgray ;
+
+.hwhite {
+    background-color: #fff;
+    text-align: left;
+    padding-left: 20px;
+    outline: none;
+    border-bottom: solid 1px lightgray;
 }
-.tableTitle{
+
+.tableTitle {
     height: 50px;
     font-size: xx-large;
     font-weight: bold;
     text-align: left;
 }
-.tableTitle2{
+
+.tableTitle2 {
     height: 50px;
     font-size: xx-large;
     font-weight: bold;
-    padding-left:20px;
+    padding-left: 20px;
 }
-.tableTitle4{
+
+.tableTitle4 {
     height: 50px;
     font-size: large;
     font-weight: bold;
-    padding-left:20px;
+    padding-left: 20px;
 }
+
 .theader {
     text-align: left;
     height: 50px;
     background-color: #CEF6F5;
     border-bottom: solid 1px #58D3F7;
 }
-.inputText{
+
+.inputText {
     margin-top: 12px;
     margin-left: 30px;
 }
-.inputText2{
+
+.inputText2 {
     margin-top: 12px;
     margin-left: 30px;
     float: left;
 }
+
 .bubble {
     font-weight: bold;
     background-color: #f5eabe;
     padding: 5px;
     color: inherit;
 }
-.hMargin { margin: 0 30px }
-.smallText { font-size: small }
+
+.hMargin {
+    margin: 0 30px
+}
+
+.smallText {
+    font-size: small
+}
 
 #header {
     height: 50px;
     background: #e6e6e6;
     border-bottom: solid 1px black;
-    font-size: small; 
+    font-size: small;
     text-align: right;
     vertical-align: top;
 }
+
 #headerleft {
     height: 50px;
-	 width:30%;
+    width: 30%;
     border-bottom: solid 1px black;
-    font-size: small; 
+    font-size: small;
     text-align: right;
     vertical-align: top;
-	 float: left;
+    float: left;
 }
+
 #headermid {
     height: 50px;
-	 width:50%;
+    width: 50%;
     border-bottom: solid 1px black;
-    font-size: x-large; 
+    font-size: x-large;
     text-align: left;
     vertical-align: top;
-	 float: left;
+    float: left;
 }
+
 #headerright {
     height: 50px;
-	 width:20%;
+    width: 20%;
     border-bottom: solid 1px black;
-    font-size: small; 
+    font-size: small;
     text-align: right;
     vertical-align: top;
-	 float: left;
+    float: left;
 }
+
 #login {
     background-color: white;
     width: 320px;
@@ -148,6 +177,7 @@ body {
     margin: auto;
     font: 14px arial, sans-serif;
 }
+
 .loginbutton {
     background-color: #E0F8F7;
     border: 1px solid gray;
@@ -162,12 +192,14 @@ body {
     margin: 4px 2px;
     cursor: pointer;
 }
-.logininput{
-	 height: 25px;
+
+.logininput {
+    height: 25px;
     border-radius: 3px;
     font-size: 16px;
     width: 315px;
 }
+
 #footer {
     width: 360px;
     font-size: 10px;
@@ -176,11 +208,13 @@ body {
     border-radius: 5px;
     margin: auto;
 }
+
 h2 {
     text-align: center;
     font: 24px arial, sans-serif;
     color: gray;
 }
+
 #LeftColumn {
     height: 600px;
     width: 50px;
@@ -188,24 +222,29 @@ h2 {
     background: #CEF6F5;
     list-style-type: none;
 }
+
 #LeftColumn ul {
     list-style-type: none;
 }
-#LeftColumn ul li{
+
+#LeftColumn ul li {
     margin: 10px -40px;
 }
-#LeftColumn ul li a{
+
+#LeftColumn ul li a {
     padding: 5px;
     display: block;
     background-color: #CEF6F5;
     vertical-align: middle;
     line-height: 25px;
-    font-size: small; 
+    font-size: small;
 }
-#LeftColumn ul li a:hover{
+
+#LeftColumn ul li a:hover {
     background-color: #CEF6F5;
     color: black;
 }
+
 #LeftColumn2 {
     height: 600px;
     width: 194px;
@@ -213,23 +252,26 @@ h2 {
     background: white;
     list-style-type: none;
 }
+
 #LeftColumn2a {
     height: 600px;
     width: 194px;
     float: left;
     background: white;
-    border-left:solid 1px black;
-    padding-left:5px;
+    border-left: solid 1px black;
+    padding-left: 5px;
     list-style-type: none;
 }
-.tableTitle3{
+
+.tableTitle3 {
     height: 50px;
     font-size: xx-large;
     font-weight: bold;
-    padding-left:20px;
-    position:relative;
-    top:10px;
+    padding-left: 20px;
+    position: relative;
+    top: 10px;
 }
+
 #RightColumn {
     height: 600px;
     width: 695px;
@@ -245,55 +287,60 @@ h2 {
     background: white;
     border-left: solid 1px black;
 }
+
 #widgetBar {
     height: 50px;
     width: 700px;
     float: left;
-    background: white;    
+    background: white;
     border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
+
 #widgetBartab {
     height: 50px;
     width: 700px;
     float: left;
-    background: white;    
+    background: white;
     border-top: solid 1px black;
     border-bottom: solid 2px #58D3F7;
 }
+
 #widgetBar2x {
     height: 100px;
     width: 700px;
     float: left;
-    background: white;    
+    background: white;
     border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
+
 #widgetBar3x {
     height: 150px;
     width: 700px;
     float: left;
-    background: white;    
+    background: white;
     border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
+
 #widgetBar2 {
     height: 50px;
     width: 900px;
     float: left;
-    background: white;    
+    background: white;
     border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
+
 #widgetBarQuarter {
     height: 50px;
     width: 700px;
     float: left;
-    background: white;    
-     padding-top:10px;
+    background: white;
+    padding-top: 10px;
     border-top: solid 1px black;
     border-bottom: solid 1px black;
-   
 }
 
 .titleWidget {
@@ -304,14 +351,17 @@ h2 {
     line-height: 35px;
     background: white;
 }
-.cudWidget{
+
+.cudWidget {
     height: 50px;
     margin: 2px;
     float: right;
 }
-.cudWidget button.submitbtn:hover{
-    cursor:pointer;
+
+.cudWidget button.submitbtn:hover {
+    cursor: pointer;
 }
+
 #RightColumnHalf {
     height: 350px;
     width: 340px;
@@ -327,48 +377,85 @@ h2 {
     background: white;
 }
 
-#materialenTable { width: 700px; 
-                   border-collapse: collapse;  
+#materialenTable {
+    width: 700px;
+    border-collapse: collapse;
 }
-#materialenTable tr { height: 50px; }
-#materialenTable td { width: 700px; }
-#materialenTable2 { width: 700px; 
-                   border-collapse: collapse;  
-}
-#materialenTable2 tr { height: 50px; }
-#materialenTable2 td { width: 700px; }
-#materialenTable2 tr td.white:hover{ background-color: #CEF6F5;
-                                    cursor:pointer;
-}
-#materialenTable3 { width: 900px; 
-                   border-collapse: collapse;  
-}
-#obstacleTable { width: 695px;
-                 border-collapse: collapse;
-}
-#obstacleTableHalf { width: 340px;
-                     border-collapse: collapse;
-}
-#obstacleTableQuarter { width: 200px;
-                     border-collapse: collapse;
-}
-#obstacleTableQuarter tr td.white:hover{ width: 200px;
-                     border-collapse: collapse;
-                     background-color: #CEF6F5;
-                     cursor:pointer;
-}
-.basictab{
-    padding: 7px 0px;
-    margin-left: 0;    
-    list-style-type: none;
-    text-align: center; /*set to left, center, or right to align the menu as desired*/
 
+#materialenTable tr {
+    height: 50px;
 }
-.basictab li{
+
+#materialenTable td {
+    width: 700px;
+}
+
+#materialenTable2 {
+    width: 700px;
+    border-collapse: collapse;
+}
+
+#materialenTable2 tr {
+    height: 50px;
+}
+
+#materialenTable2 td {
+    width: 700px;
+}
+
+#materialenTable2 tr td.white:hover {
+    background-color: #CEF6F5;
+    cursor: pointer;
+}
+
+#materialenTable3 {
+    width: 900px;
+    border-collapse: collapse;
+}
+
+#obstacleTable {
+    width: 695px;
+    border-collapse: collapse;
+}
+
+#obstacleTableHalf {
+    width: 340px;
+    border-collapse: collapse;
+}
+
+#obstacleTableHalf td {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#obstacleTableQuarter {
+    width: 200px;
+    border-collapse: collapse;
+}
+
+#obstacleTableQuarter tr td.white:hover {
+    width: 200px;
+    border-collapse: collapse;
+    background-color: #CEF6F5;
+    cursor: pointer;
+}
+
+.basictab {
+    padding: 7px 0px;
+    margin-left: 0;
+    list-style-type: none;
+    text-align: center;
+    /*set to left, center, or right to align the menu as desired*/
+}
+
+.basictab li {
     display: inline;
     margin: 0;
 }
-.basictab li a{
+
+.basictab li a {
     text-decoration: none;
     padding: 7px 90px;
     margin-right: 10px;
@@ -377,11 +464,14 @@ h2 {
     background-color: white;
     color: #2d2b2b;
 }
-.basictab li a:hover{
+
+.basictab li a:hover {
     background-color: #e6e6e6;
     color: black;
 }
-.basictab li.selected a{ /*selected tab effect*/
+
+.basictab li.selected a {
+    /*selected tab effect*/
     position: relative;
     top: 1px;
     padding-top: 10px;
@@ -389,32 +479,37 @@ h2 {
     color: black;
     font-weight: bold;
 }
-label{
+
+label {
     display: inline-block;
     clear: left;
     width: 95px;
     text-align: left;
     color: #595959;
 }
-lblgrey{
-	color: #595959;
+
+lblgrey {
+    color: #595959;
 }
-.chkbox{
-	width:250px;
+
+.chkbox {
+    width: 250px;
 }
+
 input {
-  display: inline-block;
+    display: inline-block;
 }
 
 .dropdown {
     /* display: inline-block; */
 }
-.account-dropbox{
-	display: none;
+
+.account-dropbox {
+    display: none;
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
@@ -427,19 +522,21 @@ input {
     text-align: left;
 }
 
-.account-dropbox a:hover {background-color: #CEF6F5}
+.account-dropbox a:hover {
+    background-color: #CEF6F5
+}
 
 .dropdown:hover .account-dropbox {
     display: block;
 }
 
-body#gebruikersbeheer a#navGebruikers, 
-body#gebruikersterreinbeheer a#navGebruikersTerreinen, 
+body#gebruikersbeheer a#navGebruikers,
+body#gebruikersterreinbeheer a#navGebruikersTerreinen,
 body#terreinbeheer a#navTerreinen,
-body#berichten a#navBerichten, 
-body#materials a#navMaterials, 
-body#checkpoints a#navCheckpoints, 
-body#sections a#navSections, 
+body#berichten a#navBerichten,
+body#materials a#navMaterials,
+body#checkpoints a#navCheckpoints,
+body#sections a#navSections,
 body#chkq a#navChkQ,
 body#checked a#navchked,
 body#checklist a#navchkList {
