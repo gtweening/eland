@@ -91,7 +91,9 @@ $STH=null;
 
             <tr>
                 <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
-                <td colspan="2" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+                <td colspan="2" class = "white"><?php echo htmlentities($rows['Omschr']); ?>
+                  <span><?php echo htmlentities($rows['Omschr']); ?></span>
+                </td>
             </tr>
 
             <?php
@@ -121,7 +123,9 @@ $STH=null;
             ?>
             <tr>
                 <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
-                <td colspan ="3" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+                <td colspan ="3" class = "white"><?php echo htmlentities($rows['Omschr']); ?>
+                  <span><?php echo htmlentities($rows['Omschr']); ?></span>
+                </td>
             </tr>
 
             <?php

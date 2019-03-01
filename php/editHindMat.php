@@ -11,7 +11,10 @@ solved undifined variable
 solved undefined index when logged out
 20171222
 added materialtype and materialdetail in view
-
+20190227
+bugfix. long text caused corrupt table
+20190301
+tooltip for long text
 */
 
 include_once "../inc/base.php";
@@ -98,9 +101,15 @@ $STH=null;
 
       <tr>
           <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
-          <td colspan="2" class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
-          <td class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></td>
-          <td class = "white"><?php echo $srope.$mrope; ?></td>
+          <td colspan="2" class = "white"><?php echo htmlentities($rows['tmtomschr']); ?>
+            <span><?php echo htmlentities($rows['tmtomschr']); ?></span>
+          </td>
+          <td class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?>
+            <span><?php echo htmlentities($rows['Omschr']); ?></span>
+          </td>
+          <td class = "white"><?php echo $srope.$mrope; ?>
+            <span><?php echo $srope.$mrope; ?></span>
+          </td>
       </tr>
 
       <?php
@@ -149,10 +158,18 @@ $STH=null;
     <table id="obstacleTableHalf">
       <tr>
           <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['tomId']; ?>"></td>
-          <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
-          <td class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></td>
-          <td class = "white"><?php echo htmlentities($rows['Aantal']); ?></td>
-          <td class = "white"><?php echo $srope.$mrope; ?></td>
+          <td width="25%" class = "white"><?php echo htmlentities($rows['tmtomschr']); ?>
+            <span><?php echo htmlentities($rows['tmtomschr']); ?></span>
+          </td>
+          <td width="25%"class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?>
+            <span><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></span>
+          </td>
+          <td width="25%"class = "white"><?php echo htmlentities($rows['Aantal']); ?>
+            <span><?php echo htmlentities(utf8_encode($rows['Aantal'])); ?></span>
+          </td>
+          <td width="15%" class = "white" ><?php echo $srope.$mrope; ?>
+            <span><?php echo htmlentities(utf8_encode($rows['Aantal'])); ?></span>
+          </td>
       </tr>
 
       <?php
