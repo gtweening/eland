@@ -168,7 +168,7 @@ $STH=null;
             <span><?php echo htmlentities(utf8_encode($rows['Aantal'])); ?></span>
           </td>
           <td width="15%" class = "white" ><?php echo $srope.$mrope; ?>
-            <span><?php echo htmlentities(utf8_encode($rows['Aantal'])); ?></span>
+            <span><?php echo $srope.$mrope; ?></span>
           </td>
       </tr>
 
