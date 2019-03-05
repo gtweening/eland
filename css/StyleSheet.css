@@ -424,10 +424,24 @@ h2 {
 }
 
 #obstacleTableHalf td {
-    max-width: 100px;
+    max-width: 80px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding: 0px 2px;
+}
+
+#obstacleTableHalf td.white span {
+    display: none;
+}
+
+#obstacleTableHalf td.white:hover span {
+    max-width: 500px;
+    display: block;
+    position: absolute;
+    background-color: #58D3F7;
+    padding: 10px 10px;
+    border-radius: 6px;
 }
 
 #obstacleTableQuarter {

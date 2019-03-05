@@ -156,10 +156,18 @@ $optObsSec = array("niet opgegeven",
             ?>
             
             <tr>
-                <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?></td>
-                <td class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></td>
-                <td class = "white"><?php echo htmlentities($rows['Aantal']); ?></td>
-                <td class = "white"><?php echo $srope.$mrope; ?></td>            
+                <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?>
+                  <span><?php echo htmlentities($rows['tmtomschr']); ?></span>
+                </td>
+                <td class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?>
+                  <span><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></span>
+                </td>
+                <td class = "white"><?php echo htmlentities($rows['Aantal']); ?>
+                  <span><?php echo htmlentities(utf8_encode($rows['Aantal'])); ?></span>
+                </td>
+                <td class = "white"><?php echo $srope.$mrope; ?>
+                  <span><?php echo $srope.$mrope; ?></span>
+                </td>            
 				</tr>
 
             <?php
@@ -192,7 +200,9 @@ $optObsSec = array("niet opgegeven",
             ?>
             
             <tr>
-                <td colspan="2" class = "white"><?php echo htmlentities($rows['Omschr']); ?></td>
+                <td colspan="2" class = "white"><?php echo htmlentities($rows['Omschr']); ?>
+                  <span><?php echo htmlentities($rows['Omschr']); ?></span>
+                </td>
             </tr>
 
             <?php
