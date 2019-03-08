@@ -1,15 +1,7 @@
 <?php
-    // Database credentials
-    define('DB_HOST', 'localhost');
-    define('DB_USER', ''); //username
-    define('DB_PASS', ''); //database acces password
-    define('DB_NAME', '');  //databasename
-    
     define("CAN_REGISTER", "any");
     define("DEFAULT_ROLE", "member");
     
-    define("SECURE", FALSE);    // FOR DEVELOPMENT ONLY!!!!
-
     //Environment
     define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
     
@@ -19,20 +11,17 @@
 
     switch($domain) {
 
-        case 'test.uvponline.nl' :
-            define('ENVIRONMENT', 'staging');
-            error_reporting(E_ALL);
+        case 'hindernislogboek.survivalbond.nl' :
+            include 'constants.prod.php';
+            define('ENVIRONMENT', 'production');
+            error_reporting(0);
             break;
 
-        case 'hindernislogboek.survivalbond.nl' :
-                define('ENVIRONMENT', 'production');
-                error_reporting(0);
-                break;
-
         default :
-                define('ENVIRONMENT', 'development');
-                error_reporting(E_ALL);
-                break;
+            include 'constants.dev.php';
+            define('ENVIRONMENT', 'development');
+            error_reporting(E_ALL);
+            break;
         }
     }
 
