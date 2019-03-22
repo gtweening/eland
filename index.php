@@ -58,8 +58,8 @@ if (login_check($mysqli) == true) {
             </form>
         </div>
 <br><br><br>
-        <div id="footer">
-          <?php include "common/footer.php"; ?>
+        <div id="licentie">
+          <?php include "common/GNUlicentie.php"; ?>
         </div>
     </body>
 </html>
