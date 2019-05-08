@@ -286,7 +286,7 @@ if(isset($_POST['delSection'])){
         $STH = $db->query("Select Terrein_id FROM TblTerreinUsers WHERE Id IN ('".$ids."')");
 		  $STH->setFetchMode(PDO::FETCH_ASSOC);
 		  while($rows=$STH->fetch()){
-			 $Terreinid = htmlentities($rows['Terrein_id']);
+             $Terreinid = htmlentities($rows['Terrein_id']);
 		  }
     }
     // if successful redirect to section.php
@@ -295,8 +295,13 @@ if(isset($_POST['delSection'])){
 		$STH = $db->query("Select Terreinnaam FROM TblTerrein WHERE Id = '".$Terreinid."'");
 		$STH->setFetchMode(PDO::FETCH_ASSOC);
 		$row=$STH->fetch();
-      $value=$row['Terreinnaam'];
-      $_SESSION['Terreinnaam'] = $value;
+        $value=$row['Terreinnaam'];
+        $_SESSION['Terreinnaam'] = $value;
+        //add to log
+        $login_time = date('Y-m-d h:i:sa');
+        $log_msg = $_SESSION['username'].';'.$value.';'.$login_time."\n";
+        file_put_contents('../img/login.log', $log_msg, FILE_APPEND);
+
 		echo "<meta http-equiv=\"refresh\" content=\"0;URL=sections.php\">";
     }
 }else if(isset($_POST['addBericht'])){

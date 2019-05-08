@@ -25,4 +25,5 @@
 
     //path to images
     $imgPath = "../img/Obstacles/";
+    $imgTerrainPath = "../img/Terrain/";
 ?>

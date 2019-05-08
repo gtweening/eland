@@ -62,6 +62,7 @@ function login($email, $password, $mysqli) {
                 // the password the user submitted.
                 if ($db_password == $password) {
                     // Password is correct!
+
                     // Get the user-agent string of the user.
                     $user_browser = $_SERVER['HTTP_USER_AGENT'];
                     // XSS protection as we might print this value
@@ -104,8 +105,12 @@ function login($email, $password, $mysqli) {
 							  $stmt2->fetch();
 							  $_SESSION['Terreinnaam'] = $Terreinnaam;
 							  $_SESSION['Terreinid'] = $Terreinid;
-							  // Login successful.
-                       return true;
+                              // Login successful.
+                              //add to log
+                              $login_time = date('Y-m-d h:i:sa');
+                              $log_msg = $username.';'.$Terreinnaam.';'.$login_time."\n";
+                              file_put_contents('../img/login.log', $log_msg, FILE_APPEND);
+                              return true;
 						  }
                     
                 } else {
@@ -203,11 +208,11 @@ function checkbrute($user_id, $mysqli) {
     // Get timestamp of current time 
     $now = time();
  
-    // All login attempts are counted from the past 1 hours. 
-    $valid_attempts = $now - (2 * 60 );
- 
+    // All login attempts are counted from the past 30 minutes. 
+    $valid_attempts = $now - (30 * 60 );
+
     if ($stmt = $mysqli->prepare("SELECT time 
-                             FROM login_attempts <code><pre>
+                             FROM login_attempts 
                              WHERE user_id = ? 
                             AND time > '$valid_attempts'")) {
         $stmt->bind_param('i', $user_id);
@@ -215,7 +220,7 @@ function checkbrute($user_id, $mysqli) {
         // Execute the prepared query. 
         $stmt->execute();
         $stmt->store_result();
- 
+      
         // If there have been more than 5 failed logins 
         if ($stmt->num_rows > 5) {
             return true;
@@ -337,7 +342,106 @@ function showObsPic($path,$img,$maxb,$maxh){
     }
 }
 
+function imgImport($db, $STH){
+    $result = "";
+    
+    //controleer wat we gaan uploaden
+    $imgPath = $_POST["imgPath"];
+    $vimg = $_POST["vimg"];
 
+    //tabel instellen
+    if(isset($_POST['hindId'])){
+    //herkomst = Obstacle
+    $tbl = 'TblObstacles';
+    $col = 'ImgPath';
+    $hindId = $_POST["hindId"];
+    $where = "WHERE Id = $hindId";
+    }else{
+    //herkomst = terreinOverzicht
+    $tbl = 'TblTerrein';
+    $col = 'ImgFile';
+    $terreinId = $_POST["terreinId"];
+    $where = "WHERE Id = $terreinId";
+    }
 
+    //toegestane extensies
+    $allowedExts = array("gif", "jpeg", "jpg", "png","GIF", "JPEG", "JPG", "PNG","Gif", "Jpeg", "Jpg", "Png");
+    $temp = explode(".", $_FILES["file"]["name"]);
+    $extension = end($temp);
+    if ((($_FILES["file"]["type"] == "image/gif")
+    || ($_FILES["file"]["type"] == "image/jpeg")
+    || ($_FILES["file"]["type"] == "image/jpg")
+    || ($_FILES["file"]["type"] == "image/pjpeg")
+    || ($_FILES["file"]["type"] == "image/x-png")
+    || ($_FILES["file"]["type"] == "image/png"))
+    && ($_FILES["file"]["size"] < 500000)
+    && in_array($extension, $allowedExts))
+      {
+      if ($_FILES["file"]["error"] > 0) {
+        $result = "Return Code: " . $_FILES["file"]["error"] . "<br>";
+      }
+      else {
+        $result .= "Upload: " . $_FILES["file"]["name"] . "\\n";
+        $result .= "Type: " . $_FILES["file"]["type"] . "\\n";
+        $result .= "Size: " . ($_FILES["file"]["size"] / 1024) . " kB\\n";
+        $result .= "Temp file: " . $_FILES["file"]["tmp_name"] . "\\n";
+
+        if (file_exists($imgPath . $_FILES["file"]["name"])) {
+          $result .= $_FILES["file"]["name"] . " bestaat al op de server. Raadpleeg de beheerder voor correctie!";
+        }
+        else {
+          //move file to server
+          move_uploaded_file($_FILES["file"]["tmp_name"],
+                $imgPath . $_FILES["file"]["name"]);
+          //echo "Opgeslagen in: " . $imgPath . $_FILES["file"]["name"];
+          $result .= "\\n" . $_FILES["file"]["name"] . " is opgeslagen op de server.";
+          $FileName = $_FILES["file"]["name"];
+          $sql = "UPDATE $tbl SET $col = '".$FileName."' $where";
+          $STH = $db->prepare($sql);
+          $STH->execute();
+          }
+        }
+      }
+    else {
+      $result =  "Ongeldig bestand. \\n";
+      $result .= "Type: " . $_FILES["file"]["type"] . ". Bestand moet van het type: gif, jpeg, jpg of png zijn. \\n";
+      $result .= "Grootte: " . ($_FILES["file"]["size"] / 1024) . " kB. Bestand moet kleiner zijn dan 500 Kb.\\n";
+        
+    }
+
+    return $result;
+}
+
+//bestandsnaam uit db verwijderen
+//enkel als er een bestand aanwezig is.
+function imgDelete($db, $STH){
+    //tabel instellen
+    if(isset($_POST['hindId'])){
+        //herkomst = Obstacle
+        $tbl = 'TblObstacles';
+        $col = 'ImgPath';
+        $hindId = $_POST["hindId"];
+        $where = "WHERE Id = $hindId";
+    }else{
+        //herkomst = terreinOverzicht
+        $tbl = 'TblTerrein';
+        $col = 'ImgFile';
+        $terreinId = $_POST["terreinId"];
+        $where = "WHERE Id = $terreinId";
+    }
+
+    if(!empty($_POST['vimg'])){
+        $sqlUpdate = "Update $tbl Set $col = '' $where";
+        $STH1=$db->prepare($sqlUpdate);
+        $STH1->execute();
+    }else{
+        return "Geen bestand geselecteerd!";
+    }
+    //bestand verwijderen van server
+    $fileName = $_POST['imgPath'].$_POST['vimg'];
+    unlink($fileName);
+
+    return "Bestand succesvol verwijderd.";
+}
 
 ?>

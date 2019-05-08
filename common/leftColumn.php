@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <div id="LeftColumn">
-    <ul >       
+    <ul > 
+        <li>
+            <a href="terreinOverzicht.php" id="navTerreinOverzicht" title ="Terreinoverzicht">
+                <img src="../img/terrein.png" alt="Terrein" width="35" height="35" align="middle">
+            </a>
+        </li>      
         <li>
             <a href="checkpoints.php" id="navCheckpoints" title ="Controlepunten">
                 <img src="../img/controlepunten.png" alt="Materialen" width="35" height="35" align="middle">

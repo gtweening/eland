@@ -556,6 +556,7 @@ input {
 body#gebruikersbeheer a#navGebruikers,
 body#gebruikersterreinbeheer a#navGebruikersTerreinen,
 body#terreinbeheer a#navTerreinen,
+body#terreinoverzicht a#navTerreinOverzicht,
 body#berichten a#navBerichten,
 body#materials a#navMaterials,
 body#checkpoints a#navCheckpoints,

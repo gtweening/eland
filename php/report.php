@@ -7,6 +7,8 @@ copyright: 2013 Gerko Weening
 
 20170705
 solved undefined index when logged out
+20190421
+added terrainoverview
 */
 
 include_once "../inc/base.php";
@@ -26,9 +28,12 @@ $checkperiod = getcheckperiod($_POST['jaar'], $_POST['kwartaal']);
 //selecteer enkel hindernis; overige info via aparte queries ophalen
 $qry1 = getviewtobechecked($checkperiod[0],$checkperiod[1]);
 
-$STH = $db->query($qry1);
+//terreinafbeelding ophalen
+$Terreinid = $_SESSION['Terreinid']; //sessions terreinid
+$STH = $db->query('SELECT * from TblTerrein WHERE Id ="'.$Terreinid.'"');
 $STH->setFetchMode(PDO::FETCH_ASSOC);
-while($rows=$STH->fetch()){
+$row=$STH->fetch();
+$vimg=$row['ImgFile'];
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +60,21 @@ while($rows=$STH->fetch()){
         }
     </style>
 </head>
+
 <body>
+<!-- titel pagina -->
+<h2 class="h2">Te controleren hindernissen<?php echo ' '.$_SESSION['Terreinnaam'] ?></h2>
+<h3> <?php echo $_POST['jaar'].', kwartaal '.$_POST['kwartaal']; ?></h3>
+<?php showObsPic($imgTerrainPath,$vimg,700,700);?>
+<span style="page-break-after: always;"></span>
+
+<!-- overzicht te controleren hindernissen -->
+<?php
+    $STH = $db->query($qry1);
+    $STH->setFetchMode(PDO::FETCH_ASSOC);
+    while($rows=$STH->fetch()){
+?>
+
     <h2 class="h2">Hindernis: <?php echo ($rows['Naam']),($rows['Volgnr']); ?></h2>
     <a id="main">Omschrijving: <?php echo ($rows['Omschr']); ?></a>
     <h3>Foto: </h3>
@@ -132,10 +151,18 @@ while($rows=$STH->fetch()){
 	?>
     </table>
     <span style="page-break-after: always;"></span>
+    <?php
+} //end while
+?>
+
+<div>
+    <?php include "../common/footer.php"; ?>
+</div>
+
 </body>
+
 </html>
 <?php
-} //end while
 	//close connection
 	$db = null;
 } else { ?>

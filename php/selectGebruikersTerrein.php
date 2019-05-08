@@ -7,6 +7,8 @@ copyright: 2013 Gerko Weening
 
 20170705
 solved undefined index when logged out
+20190422
+solved terrainname not showed when having more than 1 terrains for user
 
 */
 
@@ -56,11 +58,11 @@ $userid=$_GET['Id'];
 
                 <?php
                 $STH = $db->query('select ttu.*, tt.Terreinnaam, tu.Email
-												from TblTerreinUsers ttu, TblTerrein tt, TblUsers tu
-												where ttu.Terrein_id = tt.Id 
-												and ttu.User_id = tu.Id 
-												and ttu.User_id = "'.$userid.'" 
-											   order by tu.Id');
+                                    from TblTerreinUsers ttu, TblTerrein tt, TblUsers tu
+                                    where ttu.Terrein_id = tt.Id 
+                                    and ttu.User_id = tu.Id 
+                                    and ttu.User_id = "'.$userid.'" 
+                                    order by tu.Id');
                 $STH->setFetchMode(PDO::FETCH_ASSOC);
                 while($rows=$STH->fetch()){
                 ?>
@@ -68,9 +70,9 @@ $userid=$_GET['Id'];
                 <tr >
                     <td width="5%" class="white2">
 	                <input name="checkbox[]" type="checkbox" id="checkbox[]" 
-                               value="<? echo $rows['Id']; ?>"></td>
-                    <td width="50%" class="white" ><? echo htmlentities($rows['Email']); ?></td>
-							<td class="white"><? echo htmlentities($rows['Terreinnaam']); ?> </td>
+                           value="<?php echo $rows['Id']; ?>"></td>
+                    <td width="50%" class="white" ><?php echo htmlentities($rows['Email']); ?></td>
+					<td class="white"><?php echo htmlentities($rows['Terreinnaam']); ?> </td>
                 </tr>
 
                 <?php
@@ -86,6 +88,11 @@ $userid=$_GET['Id'];
         </tr>
         </table>
         </div>
+
+        <div>
+            <?php include "../common/footer.php"; ?>
+        </div>
+
     </body>
 </html>
 <?php
