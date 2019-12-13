@@ -14,13 +14,35 @@ function formhash(form, password) {
     // Finally submit the form. 
     form.submit();
 }
- 
+
+function formhash2(form, passwordn, passwordh) {
+    // Create a new element input, this will be our hashed password field. 
+    var pn = document.createElement("input");
+    var ph = document.createElement("input");
+
+    // Add the new element to our form. 
+    form.appendChild(pn);
+    pn.name = "pn";
+    pn.type = "hidden";
+    pn.value = hex_sha512(passwordn.value);
+    form.appendChild(ph);
+    ph.name = "ph";
+    ph.type = "hidden";
+    ph.value = hex_sha512(passwordh.value);
+
+    // Make sure the plaintext password doesn't get sent. 
+    passwordv.value = "";
+    passwordh.value = "";
+    // Finally submit the form. 
+    form.submit();
+}
+
 function regformhash(form, uid, email, password, conf) {
      // Check each field has a value
-    if (uid.value == ''        || 
-          email.value == ''  || 
-          password.value == ''       || 
-          conf.value == '') {
+    if (uid.value == '' || 
+        email.value == '' || 
+        password.value == '' || 
+        conf.value == '') {
  
         alert('U moet alle gevraagde details opgeven. Probeer het nog een keer');
         return false;
@@ -47,7 +69,7 @@ function regformhash(form, uid, email, password, conf) {
     // At least one number, one lowercase and one uppercase letter 
     // At least six characters 
  
-    var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/; 
+    var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
     if (!re.test(password.value)) {
         alert('Passwords must contain at least one number, one lowercase and one uppercase letter.  Please try again');
         return false;
@@ -77,5 +99,3 @@ function regformhash(form, uid, email, password, conf) {
     form.submit();
     return true;
 }
-
-

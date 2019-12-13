@@ -178,14 +178,16 @@ if(isset($_POST['delSection'])){
             $pass = $_POST['p']; 
             $password = hash('sha512', $pass . $random_salt);
             //admin indicator
-	    if(isset($_POST['useradmin']) && $_POST['useradmin']==TRUE){
-		$indadmin="1";
-	    }else{
-		$indadmin="0";
-	    } 
+            if(isset($_POST['useradmin']) && $_POST['useradmin']==TRUE){
+                $indadmin="1";
+            }else{
+                $indadmin="0";
+            }
+            //ema adress
+            $ema = $_POST['emailadres'];
             //insert user
-            $STH = $db->prepare("INSERT INTO TblUsers (Email, Password, salt, Admin) VALUES
-            ('$_POST[usernaam]','$password', '$random_salt', '$indadmin')");
+            $STH = $db->prepare("INSERT INTO TblUsers (Email, Password, salt, Admin, ema) VALUES
+                    ('$_POST[usernaam]','$password', '$random_salt', '$indadmin', '$ema')");
             $STH->execute();
         }else {
             echo "<meta http-equiv=\"refresh\" content=\"0;URL=beheerder.php\">";
