@@ -5,6 +5,8 @@
  Used by parcours commissie to verify safety of obstacles.
  
  copyright: 2018 Gerko Weening
+ 20191213
+ foutmelding uigebreid.
  */
 
 include_once "../inc/base.php";
@@ -57,7 +59,6 @@ $getObstMat="select distinct tom.Obstacle_id as HId,mat.MOmschr, mat.val, tom.Aa
              select distinct tom.Obstacle_id as HId,mat.MOmschr, mat.val, tom.Aantal 
              from TblObstacleMaterials tom right join (".$getMatType.") as mat 
                   on mat.id=tom.Material_id ";
-
 
 //get pivot script for materialtypes per material
 //GROUP_CONCAT kan 1024 karakters bevatten => kan uit limiet lopen.
@@ -151,7 +152,8 @@ if ($STH0 !== FALSE){
 	$info = $STH0->fetchAll(PDO::FETCH_ASSOC);
 } else {
 //	echo $getObstChkInfo;
-  echo "er is een fout opgetreden bij het ophalen van de data. Dit is bekend. Er wordt aan gewerkt.";
+  echo "Er is een fout opgetreden bij het ophalen van de data. Dit is bekend. Er wordt aan gewerkt."."<br>";
+  echo "Controleer of er spaties zitten in het materiaal type. Vervang deze door '_'.";
   exit;
 }
 

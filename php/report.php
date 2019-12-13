@@ -9,6 +9,8 @@ copyright: 2013 Gerko Weening
 solved undefined index when logged out
 20190421
 added terrainoverview
+20191213
+materiaaltype toegevoegd aan report
 */
 
 include_once "../inc/base.php";
@@ -89,13 +91,17 @@ $vimg=$row['ImgFile'];
                 <?php
                 //selecteer materialen van hindernis
                 $vhindId = ($rows['Id']); 
-                $query2 = "SELECT tm.Omschr, tom.Aantal from TblObstacleMaterials tom, TblMaterials tm ";
-                $query2 .= "where tom.Material_id = tm.Id and tom.Obstacle_id =". $vhindId ." ";
+                $query2 = "SELECT tmt.Omschr as mata, tm.Omschr, tom.Aantal ";
+                $query2 .= "from TblObstacleMaterials tom, TblMaterials tm, TblMaterialTypes tmt ";
+                $query2 .= "where tom.Material_id = tm.Id ";
+                $query2 .= "  and tm.MaterialType_id = tmt.Id ";
+                $query2 .= "  and tmt.Terrein_id = ". $_SESSION['Terreinid']." ";
+                $query2 .= "  and tom.Obstacle_id = ". $vhindId ." ";
                 $STH2 = $db->query($query2);
                 while($rows2=$STH2->fetch()){
                 ?>
                 <tr>
-                    <td class="TableText">- <?php echo (utf8_encode($rows2['Omschr'])); ?>; <?php echo ($rows2['Aantal']); ?>  </td>
+                    <td class="TableText">- <?php echo (utf8_encode($rows2['mata'])) ." " . (utf8_encode($rows2['Omschr'])) . " " . ($rows2['Aantal']); ?>  </td>
                 </tr>            
                 <?php }?>
              </table>
