@@ -57,7 +57,14 @@ if (login_check($mysqli) == true) {
 
             </form>
         </div>
-<br><br><br>
+        <br>
+        <div id="login">
+            <?php
+                $path = DOMAIN_NAME."/pwdrst/step1.php"; 
+                echo "<a href='".$path."'>wachtwoord vergeten?</a>";
+            ?>
+        </div>
+<br><br>
         <div id="licentie">
           <?php include "common/GNUlicentie.php"; ?>
         </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <div id="licentie"><br>
-      Eland - Copyright (C) 2013-2019 - Gerko Weening <br><br>
+      Eland - Copyright (C) 2013-2020 - Gerko Weening <br><br>
       Dit Programma is verspreid met de hoop dat het nuttig zal zijn maar 
 		ZONDER EENDER WELKE GARANTIE; zelfs zonder de impliciete garantie van 
 		VERKOOPBAARHEID of GESCHIKTHEID VOOR EEN BEPAALD DOEL. Zie de 
