@@ -214,9 +214,80 @@ if(isset($_POST['delSection'])){
     }
 }else if(isset($_POST['addTerrein'])){      
     if(!empty($_POST['Terreinnaam'])){
+        $terreinnaam = $_POST['Terreinnaam' ];
         $STH = $db->prepare("INSERT INTO TblTerrein (Terreinnaam) VALUES
-        ('$_POST[Terreinnaam]')");
+        ('$terreinnaam')");
         $STH->execute();
+
+        //get terrainid
+        $STH = $db->query("SELECT Id FROM TblTerrein WHERE Terreinnaam = '".$terreinnaam."'");
+        $STH->setFetchMode(PDO::FETCH_ASSOC);
+        $row=$STH->fetch();
+        $value=$row['Id'];
+       
+        //add default materials
+        $STH = $db->prepare("INSERT INTO TblMaterialTypes (Omschr, Terrein_id) VALUES 
+                            ('Hout',$value), ('Staal',$value), ('Polypropyleen',$value), ('Polyester',$value), ('Rubber',$value), 
+                            ('Aluminium',$value), ('Koppelstuk',$value)");
+        $STH->execute();
+
+        $materials = ['Hout','Staal','Polyprop.','Polyester','Rubber'];
+        $arraylength = count($materials);
+
+        $i =0;
+        while ($i < $arraylength){
+            $sqlMat = "SELECT Id FROM TblMaterialTypes WHERE Terrein_id = $value and Omschr ='";
+            
+            switch($i){
+                case 0: //hout
+                    $matOmschr = 'Hout';
+                    break;
+                case 1: //Staal
+                    $matOmschr = 'Staal';
+                    break;
+                case 2: //polyprop
+                    $matOmschr = 'Polypropyleen';
+                    break;
+                case 3: //Polyester
+                    $matOmschr = 'Polyester';
+                    break;
+                case 4: //rubber
+                    $matOmschr = 'Rubber';
+                    break;
+            }
+            $STH = $db->query($sqlMat.$matOmschr."' ");
+            $STH->setFetchMode(PDO::FETCH_ASSOC);
+            $row=$STH->fetch();
+            $matid=$row['Id'];
+
+            switch($i){
+                case 0: //hout
+                    $sqlAdd = "INSERT INTO TblMaterials (Omschr,Terrein_id,MaterialType_id) VALUES 
+                            ('d100mm',".$value.",".$matid."), ('d140mm',".$value.",".$matid."), ('d160mm',".$value.",".$matid.")";
+                    break;
+                case 1: //Staal
+                    $sqlAdd = "INSERT INTO TblMaterials (Omschr,Terrein_id,MaterialType_id) VALUES 
+                            ('stijgerbuis d48,3x3',".$value.",".$matid.")";
+                    break;
+                case 2: //polyprop
+                    $sqlAdd = "INSERT INTO TblMaterials (Omschr,Terrein_id,MaterialType_id) VALUES 
+                            ('d12mm',".$value.",".$matid."), ('d18mm',".$value.",".$matid."), ('d32mm',".$value.",".$matid.")";
+                    break;
+                case 3: //Polyester
+                    $sqlAdd = "INSERT INTO TblMaterials (Omschr,Terrein_id,MaterialType_id) VALUES 
+                            ('hijsband 2500kg',".$value.",".$matid."), ('spanband 2000kg',".$value.",".$matid.")";
+                    break;
+                case 4: //rubber
+                    $sqlAdd = "INSERT INTO TblMaterials (Omschr,Terrein_id,MaterialType_id) VALUES 
+                            ('autoband',".$value.",".$matid."), ('cartband',".$value.",".$matid.")";
+                    break;
+            }        
+            $STH = $db->prepare($sqlAdd);
+            $STH->execute();
+
+            $i++;
+        }
+
     }else {
         echo "<meta http-equiv=\"refresh\" content=\"0;URL=beheerTerreinen.php\">";
     }
