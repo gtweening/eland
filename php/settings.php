@@ -133,7 +133,7 @@ $db = null;
   </script>
 </head>
 
-<body id="sections" oninput="init();">
+<body id="settings" oninput="init();">
   <div id="LeftColumn2">      
   </div>
 

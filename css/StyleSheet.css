@@ -570,6 +570,7 @@ body#materials a#navMaterials,
 body#checkpoints a#navCheckpoints,
 body#sections a#navSections,
 body#chkq a#navChkQ,
+body#settings a#navsetting,
 body#checked a#navchked,
 body#checklist a#navchkList {
     background-color: lightgrey;

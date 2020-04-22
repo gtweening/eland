@@ -13,9 +13,23 @@
         <div id="header">
         <?php
             include_once "../inc/base.php";
+
             //bepaal user_id
             $userid = $_SESSION['user_id'];
-            
+
+            //Get terreinnaam
+            $qry2 = "Select tt.Terreinnaam 
+            from TblTerreinUsers ttu, TblTerrein tt 
+            where ttu.Terrein_id = tt.Id and
+                    ttu.User_id = '$userid'
+            ";
+            $stmt2 = $mysqli->prepare($qry2);
+            $stmt2->execute();    // Execute the prepared query.
+            $stmt2->store_result();
+            // get variables from result.
+            $stmt2->bind_result($Terreinnaam);
+            $stmt2->fetch();
+
             //get aantal openstaande berichten voor deze gebruiker
             $sqlaantal = "select count(tm.Id) as aantal 
                           from TblMessages tm 
@@ -65,12 +79,10 @@
             <div id="headermid">
                 <?php
                     if (isset($_SESSION['username'])){
-                        if (isset($_SESSION['Terreinnaam'])) {
                 ?>
                     Terrein: 
                     <a><b>
-                        <?php echo $_SESSION['Terreinnaam'];} 
-                        ?>
+                        <?php echo $Terreinnaam;?>
                     </b></a>
                 <br>
             </div>

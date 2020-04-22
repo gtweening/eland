@@ -54,6 +54,12 @@
                 
             </a>
         </li>
+        <li>
+            <a href="settings.php" id="navsetting" title="Instellingen">
+                <img src="../img/settings.png" alt="Materialen" width="35" height="35" align="middle">
+                
+            </a>
+        </li>
     </ul>
  </div>
 </html> 
