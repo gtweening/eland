@@ -317,28 +317,30 @@ function esc_url($url) {
 //height: max height
 //it is assumed that width and height have the expected ratio
 function showObsPic($path,$img,$maxb,$maxh){
-    //if there is an image, check ratio
-    if($img!=''){
-        //standaard ratio = 300*200 (maxb*maxh)
-        $defaultratio=$maxb/$maxh;
-        list($w,$h) = getimagesize($path.$img);
-        $ratio = $w/$h;
-        $str="";
-        switch (TRUE){
-            case ($ratio<$defaultratio):
-                //breedte is kleiner dan 300/200 => max h = 200
-                $width=$maxh/$h*$w;
-                $str=' width="'.$width.'" height="'.$maxh.'" ';
-                break;
-            case ($ratio>$defaultratio):
-                //breedte is groter dan 300/200 => max b = 300
-                $height=$maxb/$w*$h;
-                $str=" width='".$maxb."' heigth='".$height."'";
-                break;
+    if (file_exists($path.$img)){
+        //if there is an image, check ratio
+        if($img!=''){
+            //standaard ratio = 300*200 (maxb*maxh)
+            $defaultratio=$maxb/$maxh;
+            list($w,$h) = getimagesize($path.$img);
+            $ratio = $w/$h;
+            $str="";
+            switch (TRUE){
+                case ($ratio<$defaultratio):
+                    //breedte is kleiner dan 300/200 => max h = 200
+                    $width=$maxh/$h*$w;
+                    $str=' width="'.$width.'" height="'.$maxh.'" ';
+                    break;
+                case ($ratio>$defaultratio):
+                    //breedte is groter dan 300/200 => max b = 300
+                    $height=$maxb/$w*$h;
+                    $str=" width='".$maxb."' heigth='".$height."'";
+                    break;
+            }
+            //result
+            //show image
+            echo '<img src="'.$path.$img.'"'.$str.' >';
         }
-        //result
-        //show image
-        echo '<img src="'.$path.$img.'"'.$str.' >';
     }
 }
 
