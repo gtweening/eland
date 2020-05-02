@@ -63,6 +63,25 @@ function getviewtobechecked($ChkQ, $datend) {
 	return $query1;
 }
 
+//ophalen terreinnaam obv terreinid
+function getTerreinnaam($db,$terreinId){
+	$STH = $db->prepare('SELECT * from TblTerrein
+	                     where Id = '.$terreinId.'  
+	                    ');
+	$STH->execute();
+	$row = $STH->fetch();
+	return htmlentities($row['Terreinnaam']);
+}
 
+//ophalen contact email adres van gebruiker obv terreinid
+function getUserEmail($db,$terreinId){
+	$STH = $db->prepare('SELECT tu.ema from TblUsers tu
+                                       inner join TblTerreinUsers ttu on tu.Id = ttu.User_id
+                         WHERE ttu.Terrein_id = '.$terreinId
+                                );
+    $STH->execute();
+    $row = $STH->fetch();
+    return htmlentities($row['ema']); 
+}
 
 ?>

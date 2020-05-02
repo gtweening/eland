@@ -523,6 +523,14 @@ input {
     display: inline-block;
 }
 
+.theader {
+    text-align: center;
+    padding-top: 5px;
+    height: 20px;
+    background-color: #CEF6F5;
+    border-bottom: solid 1px #58D3F7;
+}
+
 .dropdown {
     /* display: inline-block; */
 }
@@ -562,6 +570,7 @@ body#materials a#navMaterials,
 body#checkpoints a#navCheckpoints,
 body#sections a#navSections,
 body#chkq a#navChkQ,
+body#settings a#navsetting,
 body#checked a#navchked,
 body#checklist a#navchkList {
     background-color: lightgrey;
