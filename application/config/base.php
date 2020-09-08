@@ -14,6 +14,7 @@
         $db = new PDO($dsn, DB_USER, DB_PASS);
         // for login
         $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
     } catch (PDOException $e) {
         echo 'Connection failed: ' . $e->getMessage();
         exit;

@@ -3,8 +3,8 @@
 versturen mail na stap1
 -->
 <?php
-include_once WEBROOT."/config/base.php";
-$path = WEBROOT."/LostPassword/step2/".$_GET['Id'];
+    include_once '../Routes.php';
+    $path = WEBROOT."/LostPassword/step2/".$_GET['Id'];
 ?>
 
 <head>

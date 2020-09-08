@@ -1,0 +1,8 @@
+Options +FollowSymLinks
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond $1 !^(\.php|png|ico|gif|jpg|jeg|bmp|html|css|img|log|docs|js|robots\.txt)
+RewriteRule ^(.+)$ index.php?url=$1 [L,QSA]
+

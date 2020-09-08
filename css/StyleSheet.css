@@ -75,6 +75,12 @@ body {
     border-bottom: solid 1px lightgray;
 }
 
+td a {
+    display:block;
+    text-decoration:none;
+    color:black;
+}
+
 .tableTitle {
     height: 50px;
     font-size: xx-large;
@@ -200,6 +206,15 @@ body {
     width: 315px;
 }
 
+.errormessage {
+    height: 45px;
+    width: 700px;
+    float: left;
+    padding-top: 10px;
+    text-align: center;
+    background-color:  rgb(250, 201, 201);
+}
+
 #footer {
     width: 100%;
     font-size: 10px;
@@ -224,6 +239,12 @@ h2 {
     color: gray;
 }
 
+.menuItem{
+    margin-top:10px;
+    margin-bottom:10px;
+    text-align: center;
+}
+
 #LeftColumn {
     height: 600px;
     width: 50px;
@@ -244,7 +265,6 @@ h2 {
     padding: 5px;
     display: block;
     background-color: #CEF6F5;
-    vertical-align: middle;
     line-height: 25px;
     font-size: small;
 }
@@ -445,6 +465,19 @@ h2 {
 }
 
 #obstacleTableHalf td.white:hover span {
+    max-width: 500px;
+    display: block;
+    position: absolute;
+    background-color: #58D3F7;
+    padding: 10px 10px;
+    border-radius: 6px;
+}
+
+button span {
+    display: none;
+}
+
+button:hover span {
     max-width: 500px;
     display: block;
     position: absolute;

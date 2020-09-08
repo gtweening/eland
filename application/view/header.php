@@ -3,8 +3,8 @@
 <html>
  <head>
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-     <link rel="stylesheet" type="text/css" href="../css/StyleSheet.css">
-     <link rel="stylesheet" type="text/css" href="../css/popup.css">
+     <link rel="stylesheet" type="text/css" href="<?php echo WEBROOT; ?>/css/StyleSheet.css">
+     <link rel="stylesheet" type="text/css" href="<?php echo WEBROOT; ?>/css/popup.css">
      <title>De Survivalrun Audit log</title>
  </head>
 
@@ -12,51 +12,20 @@
     <div id="main">
         <div id="header">
         <?php
-            include_once "../inc/base.php";
-
-            //bepaal user_id
             $userid = $_SESSION['user_id'];
-
-            //Get terreinnaam
-            $qry2 = "Select tt.Terreinnaam 
-            from TblTerreinUsers ttu, TblTerrein tt 
-            where ttu.Terrein_id = tt.Id and
-                    ttu.User_id = '$userid'
-            ";
-            $stmt2 = $mysqli->prepare($qry2);
-            $stmt2->execute();    // Execute the prepared query.
-            $stmt2->store_result();
-            // get variables from result.
-            $stmt2->bind_result($Terreinnaam);
-            $stmt2->fetch();
+            //get username
+            $userName = $this->mod_header->getUserName($userid, $this->mysqli);
 
             //get aantal openstaande berichten voor deze gebruiker
-            $sqlaantal = "select count(tm.Id) as aantal 
-                          from TblMessages tm 
-                          where tm.Id not in (select distinct Message_id from TblMessagesRead 
-                                              where User_id = ".$userid.") 
-                                and tm.Gepubliceerd = 1;";
-            $STH = $db->query($sqlaantal);
-            $STH->setFetchMode(PDO::FETCH_ASSOC);
-            $row=$STH->fetch();
-            $aantal=$row['aantal'];
-            
+            $aantal = $this->mod_header->getNrOpenMessages($userid, $this->db);
+
             //bij groter dan 0
             //haal oudste bericht op
-            $sqloudste="select * 
-                        from TblMessages tm 
-                        where tm.Id not in (select Message_id from TblMessagesRead 
-                                            where User_id = ".$userid.") 
-                              and tm.Gepubliceerd = 1 
-                        order by tm.Datum asc 
-                        LIMIT 1;";
-            $STH = $db->query($sqloudste);
-            $STH->setFetchMode(PDO::FETCH_ASSOC);
-            $row=$STH->fetch();
-            $titel=$row['Titel'];
-            $datum=$row['Datum'];
-            $bericht=$row['Bericht'];
-            $messageid=$row['Id'];
+            if($aantal>0){
+                $message = $this->mod_header->getOldestMessage($userid, $this->db);
+            }
+            $messageid = $message['Messageid'];
+            $db = $this->db;
             //enable knop
             //bij drukken op knop
             //bericht wegschrijven als gelezen
@@ -72,31 +41,37 @@
                 //echo "<meta http-equiv=\"refresh\" content=\"0;URL=".$url."\">";
             }
             
+            
         ?>
             <div id="headerleft">
-                <img align ="left" src="../img/logo.gif" alt="" width="152" height="50">
+                <img align ="left" src="<?php echo WEBROOT; ?>/img/logo.gif" alt="" width="152" height="50">
             </div>
             <div id="headermid">
                 <?php
-                    if (isset($_SESSION['username'])){
+                    if(1==1){
+                        if($this->url[0] <> 'Beheer' && $this->url[0] <> 'Login'){
                 ?>
                     Terrein: 
                     <a><b>
-                        <?php echo $Terreinnaam;?>
-                    </b></a>
-                <br>
+                        <?php echo $_SESSION['Terreinnaam'];?>
+                        </b>
+                    </a>
+                    <br>
+                        <?php } ?>
             </div>
+            
+
             <div id="headerright">
                 <div class="cudWidget">
-                	<a href="../docs/help.html">
-                       <img src="../img/information.png" width="40" height="40"> 
+                	<a href="<?php echo WEBROOT; ?>/docs/help.html">
+                       <img src="<?php echo WEBROOT; ?>/img/information.png" width="40" height="40"> 
                     </a>
                 </div>
                 
                 <!-- show messages read button for all users except beheerder  -->
                 <?php
-                if ($_SESSION['username']!= 'beheerder@eland.nl' &&
-                    $_SESSION['username']!= 'beheerder@beheer.nl'){
+                if ($userName!= 'beheerder@eland.nl' &&
+                    $userName!= 'beheerder@beheer.nl'){
                 ?>
                     <div class="cudWidget">
                     <!-- laat juiste afbeelding zien met aantal niet gelezen berichten -->
@@ -104,21 +79,21 @@
                         switch (true){
                             case ($aantal==1):
                                 echo '<a href="#popup">
-                                       <img src="../img/messages1.png" width="40" height="40">
+                                       <img src="'.WEBROOT.'/img/messages1.png" width="40" height="40">
                                      </a> '; 
                                break;
                             case ($aantal==2):
                                 echo '<a href="#popup">
-                                       <img src="../img/messages2.png" width="40" height="40">
+                                       <img src="'.WEBROOT.'/img/messages2.png" width="40" height="40">
                                      </a> '; 
                                 break;
                             case ($aantal>2):
                                 echo '<a href="#popup">
-                                       <img src="../img/messages3.png" width="40" height="40"> 
+                                       <img src="'.WEBROOT.'/img/messages3.png" width="40" height="40"> 
                                      </a> '; 
                                 break;
                             default:
-                                echo '<img src="../img/messages0.png" alt="bericht" 
+                                echo '<img src="'.WEBROOT.'/img/messages0.png" alt="bericht" 
                                width="40" height="40">';
                         }
                     ?>	
@@ -128,10 +103,10 @@
                 ?>
 
                 <div class="cudWidget dropdown">
-                   <a><img src="../img/user.png" width="40" height="40"> </a>
+                   <a><img src="<?php echo WEBROOT; ?>/img/user.png" width="40" height="40"> </a>
                    <div class="account-dropbox">
-                      <a>Ingelogd: <?php echo $_SESSION['username']; ?></a>
-                      <a href="../inc/logout.php">
+                      <a>Ingelogd: <?php echo $userName; ?></a>
+                      <a href="<?php echo WEBROOT; ?>/Logout">
                         <?php
                         //uiloggen onderdeel van php vanwege controle op ingelogd zijn
                         echo "Uitloggen";
@@ -155,10 +130,10 @@
 			</header>
 			<div class="container">
 			   <a style="float:right;">
-			     <?php echo $datum; ?>
+			     <?php echo $message['Datum']; ?>
 			   </a>
-			   <h3><?php echo $titel; ?></h3>
-			   <p> <?php echo $bericht; ?></p>
+			   <h3><?php echo $message['Titel']; ?></h3>
+			   <p> <?php echo $message['Bericht']; ?></p>
 			</div>
 			<footer class="container popup_footer">
                <form name="form1" method="post" 
