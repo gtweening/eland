@@ -46,8 +46,22 @@ class LostPassword extends Controller {
                            'Reply-to: automatisering.com@survivalrunbond.nl';
                 $subject = 'Aanvraag wachtwoord reset';
         
-                $path = WEBROOT."/application/emails/lostPassword_step1.php?Id=".$id;
-                $msg = file_get_contents($path); 
+                //$path = WEBROOT."/application/emails/lostPassword_step1.php?Id=".$id;
+                //$msg = file_get_contents($path); 
+                $msg = "
+                <html>
+                <body>
+                Hallo,<br><br>
+                Er is een nieuw wachtwoord aangevraagd voor Eland<br>
+                Als dit klopt klik dan onderstaande link.<br>
+                Deze link is 15 min. geldig<br><br>
+                Zoniet, neem dan contact op met de beheerder.<br><br>
+                <a href='".WEBROOT."/LostPassword/step2/".$id."' >Wachtwoord reset</a>
+
+                </body>
+
+                </html>
+                ";
                 mail($ema,$subject,$msg,$headers);
         
                 $result = "Er is een mail verstuurd naar het mailadres van deze gebruiker!";
@@ -88,8 +102,28 @@ class LostPassword extends Controller {
                        'Reply-to: automatisering.com@survivalrunbond.nl'.
                        'X-Mailer: PHP/'.phpversion();
             $subject = 'Aanvraag wachtwoord reset';
-            $path = WEBROOT."/application/emails/lostPassword_step2.php?Id=".$userId."&pwd=".$pwd;
-            $msg = file_get_contents($path); 
+            //$path = WEBROOT."/application/emails/lostPassword_step2.php?Id=".$userId."&pwd=".$pwd;
+            //$msg = file_get_contents($path); 
+
+            $msg = "
+            <html>
+            <head>
+            </head>
+
+            <body>
+            Hallo,<br><br>
+            Hieronder wordt je tijdelijk wachtwoord voor Eland getoond.<br><br>
+            Heb je deze niet aangevraagd, neem dan contact op met de beheerder.<br>
+            Ga NU naar onderstaande link om het wachtwoord direct aan te passen!<br>
+            Login met je gebruikersnaam en je tijdelijke wachtwoord: <b>".$pwd."</b><br>
+            en kies daarna je eigen geheime wachtwoord.<br><br>
+            <a href='".WEBROOT."/LostPassword/step2/".$id."' >Wachtwoord aanpassen</a>
+
+            </body>
+
+            </html>
+            ";
+            
             mail($ema,$subject,$msg,$headers);
         
             //melden dat tijdelijk wachtwoord verstuurd is

@@ -2,16 +2,16 @@
 
 function Loader($class) {
     
-    //echo "class:".$class."<br>";
-    $class_file = DIR.DS.$class.'.php';
+    $class_file = WEBROOT.DS.$class.'.php';
+  
     if(file_exists($class_file)){
         require_once($class_file);
     } else {
-        foreach(AUTOLOAD_CLASSES as $path) {
+	//serialize speciaal voor PHP5.6. In 7.x niet meer nodig.
+        foreach( unserialize(LOAD_CLASSES) as $path) {
             $class_file = $path.DS.$class.'.php';
             if(file_exists($class_file)) require_once($class_file);
-            //echo $class_file."<br>";
-        }
+         }
     }
 }
 

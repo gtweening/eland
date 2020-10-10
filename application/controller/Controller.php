@@ -4,13 +4,13 @@ class Controller {
   
     public function __construct()    
     {    
-        $this->base_path = $_SERVER['DOCUMENT_ROOT'];
-        $this->app_path  = $_SERVER['DOCUMENT_ROOT']."/eland/application/";
+        $this->base_path = DIR;
+        $this->app_path  = DIR."/application/";
 
         //path to images
-        $this->imgPath = $this->base_path."/eland/img/";
-        $this->obsPath = $this->base_path."/eland/img/Obstacles/";
-        $this->imgTerrainPath = $this->base_path."/eland/img/Terrain/";  
+        $this->imgPath = $this->base_path."/img/";
+        $this->obsPath = $this->base_path."/img/Obstacles/";
+        $this->imgTerrainPath = $this->base_path."/img/Terrain/";  
         
         include_once($this->app_path."config/base.php");
         $this->db = $db;

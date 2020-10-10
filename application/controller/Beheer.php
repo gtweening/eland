@@ -52,7 +52,7 @@ class Beheer extends Controller {
             $password = $_POST['p']; // The hashed password.
             $url='';
 
-            if ($this->mod_login->login($email, $password, $this->mysqli) == true ) {  
+            if ($this->mod_login->login($email, $password, $this->mysqli, $this->db) == true ) {  
                 // Login success 
                 //$url = $GLOBALS['userid'].'/'.$GLOBALS['terreinId'];
                 //$url = base64_encode($url);

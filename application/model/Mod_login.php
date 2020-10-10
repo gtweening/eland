@@ -52,11 +52,20 @@ class Model{
                         $_SESSION['username'] = $username;
                         $_SESSION['login_string'] = hash('sha512', 
                                   $password . $user_browser);
+                        
+                        //als beheerder in Beheer menu inlogt dan overslaan
+                        $url    = isset($_GET['url']) ? $_GET['url'] : NULL;
+                        $beheer = 0;
+
+                        if(substr($url,0,6) == 'Beheer'){
+                            $beheer = 1;
+                        }
+                        
                         //check aantal terreinen bij gebruiker
                         $aantal = $this->countTerrainsbyUser($user_id, $db);
 
                         //als gebruiker meer dan 1 terrein beheert dan keuze laten maken
-                        if ($aantal>1) {
+                        if ($aantal>1 && $beheer == 0) {
                             $_SESSION['Terreinid'] = 0;
                             header('Location:../Login/terreinselect');
                             exit;

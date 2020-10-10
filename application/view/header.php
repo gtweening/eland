@@ -23,8 +23,9 @@
             //haal oudste bericht op
             if($aantal>0){
                 $message = $this->mod_header->getOldestMessage($userid, $this->db);
+                $messageid = $message['Messageid'];
             }
-            $messageid = $message['Messageid'];
+            
             $db = $this->db;
             //enable knop
             //bij drukken op knop
@@ -137,7 +138,9 @@
 			</div>
 			<footer class="container popup_footer">
                <form name="form1" method="post" 
-		             action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                     action="<?php $url = isset($_GET['url']) ? $_GET['url'] : NULL;
+                                   echo WEBROOT.'/'.$url;
+                            ?>">
 	              <button class="btnRead" type="submit" name="MessageRead" >
                   Gelezen
                   </button>

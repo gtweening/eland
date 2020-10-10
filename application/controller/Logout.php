@@ -31,7 +31,7 @@ class Logout extends Controller {
                 session_unset();
                 session_destroy();
                 
-                header('Location:/eland/');
+                header('Location:/');
                 exit();
                 
         }
