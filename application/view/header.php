@@ -50,7 +50,7 @@
             <div id="headermid">
                 <?php
                     if(1==1){
-                        if($this->url[0] <> 'Beheer' && $this->url[0] <> 'Login'){
+                        if($this->url[0] <> 'Beheer' && $this->url[0] <> 'Login'  && $this->url[0] <> 'Logboeken'){
                 ?>
                     Terrein: 
                     <a><b>
