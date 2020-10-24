@@ -18,10 +18,10 @@
 |	['database'] The name of the database you want to connect to
 */
 
-define('DB_HOST', 'com-linweb183');
-define('DB_USER', 'ID251072_db018643hinde19'); //username
-define('DB_PASS', 'pweN0_kvgUavtc?r'); //database acces password
-define('DB_NAME', 'ID251072_db018643hindernislogboek');  //databasename
+define('DB_HOST', '');
+define('DB_USER', ''); //username
+define('DB_PASS', ''); //database acces password
+define('DB_NAME', '');  //databasename
 
 define("SECURE", FALSE);    // FOR DEVELOPMENT ONLY!!!!
 define("DOMAIN_NAME", 'http://hindernislogboek.survivalbond.nl');
