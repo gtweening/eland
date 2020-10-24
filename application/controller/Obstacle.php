@@ -52,7 +52,14 @@ class Obstacle extends Controller {
             $obstacleid = $this->url[2];
         }
 
-        $obstacle = $this->mod_obstacles->getObstacle($obstacleid, $this->db);
+        $obstacle     = $this->mod_obstacles->getObstacle($obstacleid, $this->db);
+        if ($obstacle == FALSE){
+            //geen obstacle id beschikbaar => terug naar secties
+            $message .= "Geen hindernisnummer beschikbaar tijdens vorige bewerking. <br>Terug naar Sectieoverzicht gegaan.";
+            $_SESSION['errormessage'] = $message;
+            header('Location:'.WEBROOT.'/Sections');
+        }
+
         $row            = $obstacle->fetch();
         $sectieid       = $row['Section_id'];
         $this->volgnr   = $row['Volgnr'];
@@ -243,7 +250,7 @@ class Obstacle extends Controller {
 
         if(isset($_POST['fileImport_x'])){
         
-            $this->mod_helpers->uploadFile($_FILES, $this->obsPath, 'TblObstacles', $obstacleid,  $this->db);
+            $this->mod_helpers->uploadFile($_FILES, $this->obsPath, $obstacleid, NULL, $this->db);
         }
 
         if(isset($_POST['fileDelete_x'])){

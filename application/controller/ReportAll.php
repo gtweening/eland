@@ -34,15 +34,34 @@ class ReportAll extends Controller {
         $obstacles                  = $this->mod_obstacles->getAllObstaclesForTerrain($this->db);
 
         while($row = $obstacles->fetch() ){
-            $obstacleid      = $row['Id'];
+            $w          = 0;
+            $h          = 0;
+            $obstacleid = $row['Id'];
+
+            if($row['ImgPath'] != ''){
+                list($w,$h) = getimagesize($this->obsPath . $row['ImgPath']);
+                $ratio      = $w/$h;
+                switch (TRUE){
+                    case ($ratio <=1):
+                        $h = 300;
+                        $w = 300 * $ratio;
+                        break;
+                    case ($ratio > 1):
+                        $w = 500;
+                        $h = 500 / $ratio;
+                        break; 
+                }
+            }
             $newdata = array(
                 'Sectie'    => $row['Naam'],
                 'Volgnr'    => $row['Volgnr'],
                 'Omschr'    => $row['Omschr'],
-                'ImgPath'   => $row['ImgPath']
-                );
+                'ImgPath'   => $row['ImgPath'],
+                'w'         => $w,
+                'h'         => $h
+            );
             $obstaclesToCheckArray[$obstacleid] = $newdata;
-
+           
             $obstacleMaterials   = $this->mod_obstacles->getObstacleMaterials($obstacleid,$this->db);
             $obstacleCheckpoints = $this->mod_obstacles->getObstacleCheckpoints($obstacleid,$this->db);
             $obstacleChecks      = $this->mod_obstacles->getObstacleChecks($obstacleid,$this->db);
