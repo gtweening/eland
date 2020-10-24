@@ -9,6 +9,8 @@ class Login extends Controller {
         $this->mod_header = new mod_header();
         include_once($this->app_path."model/Mod_login.php"); 
         $this->mod_login = new Model();
+        include_once($this->app_path."model/Mod_users.php"); 
+        $this->mod_users = new mod_users();
         include_once($this->app_path."model/Mod_terrein.php"); 
         $this->mod_terrein = new mod_terrein();
         
@@ -44,10 +46,18 @@ class Login extends Controller {
 
             if ($this->mod_login->login($email, $password, $this->mysqli, $this->db) == true ) {  
                 // Login success 
-                //$url = $GLOBALS['userid'].'/'.$GLOBALS['terreinId'];
-                //$url = base64_encode($url);
-                //check if user = administrator
-                header('Location:../Sections');
+                //get role
+                $role = $this->mod_users->getrole($email, $this->db);
+                switch($role){
+                    case (''):  //empty = default user
+                        header('Location:../Sections');
+                        break;
+
+                    case ('PC'):
+                        header('Location:../Logboeken');
+                    break;
+                }
+                
             } else {
                 // Login failed 
                 header('Location:../index.php?error=1');

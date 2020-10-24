@@ -269,13 +269,11 @@ class mod_obstacles{
         return $STH;
     }
 
-    function getAllObstaclesForTerrain($db) {
-        $Terreinid="";
-        if ($_SESSION['Terreinid']==0) {
+    function getAllObstaclesForTerrain($terreinid, $db) {
+        if ($terreinid == 0) {
             $whereTerrein = "Terrein_id is null ";
         } else {
-            $Terreinid = $_SESSION['Terreinid'];
-            $whereTerrein = "Terrein_id = ".$Terreinid." ";
+            $whereTerrein = "Terrein_id = ".$terreinid." ";
         }
 
         $query1 ="select distinct ts.Naam,tob.* ";
