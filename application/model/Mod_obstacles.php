@@ -3,11 +3,15 @@
 class mod_obstacles{
 
     function getObstacle($id, $db){
-        $STH=$db->query('SELECT * from TblObstacles
-                         where Id = '.$id );
+        if ($id != ''){
+            $sql = 'SELECT * from TblObstacles where Id = '.$id;
+            $STH=$db->query($sql);
+            $STH->setFetchMode(PDO::FETCH_ASSOC);
+            return $STH;
 
-        $STH->setFetchMode(PDO::FETCH_ASSOC);
-        return $STH;
+        }else{
+            return FALSE;
+        }
     }
 
     function getObstacleBySectionId($vsectionid, $db){
@@ -194,8 +198,7 @@ class mod_obstacles{
     function addObstacleCheck($obstacleid, $datum, $status, $controleur, $note, $db){
         $query = "INSERT INTO TblObstacleChecks (Obstacle_id, DatCheck, ChkSt, CheckedBy, Note) VALUES " ;           
         $query .= " ('$obstacleid', '$datum' , '$status', '$controleur', '$note') ";
-echo $query;
-exit;
+
         $stmt = $db -> prepare($query);
         $stmt->execute();
     }

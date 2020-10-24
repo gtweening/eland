@@ -30,7 +30,14 @@
         <input class="cudWidget" type="image" name="fileImport" src="<?php echo WEBROOT; ?>/img/save.jpeg" 
                 value="Opslaan" >
     </form><br>
-    <?php echo '<img src="'.WEBROOT.'/img/Terrain/'.$vimg.'"'.$imgstyle.' >'; ?>
+    <?php 
+        if($vimg != ''){
+          echo '<img src="'.WEBROOT.'/img/Terrain/'.$vimg.'"'.$imgstyle.' >';
+      }else{
+          $str = '<a id="main">geen hindernisafbeelding.</a><br><br>';
+          echo $str;
+      }
+    ?>
   </div>
 
   <div>

@@ -39,7 +39,7 @@
     <div class="navbar">
         <a id="afdrukbutton" onclick="printDiv('printableArea')">Afdrukken (naar bestand)</a>
     </div>
-
+ 
     <div id="printableArea">
         <div class="main">
             <h2 class="h2"><?php echo $title.' '.$_SESSION['Terreinnaam'] ?></h2>
@@ -47,6 +47,7 @@
                 <h3> <?php echo $jaar.', kwartaal '.$kwartaal; ?></h3>
             <?php } ?>
             <?php echo '<img src="'.WEBROOT.'/img/Terrain/'.$terreinPic.'"'.$imgstyle.' >'; ?>
+            <a id="main">Terreinoverzicht</a>
             <span style="page-break-after: always;"></span>
 
             <!-- overzicht te controleren hindernissen -->
@@ -59,7 +60,15 @@
                     <a id="main">Omschrijving: <?php echo ($obstaclesToCheckArray[$key]['Omschr']); ?></a>
                     <h3>Foto: </h3>
                     <div>
-                        <?php echo '<img src="'.WEBROOT.'/img/Obstacles/'.$obstaclesToCheckArray[$key]['ImgPath'].'" alt="" width="250" height="160"  '; ?>
+                        <?php 
+                            if($obstaclesToCheckArray[$key]['ImgPath'] != ''){
+                                echo '<img src="'.WEBROOT.'/img/Obstacles/'.$obstaclesToCheckArray[$key]['ImgPath'].'" 
+                                width="'. $obstaclesToCheckArray[$key]['w'].'" height="'. $obstaclesToCheckArray[$key]['h'].'" > ';
+                            }else{
+                                $str = '<a id="main">geen hindernisafbeelding.</a><br><br>';
+                                echo $str;
+                            }
+                        ?>
                     </div>
 
                     <div>

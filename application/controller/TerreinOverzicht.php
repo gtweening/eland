@@ -54,7 +54,7 @@ class TerreinOverzicht extends Controller {
               $imgPath = $_POST["imgPath"];
               $vimg = $_POST["vimg"];
 
-              $this->mod_helpers->imgImport($this->db, $imgPath, $vimg, NULL, $terreinid );
+              $this->mod_helpers->uploadFile($_FILES, $imgPath, NULL, $terreinid, $this->db );
               
             }
             

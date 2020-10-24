@@ -45,7 +45,14 @@
                 </td>
                 <td class="hwhite">
                     <br><br>
-                    <?php echo '<img src="'.WEBROOT.'/img/Obstacles/'.$this->img.'"'.$imgstyle.' >'; ?>
+                    <?php 
+                        if($this->img != ''){
+                            echo '<img src="'.WEBROOT.'/img/Obstacles/'.$this->img.'"'.$imgstyle.' > ';
+                        }else{
+                            $str = '<a id="main">geen hindernisafbeelding.</a><br><br>';
+                            echo $str;
+                        }
+                    ?>
                     <br><br>
                 </td>
                 </tr>

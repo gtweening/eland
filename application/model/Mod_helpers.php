@@ -159,75 +159,6 @@ class mod_helpers{
         }
     }
 
-    function imgImport($db, $imgPath, $vimg, $hindId=NULL, $terreinId=NULL){
-        $result = "";
-        
-        //tabel instellen
-        if(isset($_POST['hindId'])){
-            //herkomst = Obstacle
-            $tbl = 'TblObstacles';
-            $col = 'ImgPath';
-            $where = "WHERE Id = $hindId";
-
-        }else{
-            //herkomst = terreinOverzicht
-            $tbl = 'TblTerrein';
-            $col = 'ImgFile';
-            $where = "WHERE Id = $terreinId";
-        }
-    
-        //toegestane extensies
-        $allowedExts = array("gif", "jpeg", "jpg", "png","GIF", "JPEG", "JPG", "PNG","Gif", "Jpeg", "Jpg", "Png");
-        $temp = explode(".", $_FILES["file"]["name"]);
-        $extension = end($temp);
-        if ((($_FILES["file"]["type"] == "image/gif")
-            || ($_FILES["file"]["type"] == "image/jpeg")
-            || ($_FILES["file"]["type"] == "image/jpg")
-            || ($_FILES["file"]["type"] == "image/pjpeg")
-            || ($_FILES["file"]["type"] == "image/x-png")
-            || ($_FILES["file"]["type"] == "image/png"))
-            && ($_FILES["file"]["size"] < 500000)
-            && in_array($extension, $allowedExts))
-        {
-          if ($_FILES["file"]["error"] > 0) {
-            $result = "Return Code: " . $_FILES["file"]["error"] . "<br>";
-          }
-          else {
-            $result .= "Upload: " . $_FILES["file"]["name"] . "\\n";
-            $result .= "Type: " . $_FILES["file"]["type"] . "\\n";
-            $result .= "Size: " . ($_FILES["file"]["size"] / 1024) . " kB\\n";
-            $result .= "Temp file: " . $_FILES["file"]["tmp_name"] . "\\n";
-    
-            if (file_exists($imgPath . $_FILES["file"]["name"])) {
-                $_SESSION['errormessage'] = $_FILES["file"]["name"] . " bestaat al op de server. Raadpleeg de beheerder voor correctie!";
-                return false;
-
-            }
-            else {
-              //move file to server
-              move_uploaded_file($_FILES["file"]["tmp_name"],
-                                $imgPath . $_FILES["file"]["name"]);
-              //echo "Opgeslagen in: " . $imgPath . $_FILES["file"]["name"];
-              //$result .= "\\n" . $_FILES["file"]["name"] . " is opgeslagen op de server.";
-              $FileName = $_FILES["file"]["name"];
-              $sql = "UPDATE $tbl SET $col = '".$FileName."' $where";
-              $STH = $db->prepare($sql);
-              $STH->execute();
-              }
-            }
-        }
-        else {
-            $message = "Ongeldig bestand. <br>";
-            $message .= "Type: " . $_FILES["file"]["type"] . ". Bestand moet van het type: gif, jpeg, jpg of png zijn. ";
-            $message .= "Grootte: " . ($_FILES["file"]["size"] / 1024) . " kB. Bestand moet kleiner zijn dan 500 Kb.\\n";
-            $_SESSION['errormessage'] = $message;
-
-            return false;
-            
-        }
-    
-        return TRUE;
-    }
 
     //bestandsnaam uit db verwijderen
     //enkel als er een bestand aanwezig is.
@@ -261,10 +192,28 @@ class mod_helpers{
         return TRUE;
     }
 
-    function uploadFile($file,$imgPath, $tablename, $id, $db){
-        $allowedExts = array("gif", "jpeg", "jpg", "png","GIF", "JPEG", "JPG", "PNG","Gif", "Jpeg", "Jpg", "Png");
-        $temp = explode(".", $file["file"]["name"]);
-        $extension = end($temp);
+    
+    //upload obstacle image to server
+    function uploadFile($file,$imgPath, $hindId=NULL, $terreinId=NULL, $db){
+        
+        $message     = "";
+        $allowedExts = array("jpeg", "jpg", "png", "JPEG", "JPG", "PNG", "Jpeg", "Jpg", "Png");
+        $temp        = explode(".", $file["file"]["name"]);
+        $extension   = end($temp);
+
+        //tabel instellen
+        if(isset($_POST['hindId'])){
+            //herkomst = Obstacle
+            $tbl   = 'TblObstacles';
+            $col   = 'ImgPath';
+            $where = "WHERE Id = $hindId";
+
+        }else{
+            //herkomst = terreinOverzicht
+            $tbl   = 'TblTerrein';
+            $col   = 'ImgFile';
+            $where = "WHERE Id = $terreinId";
+        }
 
         if ((($file["file"]["type"] == "image/gif")
             || ($file["file"]["type"] == "image/jpeg")
@@ -272,13 +221,14 @@ class mod_helpers{
             || ($file["file"]["type"] == "image/pjpeg")
             || ($file["file"]["type"] == "image/x-png")
             || ($file["file"]["type"] == "image/png"))
-            && ($file["file"]["size"] < 500000)
+           // && ($file["file"]["size"] < 9000000)
             && in_array($extension, $allowedExts))
         {
             if ($file["file"]["error"] > 0) {
                 $message =  "Return Code: " . $file["file"]["error"] . "<br>";
                 $_SESSION['errormessage'] = $message;
                 return false;
+
             } else {
                 $message = "Upload: " . $file["file"]["name"] . "<br>";
                // $message .= "Type: " . $file["file"]["type"] . "<br>";
@@ -288,27 +238,60 @@ class mod_helpers{
                     $message = $file["file"]["name"] . " bestaat al. ";
                     $_SESSION['errormessage'] = $message;
                     return false;
+
                 }
                 else {
-                  //move file to server
-                  move_uploaded_file($file["file"]["tmp_name"],
-                        $imgPath . $file["file"]["name"]);
+                    //move file to server
+                    move_uploaded_file($file["file"]["tmp_name"], $imgPath . $file["file"]["name"]);
+
+                    //change image scale
+                    $image      = $file["file"]["name"];
+                    $type       = $file["file"]["type"];
+                    list($w,$h) = getimagesize($imgPath . $image);
+                    $ratio      = $w/$h; //>1: widht>height, <1: width < height
+                    switch (TRUE){
+                        case ($ratio <=1):
+                            $h = 500;
+                            $w = 500 * $ratio;
+                            break;
+                        case ($ratio > 1):
+                            $w = 500;
+                            $h = 500 / $ratio;
+                            break; 
+                    }
+
+                    //create image and save to server - existing file is overwritten
+                    switch ($type){
+                        case ("image/jpeg"):
+                        case ("image/jpg"):
+                        case ("image/pjpeg"):
+                            $tempimage    = imagecreatefromjpeg($imgPath.$image);
+                            $imageResized = imagescale($tempimage, $w, $h);
+                            $saved        = imagejpeg($imageResized,$imgPath.$image);
+                            break;
+                        case ("image/x-png"):
+                        case ("image/png"):
+                            $tempimage    = imagecreatefrompng($imgPath.$image);
+                            $imageResized = imagescale($tempimage, $w, $h);
+                            $saved        = imagepng($imageResized,$imgPath.$image);
+                            break;
+                    }
+
                   $message .= "Opgeslagen op server.";
                   $_SESSION['errormessage'] = $message;
 
                   $FileName = $file["file"]["name"];
-
-                  $STH = $db->prepare("UPDATE $tablename SET ImgPath = '".$FileName."' WHERE Id = $id");
+                  $sql = "UPDATE $tbl SET $col = '".$FileName."' $where";
+                  $STH = $db->prepare($sql);
                   $STH->execute();
-                  //echo "<meta http-equiv=\"refresh\" content=\"0;URL=obstacle.php?Id=".$_POST['hindId']."&Sec=".$_POST['hindSec']."&Vnr=".$_POST['hindVolgnr']."\">";
-                  //header('Location:obstacle.php?Id='.$_POST['hindId'].'&Sec='.$_POST['hindSec'].'&Vnr='.$_POST['hindVolgnr'].'');
                 }
             }
         } else {
 
             $message = "Ongeldig bestand. "."<br>";
-            $message .= "Bestand moet van het type: gif, jpeg, jpg of png zijn " ;
-            $message .= "en kleiner dan 500Kb (" . $file["file"]["size"] / 1024 .").";
+            $message .= "Bestand moet van het type: jpeg, jpg of png zijn, niet:  " ;
+            $message .= $file["file"]["type"];
+            //$message .= "en kleiner dan 9 MB (" . $file["file"]["size"] / 1024 ." KB).";
             $_SESSION['errormessage'] = $message;
             return false;
         }
