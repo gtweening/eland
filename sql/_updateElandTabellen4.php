@@ -3,7 +3,7 @@
  * 4th update eland tabellen 
  *
  * bevat enkel de toevoegingen van version 5.0
- * voorwaarde: _createelandtables20 is uitgevoerd.
+ * voorwaarde: _createelandtables30 is uitgevoerd.
  * 
  * Voegt twee tabellen toe tbv versturen berichten
  */

@@ -195,6 +195,26 @@ class mod_users{
         }
     }
 
+    function getrole($email,$db){
+        $sql = "SELECT role
+                FROM TblUsers
+                WHERE Email = '".$email."' ";
+    
+        $stmt = $db->prepare($sql);
+        $stmt->execute();  
+        $result = $stmt->fetch();
+        $role   = $result['role'];
+    
+        if ($stmt->rowCount() == 1) {
+            //user exists
+            return $role;
+
+        }else{
+            //user doen not exists
+            return false;
+        }
+    }
+
     function editTempPwd($pwd, $endtime, $uname, $db){
         $stmt = $db->prepare("UPDATE TblUsers 
                               SET temppwd = '".$pwd."' , validuntil = '".$endtime."' 
@@ -212,9 +232,9 @@ class mod_users{
         return true;
     }
 
-    function addUser($email, $password, $salt, $indadmin, $ema, $db){
-        $STH = $db->prepare("INSERT INTO TblUsers (Email, Password, salt, Admin, ema) VALUES
-                            ('$email','$password', '$salt', '$indadmin', '$ema')");
+    function addUser($email, $password, $salt, $indadmin, $ema, $role, $db){
+        $STH = $db->prepare("INSERT INTO TblUsers (Email, Password, salt, Admin, ema, role) VALUES
+                            ('$email','$password', '$salt', '$indadmin', '$ema', '$role')");
         $STH->execute();
     }
 

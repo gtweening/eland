@@ -26,7 +26,8 @@
                     <input type="text" class="inputText" name="usernaam" maxlength="50" size="18" placeholder='gebruikersnaam'>
                     <input type="text" class="inputText" name="password" maxlength="50" size="18" placeholder='wachtwoord'>
                     <input type="checkbox" class="inputText" name="useradmin" ><br>
-                    <input type="text" class="inputText" name="emailadres" maxlength="100" size="45" placeholder='email adres'>
+                    <input type="text" class="inputText" name="emailadres" maxlength="100" size="45" placeholder='emailadres'>
+                    <input type="text" class="inputText" name="role" maxlength="3" size="3" placeholder='role'>
                     <div class="cudWidget">
                         <button class="submitbtn" type="submit" name="addUser" float="right" 
                                 onclick="formhash(this.form, this.form.password)">   
@@ -40,7 +41,8 @@
                         <th width="5%" ></th>
                         <th width="40%"><strong>Gebruikersnaam</strong></th>
                         <th width="40%"><strong>Email adres</strong></th>
-                        <th ><strong>Administrator</strong></th>
+                        <th width="10%"><strong>Rol</strong></th>
+                        <th ><strong>Admin</strong></th>
                     </tr>
                 
                     <?php
@@ -51,8 +53,9 @@
                         <td width="5%" class="white2">
                             <input name="checkbox[]" type="checkbox" id="checkbox[]" 
                                   value="<?php echo $rows['Id']; ?>"></td>
-                        <td width="70%" class="white" "><?php echo htmlentities($rows['Email']); ?></td>
-                        <td width="70%" class="white" "><?php echo htmlentities($rows['ema']); ?></td>
+                        <td width="40%" class="white" ><?php echo htmlentities($rows['Email']); ?></td>
+                        <td width="40%" class="white" ><?php echo htmlentities($rows['ema']); ?></td>
+                        <td width="10%" class="white" ><?php echo htmlentities($rows['role']); ?></td>
                         <td width="5%" class="white"><?php if($rows['Admin']== FALSE){ ?>
                                 <img src="<?php echo WEBROOT;?>/img/nok.png" width="20" height="20"><?php
                             }else{?>

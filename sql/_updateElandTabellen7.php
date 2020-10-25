@@ -2,7 +2,7 @@
 /**
  * 7th update eland tabellen 
  * bevat enkel de toevoegingen van version 4.0
- * voorwaarde: _createelandtables20 is uitgevoerd.
+ * voorwaarde: _createelandtables30 is uitgevoerd.
  * 
  * Voegt kolom toe aan TblTerrein tbv vastleggen overzichtsplaatje
  */

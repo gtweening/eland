@@ -100,9 +100,10 @@ class Beheer extends Controller {
                 }
                 //post
                 $ema        = $_POST['emailadres'];
-                $username   = $_POST['username'];
+                $username   = $_POST['usernaam'];
+                $role       = $_POST['role'];
                 //insert user
-                $this->mod_users->addUser($username, $password, $random_salt, $indadmin, $ema, $this->db);
+                $this->mod_users->addUser($username, $password, $random_salt, $indadmin, $ema, $role, $this->db);
               
             }else {
                //nothing

@@ -19,10 +19,31 @@ class ReportAll extends Controller {
         $this->sec_session_start();
     }
 
+
     function index() 
     {   
         $this->checkPermission($this->mysqli);        
         $terreinid  = $_SESSION['Terreinid'];
+
+        $this->showReport($terreinid);
+        
+    }
+
+
+    function view() 
+    {
+        $this->checkPermission($this->mysqli);     
+
+        if(isset($this->url[2])){
+            $terreinid = $this->url[2];
+            $this->showReport($terreinid);
+        }
+        
+    }
+
+
+    function showReport($terreinid)
+    {
         $terreinPic = $this->mod_terrein->getTerreinPic($terreinid, $this->db);
         $imgstyle   = $this->mod_helpers->showObsPic($this->imgTerrainPath,$terreinPic,700,700);
         $title      = "Hindernissen";
@@ -31,7 +52,7 @@ class ReportAll extends Controller {
         $obstacleCheckpointsArray   = array();
         $obstacleChecksArray        = array();
         $obstaclesToCheckArray      = array();
-        $obstacles                  = $this->mod_obstacles->getAllObstaclesForTerrain($this->db);
+        $obstacles                  = $this->mod_obstacles->getAllObstaclesForTerrain($terreinid ,$this->db);
 
         while($row = $obstacles->fetch() ){
             $w          = 0;
@@ -96,8 +117,6 @@ class ReportAll extends Controller {
         }
 
         include $this->app_path.'view/report_obstacles.php';
-
-
     }
 
 
