@@ -66,8 +66,12 @@ class Sections extends Controller {
             $sectienaam = $_POST['sectienaam'];
             $sectieomschr = $_POST['sectieomschr'];
 
-            if(!empty($_POST['sectienaam'])){
-                $this->mod_sections->addSection($terreinid, $sectienaam, $sectieomschr, $this->db);
+            if(!empty($sectienaam)){
+                if(strrchr($sectienaam, "/") == TRUE){
+                    $_SESSION['errormessage'] = "De sectienaam mag geen '/' bevatten!";
+                }else{
+                    $this->mod_sections->addSection($terreinid, $sectienaam, $sectieomschr, $this->db);
+                }
 
             }else{
                 $_SESSION['errormessage'] = "De sectienaam moet nog ingevuld worden!";
@@ -99,8 +103,12 @@ class Sections extends Controller {
                         $check = $this->mod_helpers->checkUnique($sId, $terreinid, 'TblSections', 'Naam', $sNaam, $this->db);
 
                         if($check == true){
-                            $this->mod_sections->editSection($sId, $sNaam, $sOmschr, $this->db);
-                
+                            if(strrchr($sNaam, "/") == TRUE){
+                                $_SESSION['errormessage'] = "De sectienaam mag geen '/' bevatten!";
+                            }else{
+                                $this->mod_sections->editSection($sId, $sNaam, $sOmschr, $this->db);
+                            }
+                           
                         }else{
                             $_SESSION['errormessage'] = "Sectienaam is elders gebruikt! Kies andere naam!";
 
