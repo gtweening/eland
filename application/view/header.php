@@ -126,16 +126,18 @@
 	<div id="popup" class="overlay">
 		<div class="popup">
 			<header class="container popup_header">
-			   <a class="close display-topright" href="">&times;</a>
+			   <a class="close" href="">&times;</a>
 			   <h2>Nieuwsberichten</h2>
 			</header>
-			<div class="container">
+
+			<div class="container popup_body">
 			   <a style="float:right;">
 			     <?php echo $message['Datum']; ?>
 			   </a>
 			   <h3><?php echo $message['Titel']; ?></h3>
 			   <p> <?php echo $message['Bericht']; ?></p>
 			</div>
+
 			<footer class="container popup_footer">
                <form name="form1" method="post" 
                      action="<?php $url = isset($_GET['url']) ? $_GET['url'] : NULL;
