@@ -173,9 +173,9 @@ class ReportControlelijstPC extends Controller {
         }
 
         //export naar excel
-        $filename = "PC_controlelijst_".$TL.".xls";
-        header('Content-type: application/vnd.ms-excel');
-        header('Content-disposition: attachment; filename='.$filename );
+        $filename = "PC_controlelijst_".$TL.".csv";
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename='.$filename );
         header("Pragma: no-cache");
         header("Expires: 0");
         print "$header\n$data";
