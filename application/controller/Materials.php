@@ -48,10 +48,16 @@ class Materials extends Controller {
 
         }else if(isset($_POST['addMaterialType'])){ 
             $terreinid = $_SESSION['Terreinid'];
-            $material = $_POST['materialtype'];
+            $material  = $_POST['materialtype'];
+            $amount    = $this->mod_materials->getAmountMaterials($terreinid, $this->db);
 
-            if(!empty($_POST['materialtype'])){
+            if(!empty($material)){
+                $material = str_replace(" ","_",$material);
                 $this->mod_materials->addMaterialType($terreinid, $material, $this->db);
+
+                if($amount >= 10){
+                    $_SESSION['errormessage'] = "U gaat meer dan 10 verschillende materialen gebruiken! <br>Dit levert problemen op bij PC-controlelijst. Probeer ze samen te voegen.";
+                }
 
             }else{
                 $_SESSION['errormessage'] = "De materiaalomschrijving moet nog ingevuld worden!";

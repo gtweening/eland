@@ -45,6 +45,17 @@ class mod_materials{
         $STH->execute();  
     }
 
+    function getAmountMaterials($terreinid, $db){
+        $STH = $db->prepare('SELECT count(*) as amount from TblMaterialTypes 
+                            where Terrein_id ='.$terreinid.'
+                            order by Id');
+        $STH->execute();
+        $result = $STH->fetch(PDO::FETCH_ASSOC);
+        $amount = $result['amount'];
+
+        return $amount;
+    }
+
     //############################################################
 
     function getmaterialdetails($Terreinid, $db){
