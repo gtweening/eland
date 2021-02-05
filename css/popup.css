@@ -20,7 +20,7 @@
          opacity: 0;
 }
 
-.container{padding:0.01em 16px;}
+.popupcontainer{padding:0.01em 16px;}
 
 /* foreground popup */
 .popup {margin:auto;

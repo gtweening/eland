@@ -10,7 +10,7 @@
 
  <body>
     <div id="main">
-        <div id="header">
+        <div class="header">
         <?php
             $userid = $_SESSION['user_id'];
             //get username
@@ -125,12 +125,12 @@
     <!-- modal dialogue -->
 	<div id="popup" class="overlay">
 		<div class="popup">
-			<header class="container popup_header">
+			<header class="popupcontainer popup_header">
 			   <a class="close" href="">&times;</a>
 			   <h2>Nieuwsberichten</h2>
 			</header>
 
-			<div class="container popup_body">
+			<div class="popupcontainer popup_body">
 			   <a style="float:right;">
 			     <?php echo $message['Datum']; ?>
 			   </a>
@@ -138,7 +138,7 @@
 			   <p> <?php echo $message['Bericht']; ?></p>
 			</div>
 
-			<footer class="container popup_footer">
+			<footer class="popupcontainer popup_footer">
                <form name="form1" method="post" 
                      action="<?php $url = isset($_GET['url']) ? $_GET['url'] : NULL;
                                    echo WEBROOT.'/'.$url;
@@ -157,6 +157,4 @@
 		</div>
     </div>
     
-    
- </body>
-</html> 
+    <div class="container">

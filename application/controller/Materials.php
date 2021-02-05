@@ -36,7 +36,7 @@ class Materials extends Controller {
     function execute(){
         unset($_SESSION['errormessage']);
 
-        if(isset($_POST['delMaterialType'])){
+        if(isset($_POST['delMaterialType_x'])){
             if(!empty($_POST['checkbox'])){
                 $selected = $_POST['checkbox'];
                 $this->mod_materials->delMaterialType($selected, $this->db);
@@ -58,7 +58,7 @@ class Materials extends Controller {
            
             }
 
-        }else if(isset($_POST['editMaterialType'])){
+        }else if(isset($_POST['editMaterialType_x'])){
             $terreinid = $_SESSION['Terreinid'];
             $material = $_POST['materialtype'];
             

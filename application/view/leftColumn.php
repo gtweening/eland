@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-<div id="LeftColumn">
+
+<div class="nav">
     <div class = "menuItem">
         <a href="<?php echo WEBROOT; ?>/TerreinOverzicht" id="navTerreinOverzicht" title ="Terreinoverzicht">
                 <img src="<?php echo WEBROOT; ?>/img/terrein.png" alt="Terrein" width="40" height="40" >

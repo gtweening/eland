@@ -3,17 +3,19 @@
     include_once "leftColumn.php"; 
 ?>
 
-<html>
-    <head>
-    </head>
 
-    <body id="gebruikersterreinbeheer">
-        <div id="LeftColumn2">
-        </div>
+<body id="gebruikersterreinbeheer">
+    <div class="navobsbysection">          
+    </div>
 
-        <div id="RightColumn">
-            <form name="form1" method="post" action="<?php echo WEBROOT; ?>/Login/terreinselectexecute">
+    <div class="workarea">
+        <form name="form1" method="post" action="<?php echo WEBROOT; ?>/Login/terreinselectexecute">
+
+            <div class="workarea-row">
                 <a class="tableTitle">&nbsp;&nbsp;&nbsp;&nbsp;Gebruiker terreinen</a>
+            </div>
+            
+            <div class="workarea-row">
                 <div class="cudWidget">
                     <button class="submitbtn" type="submit" name="setGebrTerrein" float="right" >   
                             <img src="<?php echo WEBROOT; ?>/img/ok.jpeg" width="35" height="35">
@@ -24,8 +26,10 @@
                     <br>
                     <a>U beheert meerdere terreinen. U kunt 1 terrein tegelijkertijd onderhouden. Kies terrein.</a>
                 </div>
+            </div>
 
-                <table id="materialenTable" >
+            <div class="containertable">
+                <table >
                     <tr class="theader">
                         <th width="5%" ></th>
                         <th width="50%"><strong>Gebruikersnaam</strong></th>
@@ -36,7 +40,7 @@
                     while($rows = $terreinusers->fetch()){
                     ?>
 
-                    <tr >
+                    <tr class="trow">
                         <td width="5%" class="white2">
                         <input name="checkbox[]" type="checkbox" id="checkbox[]" 
                             value="<?php echo $rows['Id']; ?>"></td>
@@ -52,9 +56,11 @@
                     ?>
 
                 </table>
-            </form>
-        </div>
-    </body>
+        </form>
+    </div>
+
+</div>
+</body>
 </html>
 
 

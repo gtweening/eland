@@ -51,7 +51,7 @@ class Sections extends Controller {
     function execute(){
         unset($_SESSION['errormessage']);
 
-        if(isset($_POST['delSection'])){
+        if(isset($_POST['delSection_x'])){
             if(!empty($_POST['checkbox'])){
                 $selected = $_POST['checkbox'];
                 $this->mod_sections->delSection($selected, $this->db);
@@ -78,7 +78,7 @@ class Sections extends Controller {
            
             }
 
-        }else if(isset($_POST['editSection'])){
+        }else if(isset($_POST['editSection_x'])){
             $terreinid = $_SESSION['Terreinid'];
             $sNaam=$_POST['sectienaam'];
             $sOmschr=$_POST['sectieomschr'];
@@ -194,7 +194,8 @@ class Sections extends Controller {
                     $ids[] = (int) $val;
                 }
                 $ids = implode("','", $ids);
-                $this->mod_obstacles->delObstacles($ids, $this->db);
+                
+               $this->mod_obstacles->delObstacles($ids, $this->db);
 
             }else{
                 $_SESSION['errormessage'] = "Er is niets geselecteerd om te verwijderen!";
@@ -222,7 +223,7 @@ class Sections extends Controller {
             
             }
 
-        }else if(isset($_POST['editObstacle'])){
+        }else if(isset($_POST['editObstacle']) || isset($_POST['editObstacle_x'])){
             $terreinid      = $_SESSION['Terreinid'];
             $vsectionid     = $_POST['sectionId'];
             $vsectionname   = $_POST['sectionName']; 

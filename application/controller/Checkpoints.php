@@ -34,7 +34,7 @@ class Checkpoints extends Controller {
     function execute(){
         unset($_SESSION['errormessage']);
 
-        if(isset($_POST['delChkPoint'])){
+        if(isset($_POST['delChkPoint_x'])){
             if(!empty($_POST['checkbox'])){
                 $selected = $_POST['checkbox'];
                 $this->mod_checkpoints->delCheckpoints($selected, $this->db);
@@ -55,7 +55,7 @@ class Checkpoints extends Controller {
            
             }
 
-        }else if(isset($_POST['editChkPoint'])){
+        }else if(isset($_POST['editChkPoint_x'])){
             $terreinid = $_SESSION['Terreinid'];
             $checkpoint = $_POST['CheckPoint'];
 
