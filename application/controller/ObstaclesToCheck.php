@@ -52,11 +52,29 @@ class ObstaclesToCheck extends Controller {
 
         while($row = $obstaclesToCheck->fetch() ){
             $obstacleid      = $row['Id'];
+            $w = 0;
+            $h = 0;
+            if($row['ImgPath'] != ''){
+                list($w,$h) = getimagesize($this->obsPath . $row['ImgPath']);
+                $ratio      = $w/$h;
+                switch (TRUE){
+                    case ($ratio <=1):
+                        $h = 300;
+                        $w = 300 * $ratio;
+                        break;
+                    case ($ratio > 1):
+                        $w = 500;
+                        $h = 500 / $ratio;
+                        break; 
+                }
+            }
             $newdata = array(
                 'Sectie'    => $row['Naam'],
                 'Volgnr'    => $row['Volgnr'],
                 'Omschr'    => $row['Omschr'],
-                'ImgPath'   => $row['ImgPath']
+                'ImgPath'   => $row['ImgPath'],
+                'w'         => $w,
+                'h'         => $h
                 );
             $obstaclesToCheckArray[$obstacleid] = $newdata;
 

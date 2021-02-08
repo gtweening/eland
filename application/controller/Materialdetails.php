@@ -37,7 +37,7 @@ class Materialdetails extends Controller {
     function execute(){
         unset($_SESSION['errormessage']);
 
-        if(isset($_POST['delMaterial'])){
+        if(isset($_POST['delMaterial_x'])){
             if(!empty($_POST['checkbox'])){
                 $selected = $_POST['checkbox'];
                 $this->mod_materials->delMaterial($selected, $this->db);
@@ -69,7 +69,7 @@ class Materialdetails extends Controller {
                 $_SESSION['errormessage'] = "De materiaalomschrijving moet nog ingevuld worden!";
             }
 
-        }else if(isset($_POST['editMaterial'])){
+        }else if(isset($_POST['editMaterial_x'])){
             $terreinid = $_SESSION['Terreinid'];
             switch ($_POST['rope']){
                 case 'securerope':

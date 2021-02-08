@@ -94,7 +94,7 @@ class ObstacleChecks extends Controller {
         $controleur = $_POST['controleur'];
         $note       = $_POST['note'];
 
-        if(isset($_POST['delObstacleCheck'])){
+        if(isset($_POST['delObstacleCheck_x'])){
             if(!empty($_POST['checkbox'])){
                 foreach($_POST['checkbox'] as $val){
                     $ids[] = (int) $val;
@@ -121,7 +121,7 @@ class ObstacleChecks extends Controller {
                 $_SESSION['errormessage'] = "Er is geen datum opgegeven!";
             }
 
-        }else if(isset($_POST['editObstacleCheck'])){
+        }else if(isset($_POST['editObstacleCheck_x'])){
             //checkbox needs to be selected
             if(!empty($_POST['checkbox'])){
                 //only one checkbox selected

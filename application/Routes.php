@@ -9,7 +9,7 @@ switch($domain) {
         break;
 
     default :
-        define( 'WEBROOT', 'http://localhost/eland');
+        define( 'WEBROOT', 'http://'.$domain.'/eland');
         define( 'DIR', $_SERVER['DOCUMENT_ROOT'].'/eland');
         break;
 }

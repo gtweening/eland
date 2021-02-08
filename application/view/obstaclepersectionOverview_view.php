@@ -8,11 +8,10 @@ solved issue with php short code
 solved issue showing obstacles of section
 
 */-->
-
-    <a class="tableTitle3">Sectie <?php echo $this->sectienaam?></a>
-    <div class="cudWidget">   
+    <div class="workarea-row">  
+        <a class="tableTitle3">Sectie <?php echo $this->sectienaam?></a>
     </div>
-        
+         
     <table id="obstacleTableQuarter">
          <tr class="theader">
             <th colspan="2">Hindernis</th>

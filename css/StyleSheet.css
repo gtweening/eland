@@ -12,14 +12,104 @@ root {
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    width: 950px;
-    text-align: left;
-    margin: 20px auto;
+    width: 90%;
+    margin: auto;
 }
 
 #main {
     background: white
 }
+
+.header {
+    width: 90%;
+    min-width: 900px;
+    height: 50px;
+    background-color: #e6e6e6;
+    border-bottom: solid 1px black;
+    font-size: small;
+    text-align: right;
+    vertical-align: bottom;
+    overflow: hidden;
+    position: fixed;
+}
+
+.header:hover{
+    overflow: visible;
+}
+
+.nav {
+    width: 50px;
+    background: #CEF6F5;
+}
+
+
+.container {
+    width: 100%; /* Set full-width to expand the whole page */
+    display: flex;
+    align-items: stretch;
+    padding-top: 50px;
+}
+
+.containertable {
+    width: 100%; /* Set full-width to expand the whole page */
+    display: flex;
+    align-items: stretch;
+}
+
+.navobsbysection {
+    flex-grow: 2;
+    min-width: 150px;
+    background: white;
+}
+
+.workarea {
+    flex-grow: 10;
+    min-width: 700px;
+    border-left: solid 1px black;
+}
+
+.workarea-half {
+    flex-grow: 5;
+    min-width: 300px;
+}
+
+.workarea-row {
+    height: 50px;
+    margin-top: 0;
+    border-bottom: solid 1px black;
+}
+
+.workarea-row3x {
+    height: 150px;
+    margin-top: 0;
+    border-bottom: solid 1px black;
+}
+
+.workarea-picture {
+    margin-top: 0;
+    border-bottom: solid 1px black;
+}
+
+.containertable tr.theader{
+    height: 50px;
+    padding-top: 5px;
+    margin-top: 0;
+    background-color: #c6faf3;
+    border-bottom: solid 1px #58D3F7;
+}
+
+.containertable tr.trow{   
+    background-color: #f1f1f1;
+    height: 50px;
+    max-height: 75vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+table {
+    width:100%;
+}
+
 
 .submitbtn {
     -webkit-appearance: none;
@@ -102,12 +192,7 @@ td a {
     padding-left: 20px;
 }
 
-.theader {
-    text-align: left;
-    height: 50px;
-    background-color: #CEF6F5;
-    border-bottom: solid 1px #58D3F7;
-}
+
 
 .inputText {
     margin-top: 12px;
@@ -135,14 +220,7 @@ td a {
     font-size: small
 }
 
-#header {
-    height: 50px;
-    background: #e6e6e6;
-    border-bottom: solid 1px black;
-    font-size: small;
-    text-align: right;
-    vertical-align: top;
-}
+
 
 #headerleft {
     height: 50px;
@@ -208,7 +286,7 @@ td a {
 
 .errormessage {
     height: 45px;
-    width: 700px;
+    width: 100%;
     float: left;
     padding-top: 10px;
     text-align: center;
@@ -253,25 +331,8 @@ h2 {
     list-style-type: none;
 }
 
-#LeftColumn ul {
-    list-style-type: none;
-}
-
-#LeftColumn ul li {
-    margin: 10px -40px;
-}
-
-#LeftColumn ul li a {
-    padding: 5px;
-    display: block;
-    background-color: #CEF6F5;
-    line-height: 25px;
-    font-size: small;
-}
-
-#LeftColumn ul li a:hover {
-    background-color: #CEF6F5;
-    color: black;
+ul{
+    margin-bottom: -5px;
 }
 
 #LeftColumn2 {
@@ -319,43 +380,37 @@ h2 {
 
 #widgetBar {
     height: 50px;
-    width: 700px;
     float: left;
     background: white;
-    border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
 
-#widgetBartab {
-    height: 50px;
-    width: 700px;
-    float: left;
+.widgetBartab {
+    flex-grow: 2;
+    height: 49px;
     background: white;
-    border-top: solid 1px black;
     border-bottom: solid 2px #58D3F7;
 }
 
 #widgetBar2x {
     height: 100px;
-    width: 700px;
+    min-width: 300px;
     float: left;
     background: white;
-    border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
 
 #widgetBar3x {
     height: 150px;
-    width: 700px;
+    min-width: 600px;
     float: left;
     background: white;
-    border-top: solid 1px black;
     border-bottom: solid 1px black;
 }
 
 #widgetBar2 {
     height: 50px;
-    width: 900px;
+  
     float: left;
     background: white;
     border-top: solid 1px black;
@@ -364,7 +419,7 @@ h2 {
 
 #widgetBarQuarter {
     height: 50px;
-    width: 700px;
+  
     float: left;
     background: white;
     padding-top: 10px;
@@ -432,7 +487,7 @@ h2 {
     width: 700px;
 }
 
-#materialenTable2 tr td.white:hover {
+tr td.white:hover {
     background-color: #CEF6F5;
     cursor: pointer;
 }
@@ -452,7 +507,7 @@ h2 {
     border-collapse: collapse;
 }
 
-#obstacleTableHalf td {
+td {
     max-width: 80px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -460,11 +515,11 @@ h2 {
     padding: 0px 2px;
 }
 
-#obstacleTableHalf td.white span {
+td.white span {
     display: none;
 }
 
-#obstacleTableHalf td.white:hover span {
+td.white:hover span {
     max-width: 500px;
     display: block;
     position: absolute;
@@ -482,12 +537,12 @@ button:hover span {
     display: block;
     position: absolute;
     background-color: #58D3F7;
-    padding: 10px 10px;
+    padding: 5px 5px;
     border-radius: 6px;
 }
 
 #obstacleTableQuarter {
-    width: 200px;
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -499,21 +554,22 @@ button:hover span {
 }
 
 .basictab {
-    padding: 7px 0px;
-    margin-left: 0;
+    margin-left: 10px;
+    margin-top: 23px;
     list-style-type: none;
     text-align: center;
+
     /*set to left, center, or right to align the menu as desired*/
 }
 
 .basictab li {
-    display: inline;
+    
     margin: 0;
 }
 
-.basictab li a {
+.basictab a {
     text-decoration: none;
-    padding: 7px 90px;
+    padding: 7px 90px 7px 90px;
     margin-right: 10px;
     border: 1px solid gray;
     border-bottom: none;
@@ -521,16 +577,16 @@ button:hover span {
     color: #2d2b2b;
 }
 
-.basictab li a:hover {
+a:hover {
     background-color: #e6e6e6;
     color: black;
 }
 
-.basictab li.selected a {
+.selected a {
     /*selected tab effect*/
-    position: relative;
+  
     top: 1px;
-    padding-top: 10px;
+ 
     background-color: #CEF6F5;
     color: black;
     font-weight: bold;
@@ -556,13 +612,6 @@ input {
     display: inline-block;
 }
 
-.theader {
-    text-align: center;
-    padding-top: 5px;
-    height: 20px;
-    background-color: #CEF6F5;
-    border-bottom: solid 1px #58D3F7;
-}
 
 .dropdown {
     /* display: inline-block; */
@@ -573,6 +622,7 @@ input {
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
+    right:50px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
@@ -591,6 +641,32 @@ input {
 }
 
 .dropdown:hover .account-dropbox {
+    display: block;
+}
+
+.table-dropbox {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.table-dropbox a {
+    color: black;
+    font-size: small;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.table-dropbox a:hover {
+    background-color: #CEF6F5
+}
+
+.dropdown:hover .table-dropbox {
     display: block;
 }
 

@@ -71,30 +71,37 @@
 </head>
 
 <body id="settings" oninput="init();">
-    <div id="LeftColumn2">          
+    <div class="navobsbysection">          
     </div>
 
-    <div id="RightColumn">
-        <div class="theader">
-            <a id="savedAt">
-                Instellingen zijn nog niet veranderd.
-            </a>
-        </div>
-        
+    <div class="workarea">
         <form method="POST">
-            <a class="tableTitle">&nbsp;&nbsp;&nbsp;&nbsp;Instellingen</a>
+            <div class="workarea-row">
+                <a class="tableTitle">&nbsp;&nbsp;&nbsp;&nbsp;Instellingen</a>
+            </div>
+
+            <div class="workarea-row">
+                <div class="theader">
+                    <a id="savedAt">
+                        Instellingen zijn nog niet veranderd.
+                    </a>
+                </div>
+            </div>
+
             <input type="hidden" id="terreinId" name="terreinId" value="<?php echo $terreinId;?>">
             <div class="white">
                 Terreinnaam
                 <input type="text" class="inputText" id="terreinNaam" name="terreinNaam"
-                    maxlength="75" size="50" value ="<?php echo $terreinNaam?>">
+                    maxlength="75" size="51" value ="<?php echo $terreinNaam?>">
             </div>
             <div class="white">
                 Contact email adres
                 <input type="text" class="inputText" id="contactEma" name="contactEma"
-                    maxlength="75" size="50" value ="<?php echo $contactEma?>">
+                    maxlength="75" size="44" value ="<?php echo $contactEma?>">
             </div>
+           
         </form>
+    </div>
   </div>
 
 </body>
