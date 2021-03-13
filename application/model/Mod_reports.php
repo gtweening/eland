@@ -73,11 +73,17 @@ class mod_reports{
                             where tobm.Section_id = ts.Id 
                             and ts.Terrein_id ='$terreinid' ";
 
+        $getMaxDatChk = "select Id, Obstacle_id, DatCheck,ChkSt 
+                         from TblObstacleChecks toc1 
+                              inner join (
+                                select max(Id) as maxId 
+                                from TblObstacleChecks 
+                                group by Obstacle_id) toc2 on toc1.Id = toc2.maxId" ;
+    
         //get sectioninfo, materialtype, max obstacle check per obstacle
         $getObstChkInfoA="select tobm2.*, toc.DatCheck, toc.ChkSt 
                         from (".$getSecObstMatInfo.") as tobm2 left join 
-                        (select max(Id),Obstacle_id,DatCheck,ChkSt 
-                        from TblObstacleChecks group by Obstacle_id) as toc 
+                        (" .$getMaxDatChk.") as toc 
                         on tobm2.Id=toc.Obstacle_id ";
 
         //add main, safety rope to list
