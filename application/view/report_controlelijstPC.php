@@ -9,8 +9,11 @@
 
 <body>
     <div class="navbar">
+        <a href="<?php echo WEBROOT.'/ReportControlelijstPC/ExportPDF/'.$Terreinnaam;?>">Exporteer rapport naar PDF</a>
         <a href="<?php echo WEBROOT.'/ReportControlelijstPC/ExportXLS/'.$Terreinnaam;?>">Exporteer rapport naar XLS<font size="2"> (zonder opmaak)</font> </a>
+        <!--
         <a href="<?php echo WEBROOT.'/ReportControlelijstPC/ExportRTF/'.$Terreinnaam;?>">Exporteer rapport naar RTF</a>
+        -->
     </div>
 
     <div class="main">

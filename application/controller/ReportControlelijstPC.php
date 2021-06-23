@@ -20,6 +20,11 @@ class ReportControlelijstPC extends Controller {
         include_once($this->app_path."model/Mod_helpers.php"); 
         $this->mod_helpers = new mod_helpers();
 
+        //include_once($this->app_path."library/fpdf.php");
+        include_once($this->app_path."library/RptControlelijstPC_PDF.php");
+        include_once($this->app_path."library/tcpdf/tcpdf.php");
+        //include_once($this->app_path."library/tcpdf/RptControlelijstPC_PDF.php");
+
 
         $this->sec_session_start();
     }
@@ -218,6 +223,41 @@ class ReportControlelijstPC extends Controller {
         header("Content-Transfer-Encoding: binary");
         readfile("../downloads/".$filename);
     }
+
+
+    function ExportPDF(){
+        $TL              = $obstacleid = $this->url[2];
+        $terreinid       = $_SESSION['Terreinid'];
+        $getObstChkInfo  = $this->mod_reports->getReportAll($terreinid, $this->db);
+        $result          = $this->mysqli->query($getObstChkInfo);
+        $STH             = $this->db->query($getObstChkInfo);
+        $info            = $STH->fetchAll(PDO::FETCH_ASSOC);
+
+        $pdf = new RptControlelijstPC_PDF('L','mm','A4',true, 'UTF-8', false);
+        // set document information
+        $pdf->pdf_docinfo($TL);
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        // header/footer
+        $pdf->setPrintHeader(true);
+        $pdf->setPrintFooter(true);
+        //
+        $pdf->setData($TL, $info);
+
+        $pdf->AddPage();
+        $pdf->pdf_body($info);
+       
+        // set auto page breaks
+        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);   
+
+        // ---------------------------------------------------------
+        // IMPORTANT: disable font subsetting to allow users editing the document
+        $pdf->setFontSubsetting(false);
+
+        //Close and output PDF document
+        $pdf->Output('PCcontroleliijst-'.$TL.'.pdf', 'I');
+    }
+
+
 
 
 }

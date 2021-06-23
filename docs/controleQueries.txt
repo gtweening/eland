@@ -1,0 +1,131 @@
+--get terreinid
+select Id from TblTerrein where Terreinnaam = '';
+
+--get materialtypes
+select * from TblMaterialTypes where terrein_id = ..;
+
+--get materials
+select * from TblMaterials where terrein_id = ..;
+
+--get sections
+select * from TblSections where terrein_id = ..;
+
+--get obstacles.
+select tobs.Id 
+from TblObstacles as tobs
+  inner join TblSections as ts on tobs.section_id = ts.Id 
+where ts.terrein_id = 1;
+
+
+--get obstaclematerials
+select tobs.Id as obsId, tm.id, tm.Omschr, MaterialType_id
+from TblObstacles as tobs
+  inner join TblSections as ts on tobs.section_id = ts.Id 
+  inner join TblObstacleMaterials tom on tom.Obstacle_id = tobs.Id
+  inner join TblMaterials tm on tm.Id = tom.Material_id
+where ts.terrein_id = 1 
+  and tm.Terrein_id = 1;
+
+Select * from TblObstacles where Id in (
+SELECT Obstacle_id FROM `TblObstacleMaterials` WHERE Material_id = 142)
+
+
+--materialen zonder obstacle
+SELECT distinct tom.*
+FROM `TblObstacleMaterials` tom 
+inner join `TblMaterials` tm on tom.Material_id = tm.Id 
+left outer join `TblObstacles` tobs on tobs.Id = tom.Obstacle_id 
+where tm.Terrein_id = 10 
+  and tobs.Id is null 
+
+--controle
+--indien leeg dan bestaan obstacles niet meer
+select * 
+from TblObstacles 
+where Id in ( 
+SELECT distinct tom.Obstacle_id 
+FROM `TblMaterials` tm 
+inner join `TblObstacleMaterials` tom on tom.Material_id = tm.Id 
+left outer join `TblObstacles` tobs on tobs.Id = tom.Obstacle_id 
+where tm.Terrein_id = 10 
+  and tobs.Id is null ) 
+
+
+
+--terreingebruikers zonder user
+SELECT * FROM TblTerreinUsers
+where User_id not in (select Id from TblUsers);
+
+--terreingebruikers zonder terrein
+SELECT * FROM TblTerreinUsers
+where Terrein_id not in (select Id from TblTerrein);
+
+--materiaaltypen zonder terrein
+SELECT * FROM TblMaterialTypes
+where Terrein_id not in (select Id from TblTerrein)
+
+--materialen zonder terrein
+SELECT * FROM TblMaterials
+where Terrein_id not in (select Id from TblTerrein);
+
+--wordt 'materiaal zonder terrein' gebruikt in hindernismaterialen
+select * from TblObstacleMaterials
+where material_id in (SELECT Id FROM TblMaterials
+where Terrein_id not in (select Id from TblTerrein));
+
+
+--materialen zonder materialtype
+SELECT * FROM TblMaterials
+where MaterialType_id not in (select Id from TblMaterialTypes)
+
+--sections zonder terrein
+SELECT * from TblSections
+where Terrein_id not in (select Id from TblTerrein)
+
+--controle punten zonder terrein
+SELECT * FROM TblCheckpoints
+where Terrein_id not in (select Id from TblTerrein);
+
+--hinderniscontrole die niet bij hindernis horen
+SELECT * FROM TblObstacleChecks
+where Obstacle_id not in (Select Id from TblObstacles);
+
+--hinderniscontrolepunten zonder hindernis
+SELECT * FROM TblObstacleCheckpoints
+where Obstacle_id not in (Select Id from TblObstacles);
+
+
+--hinderniscontrolepunten zonder controlepunt
+SELECT * FROM `TblObstacleCheckpoints`
+where Checkpoint_id not in (select Id from TblCheckpoints);
+
+--hindernismaterialen zonder hindernis
+SELECT * FROM TblObstacleMaterials
+where Obstacle_id not in (select Id from TblObstacles)
+
+--hindernismaterialen zonder materiaal
+SELECT * FROM `TblObstacleMaterials`
+where Material_id not in (select Id from TblMaterials)
+
+
+SELECT tt.terreinnaam, tt.Id as terreinId
+    , ttu.Id as terreinUserId
+    , tmt.Id as materialTypeId
+    , tt.Id as materialId
+    , ts.id as sectionId
+from TblTerrein tt
+left outer join TblTerreinUsers ttu on ttu.Terrein_id = tt.Id
+left outer join TblMaterialTypes tmt on tmt.Terrein_id = tt.Id
+left outer join TblMaterials tm on tm.Terrein_id = tt.Id
+left outer join TblSections ts on ts.Terrein_id = tt.Id
+order by tt.id
+
+SELECT tt.terreinnaam, tt.Id as terreinId
+    , ttu.Id as terreinUserId
+from TblTerrein tt
+left outer join TblTerreinUsers ttu on ttu.Terrein_id = tt.Id
+order by tt.id
+
+
+
+

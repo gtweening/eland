@@ -71,7 +71,8 @@ class mod_reports{
         $getSecObstMatInfo="select distinct concat(ts.Naam,' ',tobm.Volgnr) as SHId, tobm.* 
                             from TblSections ts, (".$getObstMatInfo.") as tobm 
                             where tobm.Section_id = ts.Id 
-                            and ts.Terrein_id ='$terreinid' ";
+                              and ts.Terrein_id ='$terreinid' 
+                            order by SHId";
 
         $getMaxDatChk = "select Id, Obstacle_id, DatCheck,ChkSt 
                          from TblObstacleChecks toc1 
