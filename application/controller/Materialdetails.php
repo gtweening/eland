@@ -101,8 +101,9 @@ class Materialdetails extends Controller {
                     $srope=0;
                     break;
             }
-            $sOmschr = trim($_POST['material']);
-            $mattype = $_POST['mattype'];
+            $sOmschr  = trim($_POST['material']);
+            $mattype  = $_POST['mattype'];
+            $supplier = $_POST['supplier'];
 
             //checkbox needs to be selected
             if(!empty($_POST['checkbox'])){
@@ -117,7 +118,7 @@ class Materialdetails extends Controller {
                     }
                     //omschrijving needs to be filled
                     if (strlen($sOmschr)<>0){
-                        $this->mod_materials->editMaterial($terreinid, $sId, $sOmschr, $mattype, $srope, $mrope, $this->db);
+                        $this->mod_materials->editMaterial($terreinid, $sId, $sOmschr, $mattype, $srope, $mrope, $supplier, $this->db);
                         
                     }else{
                         $_SESSION['errormessage'] = "Omschrijving is niet gevuld!";

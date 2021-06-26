@@ -104,12 +104,13 @@ class mod_materials{
 
     }
 
-    function editMaterial($terreinid, $Id, $omschr, $mattype, $srope, $mrope, $db){
+    function editMaterial($terreinid, $Id, $omschr, $mattype, $srope, $mrope, $supplier, $db){
         $STH = $db->prepare("UPDATE TblMaterials 
                             SET Omschr = '".utf8_decode($omschr)."', 
                                 MaterialType_id = '".$mattype."', 
                                 IndSecureRope = $srope, 
-                                IndMainRope = $mrope    
+                                IndMainRope = $mrope,
+                                Supplier_id = $supplier     
                             WHERE Id = $Id");
         $STH->execute();
     }
