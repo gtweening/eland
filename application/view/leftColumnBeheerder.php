@@ -18,7 +18,7 @@
     </div>
     <div class = "menuItem">
         <a href="<?php echo WEBROOT; ?>/Beheer/materiaalLeveranciers" id="navMateriaalLeveranciers" title ="MateriaalLeveranciers">
-                <img src="<?php echo WEBROOT; ?>/img/terreinuser.png" alt="matalvrcr" width="35" height="35" align="middle">
+                <img src="<?php echo WEBROOT; ?>/img/matsupplier.png" alt="matalvrcr" width="35" height="35" align="middle">
         </a>
     </div>
     <div class = "menuItem">
