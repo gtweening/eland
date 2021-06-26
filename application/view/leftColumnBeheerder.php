@@ -17,6 +17,11 @@
         </a>
     </div>
     <div class = "menuItem">
+        <a href="<?php echo WEBROOT; ?>/Beheer/materiaalLeveranciers" id="navMateriaalLeveranciers" title ="MateriaalLeveranciers">
+                <img src="<?php echo WEBROOT; ?>/img/terreinuser.png" alt="matalvrcr" width="35" height="35" align="middle">
+        </a>
+    </div>
+    <div class = "menuItem">
         <a href="<?php echo WEBROOT; ?>/Beheer/berichten" id="navBerichten" title ="Berichten">
                 <img src="<?php echo WEBROOT; ?>/img/messages0.png" alt="berichten" width="35" height="35" align="middle">
         </a>

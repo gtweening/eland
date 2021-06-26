@@ -100,11 +100,12 @@ class mod_obstacles{
       
     function getObstacleMaterials($id, $db){
         //hindernismaterialen ophalen
-        $STH = $db->query('SELECT tom.Id as tomId, tm.Omschr, tom.Aantal, tm.*, tmt.Omschr as tmtomschr  
-                            from TblObstacleMaterials tom, TblMaterials tm, TblMaterialTypes tmt 
-                            where tom.Material_Id = tm.Id 
-                              and tmt.Id = tm.MaterialType_Id 
-                              and tom.Obstacle_id = '.$id .' ');
+        $STH = $db->query('SELECT tom.Id as tomId, tm.Omschr, tom.Aantal, tm.*, tmt.Omschr as tmtomschr, tms.Supplier  
+                            from TblObstacleMaterials tom
+                                inner join TblMaterials tm on tom.Material_Id = tm.Id 
+                                inner join TblMaterialTypes tmt on tmt.Id = tm.MaterialType_Id 
+                                left join TblMaterialSuppliers tms on tm.Supplier_id = tms.id 
+                            where  tom.Obstacle_id = '.$id .' ');
         $STH->setFetchMode(PDO::FETCH_ASSOC);
      
         return $STH;
