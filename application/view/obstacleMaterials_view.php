@@ -59,12 +59,17 @@
                                 $mrope="";
                                 if($isrope==1){$srope="Veiligheidstouw";}
                                 if($imrope==1){$mrope="Hoofdtouw";}
+                                if (!empty($rows['Supplier'])){
+                                    $mattypeview = htmlentities($rows['matType']) . ' ('.htmlentities($rows['Supplier']) . ')';
+                                }else{
+                                    $mattypeview = htmlentities($rows['matType']);
+                                }
                         ?>
                     
                         <tr>
                             <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
-                            <td colspan="2" class="white"><?php echo htmlentities($rows['matType']); ?>
-                                <span><?php echo htmlentities($rows['matType']); ?></span>
+                            <td colspan="2" class="white"><?php echo $mattypeview; ?>
+                                <span><?php echo $mattypeview; ?></span>
                             </td>
                             <td class="white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?>
                                 <span><?php echo htmlentities($rows['Omschr']); ?></span>
@@ -119,14 +124,19 @@
                         $mrope="";
                         if($isrope==1){$srope="Veiligheidstouw";}
                         if($imrope==1){$mrope="Hoofdtouw";}
+                        if (!empty($rows['Supplier'])){
+                            $mattypeview = htmlentities($rows['tmtomschr']) . ' ('.htmlentities($rows['Supplier']) . ')';
+                        }else{
+                            $mattypeview = htmlentities($rows['tmtomschr']);
+                        }
                     ?>
                     
 
                     <table >
                         <tr>
                             <td width="5%" class="white"><input name="checkbox[]" type="checkbox" id="checkbox[]" value="<?php echo $rows['tomId']; ?>"></td>
-                            <td width="10%" class = "white"><?php echo htmlentities($rows['tmtomschr']); ?>
-                                <span><?php echo htmlentities($rows['tmtomschr']); ?></span>
+                            <td width="10%" class = "white"><?php echo $mattypeview; ?>
+                                <span><?php echo $mattypeview; ?></span>
                             </td>
                             <td width="40%" class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?>
                                 <span><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></span>

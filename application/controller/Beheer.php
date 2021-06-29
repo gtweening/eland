@@ -15,6 +15,8 @@ class Beheer extends Controller {
         $this->mod_terrein = new mod_terrein();
         include_once($this->app_path."model/Mod_materials.php"); 
         $this->mod_materials = new mod_materials();
+        include_once($this->app_path."model/Mod_materialSuppliers.php"); 
+        $this->mod_matsup = new mod_materialSuppliers();
         include_once($this->app_path."model/Mod_messages.php"); 
         $this->mod_messages = new mod_messages();
         include_once($this->app_path."model/Mod_helpers.php"); 
@@ -225,6 +227,56 @@ class Beheer extends Controller {
         header('Location:../Beheer/gebruikersTerreinen');
 
     }
+
+
+    function materiaalLeveranciers(){
+        $this->checkPermission($this->mysqli);
+        $mat = $this->mod_materials->getAllMaterialTypes($this->db);
+        $lev = $this->mod_matsup->getMaterialSuppliers($this->db);
+
+        include $this->app_path.'view/beheerMateriaalLeveranciers_view.php';
+
+
+    }
+
+
+    function materiaalLeveranciersBeheer(){
+        $this->checkPermission($this->mysqli);
+
+        unset($_SESSION['errormessage']);
+
+        if(isset($_POST['addMatSup'])){      
+            if(!empty($_POST['Supplier'])){
+                $Material = $_POST['Material']; 
+                $Supplier   = $_POST['Supplier'];
+                $this->mod_matsup->addMaterialSupplier($Material, $Supplier, $this->db);
+            }
+            
+        }else if(isset($_POST['delMatSup'])){ 
+            if(!empty($_POST['checkbox'])){
+                foreach($_POST['checkbox'] as $val){
+                    $ids[] = (int) $val;
+                }
+                $ids = implode("','", $ids);
+                $this->mod_matsup->delMaterialSupplier($ids, $this->db);
+            }
+
+        }else if(isset($_POST['editMatSup'])){
+            foreach($_POST['checkbox'] as $val){
+                $Id = (int) $val;
+                $Material = $_POST['Material']; 
+                $Supplier   = $_POST['Supplier'];
+
+                $this->mod_matsup->editMaterialSupplier($Id, $Material, $Supplier, $this->db);
+            }
+        }
+
+        // if successful redirect 
+        header('Location:../Beheer/materiaalLeveranciers');
+
+
+    }
+
 
     function berichten(){
         $this->checkPermission($this->mysqli);

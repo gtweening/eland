@@ -113,11 +113,16 @@
                                 $mrope="";
                                 if($isrope==1){$srope="Veiligheidstouw";}
                                 if($imrope==1){$mrope="Hoofdtouw";}
+                                if (!empty($rows['Supplier'])){
+                                    $mattypeview = htmlentities($rows['tmtomschr']) . ' ('.htmlentities($rows['Supplier']) . ')';
+                                }else{
+                                    $mattypeview = htmlentities($rows['tmtomschr']);
+                                }
                             ?>
                             
                             <tr>
-                                <td class = "white"><?php echo htmlentities($rows['tmtomschr']); ?>
-                                <span><?php echo htmlentities($rows['tmtomschr']); ?></span>
+                                <td class = "white"><?php echo $mattypeview; ?>
+                                <span><?php echo $mattypeview; ?></span>
                                 </td>
                                 <td class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?>
                                 <span><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></span>
