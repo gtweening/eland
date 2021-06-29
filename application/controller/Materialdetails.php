@@ -79,7 +79,7 @@ class Materialdetails extends Controller {
                     break;
             }
             $omschr   = utf8_decode($_POST['material']);
-            print_r($_POST);
+            
             if(isset($_POST['supplier'])){
                 $supplier = $_POST['supplier'];
             }else{
@@ -111,7 +111,11 @@ class Materialdetails extends Controller {
             }
             $sOmschr  = trim($_POST['material']);
             $mattype  = $_POST['mattype'];
-            $supplier = $_POST['supplier'];
+            if(isset($_POST['supplier'])){
+                $supplier = $_POST['supplier'];
+            }else{
+                $supplier = 'NULL';
+            }
 
             //checkbox needs to be selected
             if(!empty($_POST['checkbox'])){
