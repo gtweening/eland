@@ -74,9 +74,17 @@ class Materialdetails extends Controller {
                     $srope=0;
                     break;
                 default:
+                    $mrope=0;
+                    $srope=0;
+                    break;
             }
-            $omschr   = utf8_decode($_POST[material]);
-            $supplier = $_POST['supplier'];
+            $omschr   = utf8_decode($_POST['material']);
+            print_r($_POST);
+            if(isset($_POST['supplier'])){
+                $supplier = $_POST['supplier'];
+            }else{
+                $supplier = 'NULL';
+            }
 
             if(!empty($_POST['material'])){
                 $this->mod_materials->addMaterial($terreinid, $omschr, $_POST['mattype'], $srope, $mrope, $supplier, $this->db);

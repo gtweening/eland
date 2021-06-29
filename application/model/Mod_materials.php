@@ -79,7 +79,7 @@ class mod_materials{
 
     function addMaterial($terreinid, $omschr, $mattype, $srope, $mrope, $supplier, $db){
         $STH = $db->prepare("INSERT INTO TblMaterials (Omschr, MaterialType_id, Terrein_id, IndSecureRope, IndMainRope, Supplier_id) 
-                                     VALUES ('$omschr', '$mattype', '$terreinid','$srope','$mrope','$supplier')");
+                                     VALUES ('$omschr', '$mattype', '$terreinid','$srope','$mrope',$supplier)");
         $STH->execute();
     }
 
