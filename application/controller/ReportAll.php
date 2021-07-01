@@ -88,10 +88,15 @@ class ReportAll extends Controller {
             $obstacleChecks      = $this->mod_obstacles->getObstacleChecks($obstacleid,$this->db);
 
             while($row2 = $obstacleMaterials->fetch() ){
-            
+                if (!empty($row2['Supplier'])){
+                    $mattypeview = htmlentities($row2['omschr']) . ' ('.htmlentities($row2['Supplier']) . ')';
+                }else{
+                    $mattypeview = htmlentities($row2['omschr']);
+                }
+
                 $newdata = array(
                         'material'     => $row2['tmtomschr'],
-                        'omschrijving' => $row2['Omschr'],
+                        'omschrijving' => $mattypeview,
                         'toelichting'  => $row2['Aantal']
                         );
                 $obstacleMaterialsArray[$obstacleid][] = $newdata;

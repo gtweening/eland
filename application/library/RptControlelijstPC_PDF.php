@@ -219,6 +219,7 @@ class RptControlelijstPC_PDF extends TCPDF {
         $ch         = $celwidth['ch'];
         $cM         = $celwidth['cMat'];
         $w2Opm      = $celwidth['w2Opm'];
+        $SHId_old   = '';
         //set filling
         $fill       = false;
         if($this->PageNo() === 1){
@@ -234,45 +235,66 @@ class RptControlelijstPC_PDF extends TCPDF {
        
         //fill obstacle data
         while($i < count($info)){
-            //status symbool instellen
-            if($info[$i]['ChkSt']==1) {$ChkSt="OK";}else {$ChkSt="!";}
+            $SHId = $info[$i]['SHId'];
+            if($SHId_old <> $SHId){
+                //status symbool instellen
+                if($info[$i]['ChkSt']==1) {$ChkSt="OK";}else {$ChkSt="!";}
 
-            $this->Cell($w3[0],6,$info[$i]['SHId'],'L',0,'L',$fill);
-            $this->Cell($w3[1],6,$info[$i]['HOmschr'],'L',0,'L',$fill);
-            $this->Cell($w3[2],6,$info[$i]['hoofdtouw'],'L',0,'L',$fill);
-            $this->Cell($w3[3],6,$info[$i]['zekeringstouw'],'L',0,'L',$fill);
-            $this->Cell($w3[4],6,'','L',0,'L',$fill);
+                $this->Cell($w3[0],6,$info[$i]['SHId'],'L',0,'L',$fill);
+                $this->Cell($w3[1],6,$info[$i]['HOmschr'],'L',0,'L',$fill);
+                $this->Cell($w3[2],6,$info[$i]['hoofdtouw'],'L',0,'L',$fill);
+                $this->Cell($w3[3],6,$info[$i]['zekeringstouw'],'L',0,'L',$fill);
+                $this->Cell($w3[4],6,$info[$i]['Supplier'],'L',0,'L',$fill);
 
-            //for ($x=1; $x <= $cM; $x++) {
-            //    $colname = "m_".$celwidth['m'.$x];
-            //    $val     = $info[$i][$colname];
-            //    if ($val == 1){
-            //        $val = "*";
-            //    } 
-            //   $c = $x+3;
-            //    $this->Cell($w3[$c],6,$val,'L',0,'C',$fill);
-            //}
+                //for ($x=1; $x <= $cM; $x++) {
+                //    $colname = "m_".$celwidth['m'.$x];
+                //    $val     = $info[$i][$colname];
+                //    if ($val == 1){
+                //        $val = "*";
+                //    } 
+                //   $c = $x+3;
+                //    $this->Cell($w3[$c],6,$val,'L',0,'C',$fill);
+                //}
 
-            $this->Cell($w3[5],6,$info[$i]['MaxH'],'L',0,'C',$fill);
-            $this->Cell($w3[6],6,$info[$i]['DatCheck'],'L',0,'C',$fill);
-            $this->Cell($w3[7],6,$ChkSt,'L',0,'C',$fill);
-            $this->Cell($w3[8],6,"",'L',0,'C',$fill);
-            $this->SetX($w2Opm);
-            $this->TextField('opm'.$i, $w3[8], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
-            $this->Cell($w3[9],6,"",'L',0,'L',$fill);
-            $this->SetX($w2Opm + $w3[8]);
-            $this->TextField('JA1'.$i, $w3[9], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
-            //$this->Cell($w3[9],6,"",'L',0,'L',$fill);
-            //$this->SetX($w2Opm + $w3[$c+4] + $w3[$c+5]);
-            //$this->TextField('NEE1'.$i, $w3[$c+6], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
-            //$this->Cell($w3[$c+6],6,"",'L',0,'L',$fill);
-            //$this->SetX($w2Opm + $w3[$c+4] + $w3[$c+5] );
-            //$this->TextField('JA2'.$i, $w3[$c+6], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
-            //$this->Cell($w3[$c+7],6,"",'L',0,'L',$fill);
-            //$this->SetX($w2Opm + $w3[$c+4] + $w3[$c+5] + $w3[$c+6] );
-            //$this->TextField('NEE2'.$i, $w3[$c+7], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
+                $this->Cell($w3[5],6,$info[$i]['MaxH'],'L',0,'C',$fill);
+                $this->Cell($w3[6],6,$info[$i]['DatCheck'],'L',0,'C',$fill);
+                $this->Cell($w3[7],6,$ChkSt,'L',0,'C',$fill);
+                $this->Cell($w3[8],6,"",'L',0,'C',$fill);
+                $this->SetX($w2Opm);
+                $this->TextField('opm'.$i, $w3[8], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
+                $this->Cell($w3[9],6,"",'L',0,'L',$fill);
+                $this->SetX($w2Opm + $w3[8]);
+                $this->TextField('JA1'.$i, $w3[9], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
+                //$this->Cell($w3[9],6,"",'L',0,'L',$fill);
+                //$this->SetX($w2Opm + $w3[$c+4] + $w3[$c+5]);
+                //$this->TextField('NEE1'.$i, $w3[$c+6], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
+                //$this->Cell($w3[$c+6],6,"",'L',0,'L',$fill);
+                //$this->SetX($w2Opm + $w3[$c+4] + $w3[$c+5] );
+                //$this->TextField('JA2'.$i, $w3[$c+6], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
+                //$this->Cell($w3[$c+7],6,"",'L',0,'L',$fill);
+                //$this->SetX($w2Opm + $w3[$c+4] + $w3[$c+5] + $w3[$c+6] );
+                //$this->TextField('NEE2'.$i, $w3[$c+7], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
 
-            $this->Ln(6);
+                $this->Ln(6);
+            }else{
+                $this->Cell($w3[0],6,'','L',0,'L',$fill);
+                $this->Cell($w3[1],6,'','L',0,'L',$fill);
+                $this->Cell($w3[2],6,'','L',0,'L',$fill);
+                $this->Cell($w3[3],6,'','L',0,'L',$fill);
+                $this->Cell($w3[4],6,$info[$i]['Supplier'],'L',0,'L',$fill);
+                $this->Cell($w3[5],6,'','L',0,'C',$fill);
+                $this->Cell($w3[6],6,'','L',0,'C',$fill);
+                $this->Cell($w3[7],6,'','L',0,'C',$fill);
+                $this->Cell($w3[8],6,"",'L',0,'C',$fill);
+                $this->SetX($w2Opm);
+                $this->TextField('opm'.$i, $w3[8], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
+                $this->Cell($w3[9],6,"",'L',0,'L',$fill);
+                $this->SetX($w2Opm + $w3[8]);
+                $this->TextField('JA1'.$i, $w3[9], 6,array('lineWidth'=>1, 'borderStyle'=>'solid' ));
+                $this->Ln(6);
+            }
+            $SHId_old = $info[$i]['SHId'];
+
             //alternate fill
             $fill = !$fill;
             $i++;

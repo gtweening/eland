@@ -47,12 +47,7 @@ class mod_reports{
                 from (".$getObstMat.") as t 
                 group by t.HId";
 
-        $getMat = "
-                SELECT distinct tom.Obstacle_id as HId, tmt.Omschr, tms.Supplier 
-                from TblObstacleMaterials tom 
-                    inner join TblMaterials tm on tom.Material_Id = tm.Id 
-                    inner join TblMaterialTypes tmt on tmt.Id = tm.MaterialType_Id 
-                    inner join TblMaterialSuppliers tms on tm.Supplier_id = tms.id";
+
 
         //join getObstMat with Obstacle info
         //add leading zero if column length=1 (0-9)
