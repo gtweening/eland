@@ -11,6 +11,8 @@ class Materialdetails extends Controller {
         $this->mod_header = new mod_header();
         include_once($this->app_path."model/Mod_materials.php"); 
         $this->mod_materials = new mod_materials();
+        include_once($this->app_path."model/Mod_materialSuppliers.php"); 
+        $this->mod_matsup = new mod_materialSuppliers();
         include_once($this->app_path."model/Mod_helpers.php"); 
         $this->mod_helpers = new mod_helpers();
 
@@ -22,8 +24,21 @@ class Materialdetails extends Controller {
         $this->checkPermission($this->mysqli);
 
         //material info ophalen
-        $materials = $this->mod_materials->getMaterials($_SESSION['Terreinid'], $this->db);
+        $materials       = $this->mod_materials->getMaterials($_SESSION['Terreinid'], $this->db);
         $materialdetails = $this->mod_materials->getMaterialdetails($_SESSION['Terreinid'], $this->db);
+        $matsup          = $this->mod_matsup->getMaterialSuppliers($this->db);
+        $mattype         = $this->mod_matsup->getMaterialTypesofSuppliers($this->db);
+
+        $i=0;
+        while($r   = $matsup->fetch()){
+            $arrmatsup[$i]['Id'] = $r['Id'];
+            $arrmatsup[$i]['MaterialType'] = $r['MaterialType'];
+            $arrmatsup[$i]['Supplier'] = $r['Supplier'];
+            $i++;
+        }
+        while($row = $mattype->fetch()){
+            $arrmattype[] = $row['MaterialType']; 
+        }
 
         if(isset($_SESSION['errormessage'])) {
             $warning = $_SESSION['errormessage'];
@@ -59,11 +74,20 @@ class Materialdetails extends Controller {
                     $srope=0;
                     break;
                 default:
+                    $mrope=0;
+                    $srope=0;
+                    break;
             }
-            $omschr=utf8_decode($_POST[material]);
+            $omschr   = utf8_decode($_POST['material']);
+            
+            if(isset($_POST['supplier'])){
+                $supplier = $_POST['supplier'];
+            }else{
+                $supplier = 'NULL';
+            }
 
             if(!empty($_POST['material'])){
-                $this->mod_materials->addMaterial($terreinid, $omschr, $_POST['mattype'], $srope, $mrope, $this->db);
+                $this->mod_materials->addMaterial($terreinid, $omschr, $_POST['mattype'], $srope, $mrope, $supplier, $this->db);
                
             }else{
                 $_SESSION['errormessage'] = "De materiaalomschrijving moet nog ingevuld worden!";
@@ -85,8 +109,13 @@ class Materialdetails extends Controller {
                     $srope=0;
                     break;
             }
-            $sOmschr = trim($_POST['material']);
-            $mattype = $_POST['mattype'];
+            $sOmschr  = trim($_POST['material']);
+            $mattype  = $_POST['mattype'];
+            if(isset($_POST['supplier'])){
+                $supplier = $_POST['supplier'];
+            }else{
+                $supplier = 'NULL';
+            }
 
             //checkbox needs to be selected
             if(!empty($_POST['checkbox'])){
@@ -101,7 +130,7 @@ class Materialdetails extends Controller {
                     }
                     //omschrijving needs to be filled
                     if (strlen($sOmschr)<>0){
-                        $this->mod_materials->editMaterial($terreinid, $sId, $sOmschr, $mattype, $srope, $mrope, $this->db);
+                        $this->mod_materials->editMaterial($terreinid, $sId, $sOmschr, $mattype, $srope, $mrope, $supplier, $this->db);
                         
                     }else{
                         $_SESSION['errormessage'] = "Omschrijving is niet gevuld!";

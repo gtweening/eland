@@ -50,7 +50,7 @@
     </div>
 
     <div class = "menuItem">
-        <a href="<?php echo WEBROOT; ?>/ReportAll" id="navrptall" title="Volledig overzicht t.b.v. archief">
+        <a href="<?php echo WEBROOT; ?>/ReportAll" id="navrptall" title="Volledig overzicht logboek">
                 <img src="<?php echo WEBROOT; ?>/img/reportAll.png" alt="Materialen" width="35" height="35" >        
         </a>
     </div>

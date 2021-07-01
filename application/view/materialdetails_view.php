@@ -3,6 +3,38 @@
     include_once "leftColumn.php"; 
 ?>
 
+<script type="text/javascript">
+    //populate dropdown based on materialtype
+    function supplierChange(){
+        var arrmattype = <?php echo json_encode($arrmattype); ?>;
+        var arrmatsup  = <?php echo json_encode($arrmatsup); ?>;
+        var supplier   = document.getElementById("supplier");
+        var matid      = document.getElementById("mattype");
+        var mat        = matid.options[matid.selectedIndex].text;
+        document.getElementById("supplier").options.length = 0;
+
+        for(const mattype of arrmattype){
+            if(mat == mattype){
+                document.getElementById("supplier").disabled = false;
+
+                for(var index = 0; index < arrmatsup.length; index++){
+                    if(arrmatsup[index]['MaterialType'] == mat){
+                        var opt = arrmatsup[index]['Supplier'];
+                        var el  = document.createElement("option");
+                        el.textContent = opt;
+                        el.value = arrmatsup[index]['Id'];
+                        supplier.appendChild(el);
+                    }
+                }
+                exit;
+            }else{
+                document.getElementById("supplier").disabled = true;
+            }
+        }
+
+    }
+</script>
+
 <body id="materials">
     <div class="navobsbysection">          
     </div>
@@ -35,12 +67,19 @@
  
                 <div id="widgetBar3x">
                     <label>Materiaal:</label> 
+                    <select class='inputText' name='mattype' id='mattype' size=1 onchange="supplierChange()">
                     <?php
-                        $sSelect = "<select class='inputText' name='mattype' id='mattype' size=1>";
-                        echo $sSelect;
-                            while($rows = $materials->fetch()){
+                        while($rows = $materials->fetch()){
                             echo "<option value=".$rows['Id'].">" .$rows['Omschr'] . "</option>";
-                            }
+                        }
+                        echo "</select>"; 
+                    ?>
+                    <label>Leverancier:</label>
+                    <select class='inputText' name='supplier' id='supplier' size=1 disabled>
+                    <?php
+                        while($rows = $matsup->fetch()){
+                            echo "<option value=".$rows['Id'].">" .$rows['Supplier'] . "</option>";
+                        }
                         echo "</select><br>"; 
                     ?>
                     
@@ -86,12 +125,17 @@
                         $mrope="";
                         if($isrope==1){$srope="Veiligheidstouw";}
                         if($imrope==1){$srope="Hoofdtouw";}
+                        if (!empty($rows['Supplier'])){
+                            $mattypeview = htmlentities($rows['matType']) . ' ('.htmlentities($rows['Supplier']) . ')';
+                        }else{
+                            $mattypeview = htmlentities($rows['matType']);
+                        }
                     ?>
 
                     <tr class="trow">
                         <td width="5%" class="white2"><input name="checkbox[]" type="checkbox" 
                             id="checkbox[]" value="<?php echo $rows['Id']; ?>"></td>
-                        <td class = "white"><?php echo htmlentities($rows['matType']); ?></td>
+                        <td class = "white"><?php echo $mattypeview; ?></td>
                         <td class = "white"><?php echo htmlentities(utf8_encode($rows['Omschr'])); ?></td>
                         <td class = "white"><?php echo $srope.$mrope; ?></td>
                     </tr>

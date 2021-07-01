@@ -11,6 +11,13 @@ class mod_materials{
         return $STH;
     }
 
+    function getAllMaterialTypes($db){
+        $STH = $db->query('SELECT distinct Omschr from TblMaterialTypes' );
+
+        $STH->setFetchMode(PDO::FETCH_ASSOC);
+        return $STH;
+    }
+
     function addMaterialType($terreinid, $sOmschr, $db){
         $STH = $db->prepare("INSERT INTO TblMaterialTypes (Omschr, Terrein_id) VALUES
                             ('$sOmschr', '$terreinid')");
@@ -59,9 +66,10 @@ class mod_materials{
     //############################################################
 
     function getmaterialdetails($Terreinid, $db){
-        $STH = $db->query('SELECT m.*, mt.Omschr as matType
-                           FROM TblMaterials m left join TblMaterialTypes mt 
-                             on m.MaterialType_id=mt.Id 
+        $STH = $db->query('SELECT m.*, mt.Omschr as matType, ms.Supplier as Supplier
+                           FROM TblMaterials m 
+                                left join TblMaterialTypes mt on m.MaterialType_id=mt.Id 
+                                left join TblMaterialSuppliers ms on m.Supplier_id=ms.Id
                            where m.Terrein_id ='.$Terreinid.'
                            order by Id');
 
@@ -69,9 +77,9 @@ class mod_materials{
         return $STH;
     }
 
-    function addMaterial($terreinid, $omschr, $mattype, $srope, $mrope, $db){
-        $STH = $db->prepare("INSERT INTO TblMaterials (Omschr, MaterialType_id, Terrein_id, IndSecureRope, IndMainRope) 
-                                     VALUES ('$omschr', '$mattype', '$terreinid','$srope','$mrope')");
+    function addMaterial($terreinid, $omschr, $mattype, $srope, $mrope, $supplier, $db){
+        $STH = $db->prepare("INSERT INTO TblMaterials (Omschr, MaterialType_id, Terrein_id, IndSecureRope, IndMainRope, Supplier_id) 
+                                     VALUES ('$omschr', '$mattype', '$terreinid','$srope','$mrope',$supplier)");
         $STH->execute();
     }
 
@@ -96,12 +104,13 @@ class mod_materials{
 
     }
 
-    function editMaterial($terreinid, $Id, $omschr, $mattype, $srope, $mrope, $db){
+    function editMaterial($terreinid, $Id, $omschr, $mattype, $srope, $mrope, $supplier, $db){
         $STH = $db->prepare("UPDATE TblMaterials 
                             SET Omschr = '".utf8_decode($omschr)."', 
                                 MaterialType_id = '".$mattype."', 
                                 IndSecureRope = $srope, 
-                                IndMainRope = $mrope    
+                                IndMainRope = $mrope,
+                                Supplier_id = $supplier     
                             WHERE Id = $Id");
         $STH->execute();
     }
